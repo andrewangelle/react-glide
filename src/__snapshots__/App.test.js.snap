@@ -1,0 +1,14 @@
+exports[`ImageCarousel renders without crashing 1`] = `
+<div>
+  <img
+    src="https://placehold.it/500x100" />
+  <button
+    onClick={[Function]}>
+    Prev
+  </button>
+  <button
+    onClick={[Function]}>
+    Next
+  </button>
+</div>
+`;
