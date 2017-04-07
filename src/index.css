@@ -3,3 +3,30 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.current-enter {
+  opacity: 0.01;
+}
+
+.current-enter.current-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-appear {
+  opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.current-leave {
+  opacity: 1;
+}
+
+.current-leave.current-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

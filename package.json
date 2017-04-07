@@ -8,7 +8,9 @@
   },
   "devDependencies": {
     "enzyme": "^2.8.0",
+    "react-addons-css-transition-group": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
+    "react-addons-transition-group": "^15.4.2",
     "react-scripts": "0.9.5",
     "react-test-renderer": "^15.4.2"
   },

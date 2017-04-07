@@ -26,6 +26,24 @@ describe('ImageCarousel', () => {
 		expect(tree).toMatchSnapshot();
 	});
 
+		it('has images array that contains images', () => {
+
+		const images = [
+  			'https://placehold.it/500x100',
+  			'https://placehold.it/510x100',
+  			'https://placehold.it/520x100',
+  			'https://placehold.it/530x100',
+  			'https://placehold.it/540x100',
+  			'https://placehold.it/550x100'
+		];
+
+		const componenet = shallow(
+			<ImageCarousel images={images} />
+		);
+
+		expect(images.length).toBeGreaterThan(0);
+	});
+
 	it('changes to next index when next button is clicked', () => {
 
 		const images = [

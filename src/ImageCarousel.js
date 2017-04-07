@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import './index.css';
 
 
 export default class ImageCarousel extends React.Component {
@@ -30,8 +32,17 @@ export default class ImageCarousel extends React.Component {
   render(){
     return (
       <div>
-        <img src={this.props.images[this.state.currentIndex]} />
-     
+
+        <ReactCSSTransitionGroup
+          transitionName='current'
+          transitionAppear={true}
+          transitionAppearTimeout={500}
+          transitionEnter={false}
+          transitionLeave={false}>
+
+          <img src={this.props.images[this.state.currentIndex]} />
+        </ReactCSSTransitionGroup>
+
         <button onClick={this.goToPrevImage.bind(this)}>Prev</button>
         <button onClick={this.goToNextImage.bind(this)}>Next</button>
       </div>
