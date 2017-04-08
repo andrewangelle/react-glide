@@ -4,15 +4,14 @@ body {
   font-family: sans-serif;
 }
 
-.container {
-	width:550px;
-	padding:40px;
-}
-
 button {
-	margin-top: 150px;
+	margin-top: 20%;
 	position: absolute;
 	z-index: 10;
+}
+
+.button-container {
+	width:60%;
 }
 
 .next {
@@ -29,8 +28,6 @@ button {
 
 
 
-
-
 /*
 * classnames and settings for animations and transitions
 */
@@ -43,11 +40,11 @@ button {
   transition: opacity 500ms ease-in;
 }
 
-.example-appear {
+.current-appear {
   opacity: 0.01;
 }
 
-.example-appear.example-appear-active {
+.current-appear.example-appear-active {
   opacity: 1;
   transition: opacity .5s ease-in;
 }

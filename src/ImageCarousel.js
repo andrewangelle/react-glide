@@ -31,7 +31,7 @@ export default class ImageCarousel extends React.Component {
 
   render(){
     return (
-      <div>
+      <div className="container">
 
         <ReactCSSTransitionGroup
           transitionName='current'
@@ -43,8 +43,11 @@ export default class ImageCarousel extends React.Component {
           <img className='carousel-image' key={this.state.currentIndex} src={this.props.images[this.state.currentIndex]} />
         </ReactCSSTransitionGroup>
 
-        <button onClick={this.goToPrevImage.bind(this)}>Prev</button>
-        <button className="next" onClick={this.goToNextImage.bind(this)}>Next</button>
+        <div className='button'>
+          <button onClick={this.goToPrevImage.bind(this)}>Prev</button>
+          <button className="next" onClick={this.goToNextImage.bind(this)}>Next</button>
+        </div>
+
       </div>
      );
   }
