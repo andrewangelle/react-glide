@@ -7,6 +7,7 @@
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
+    "animate.css": "^3.5.2",
     "enzyme": "^2.8.0",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
