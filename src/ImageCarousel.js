@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import './index.css';
+import Preload from 'react-preload';
 
 
 export default class ImageCarousel extends React.Component {
@@ -9,8 +10,11 @@ export default class ImageCarousel extends React.Component {
 
     this.state={
        currentIndex: 0
+
      }
   };
+
+
 
    goToPrevImage() {
     const { currentIndex }=this.state;
@@ -31,7 +35,7 @@ export default class ImageCarousel extends React.Component {
 
   render(){
     return (
-      <div className="container">
+      <div className="container" >
 
         <ReactCSSTransitionGroup
           transitionName='current'
@@ -40,13 +44,13 @@ export default class ImageCarousel extends React.Component {
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}>
 
-          <img className="animated bounce" className='carousel-image' key={this.state.currentIndex} src={this.props.images[this.state.currentIndex]} />
+          <img className='carousel-image' key={this.state.currentIndex} src={this.props.images[this.state.currentIndex]} />
         </ReactCSSTransitionGroup>
 
-        <div className='button-container'>
-          <button onClick={this.goToPrevImage.bind(this)}> Next </button>
-          <button className="next" onClick={this.goToNextImage.bind(this)}> Prev </button>
-        </div>
+
+        <button onClick={this.goToPrevImage.bind(this)}> Next </button>
+        <button className="next" onClick={this.goToNextImage.bind(this)}> Prev </button>
+
 
       </div>
      );

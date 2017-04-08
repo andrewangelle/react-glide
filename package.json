@@ -12,6 +12,7 @@
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
+    "react-preload": "^0.5.0",
     "react-scripts": "0.9.5",
     "react-test-renderer": "^15.4.2"
   },

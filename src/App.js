@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ImageCarousel from './ImageCarousel';
 import './index.css'
-
+import Preload from 'react-preload';
 
 
 const images = [
@@ -13,11 +13,29 @@ const images = [
   'https://unsplash.it/505/?random'
 ];
 
+const loadingIndicator = (<div>Loading...</div>);
+
 export default class App extends React.Component{
    render() {
     return (
         <div>
-          <ImageCarousel images={images} />
+
+
+ 
+          <Preload
+            loadingIndicator={loadingIndicator}
+            images={images}
+            autoResolveDelay={3000}
+            onError={this._handleImageLoadError}
+            onSuccess={this._handleImageLoadSuccess}
+            resolveOnError={true}
+            mountChildren={true}
+            >
+
+            <ImageCarousel images={images} />
+
+          </Preload>
+
         </div>
       );
    }

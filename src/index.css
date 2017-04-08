@@ -5,14 +5,11 @@ body {
 }
 
 button {
-	margin-top: 20%;
+	margin-top: 45%;
 	position: absolute;
 	z-index: 10;
 }
 
-.button-container {
-	width:60%;
-}
 
 .next {
 	right:0;
@@ -20,9 +17,12 @@ button {
 
 .carousel-image {
 	position: absolute;
-	margin-left:30%;
-	margin-right:30%;
 	z-index: 9;
+}
+
+.container {
+	position: relative;
+	width:500px;
 }
 
 
