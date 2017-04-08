@@ -40,7 +40,7 @@ export default class ImageCarousel extends React.Component {
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}>
 
-          <img className='animate' className='bounce' className='carousel-image' key={this.state.currentIndex} src={this.props.images[this.state.currentIndex]} />
+          <img className="animated bounce" className='carousel-image' key={this.state.currentIndex} src={this.props.images[this.state.currentIndex]} />
         </ReactCSSTransitionGroup>
 
         <div className='button-container'>
