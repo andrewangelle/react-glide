@@ -4,6 +4,36 @@ body {
   font-family: sans-serif;
 }
 
+.container {
+	width:550px;
+	padding:40px;
+}
+
+button {
+	margin-top: 150px;
+	position: absolute;
+	z-index: 10;
+}
+
+.next {
+	right:0;
+}
+
+.carousel-image {
+	position: absolute;
+	margin-left:30%;
+	margin-right:30%;
+	z-index: 9;
+}
+
+
+
+
+
+
+/*
+* classnames and settings for animations and transitions
+*/
 .current-enter {
   opacity: 0.01;
 }

@@ -5,7 +5,7 @@ import './index.css';
 
 
 ReactDOM.render(
-  <App images = "Image One" />,
+  <App />,
   document.getElementById('root')
 );
 
