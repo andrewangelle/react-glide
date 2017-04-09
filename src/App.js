@@ -18,11 +18,10 @@ export default class App extends React.Component{
    render() {
     return (
         <div>
-
-
-            <ImageCarousel images={images} />
-
-
+            <ImageCarousel 
+                images={images}
+                width={500}
+             />
         </div>
       );
    }

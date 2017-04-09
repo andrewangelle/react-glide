@@ -65,7 +65,7 @@ export default class ImageCarousel extends React.Component {
             className='carousel-image' 
             key={this.state.currentIndex} 
             src={this.props.images[this.state.currentIndex]}
-            style={this.props.height}
+            style={this.props.width}
             />
 
         </ReactCSSTransitionGroup>
