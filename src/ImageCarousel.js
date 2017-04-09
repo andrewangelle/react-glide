@@ -14,8 +14,6 @@ export default class ImageCarousel extends React.Component {
      }
   };
 
-
-
    goToPrevImage() {
     const { currentIndex }=this.state;
     const nextIndex = currentIndex === 0 ? 
@@ -34,8 +32,27 @@ export default class ImageCarousel extends React.Component {
    }
 
   render(){
+    const loadingIndicator = (<div>Loading...</div>);
+    
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+      ];
+
     return (
       <div className="container" >
+        <Preload
+          loadingIndicator={loadingIndicator}
+          images={images}
+          autoResolveDelay={3000}
+          onError={this._handleImageLoadError}
+          onSuccess={this._handleImageLoadSuccess}
+          resolveOnError={true}
+          mountChildren={true}>
 
         <ReactCSSTransitionGroup
           transitionName='current'
@@ -44,14 +61,18 @@ export default class ImageCarousel extends React.Component {
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}>
 
-          <img className='carousel-image' key={this.state.currentIndex} src={this.props.images[this.state.currentIndex]} />
-        </ReactCSSTransitionGroup>
+          <img 
+            className='carousel-image' 
+            key={this.state.currentIndex} 
+            src={this.props.images[this.state.currentIndex]}
+            style={this.props.height}
+            />
 
+        </ReactCSSTransitionGroup>
+        </Preload>
 
         <button onClick={this.goToPrevImage.bind(this)}> Next </button>
         <button className="next" onClick={this.goToNextImage.bind(this)}> Prev </button>
-
-
       </div>
      );
   }
