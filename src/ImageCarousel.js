@@ -51,7 +51,6 @@ export default class ImageCarousel extends React.Component {
 
     return (
       <div className="container" style={style}>
-
         <Preload
             loadingIndicator={loadingIndicator}
             images={images}
