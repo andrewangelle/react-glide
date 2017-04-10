@@ -1,17 +1,17 @@
-# project-name
+# react-glide
 
 A multi purpose carousel module built in React.
 
 ## Installation
 
 ```sh
-$ npm install project-name
+$ npm install react-glide
 ```
 
 ## Usage
 
 ```javascript
-import ImageCarousel from 'project-name';
+import Glide from 'react-glide';
 ```
 
 ```javascript
@@ -21,7 +21,7 @@ const images = [
   'http://path/to/image/url3'
 ];
 
-<ImageCarousel
+<Glide
   images={images}
   width={500}
 />
@@ -49,7 +49,7 @@ Run the example app at http://localhost:3000:
 $ npm start
 ```
 
-Run tests using jest:
+Run tests:
 
 ```sh
 $ npm test
