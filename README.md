@@ -1,8 +1,11 @@
-#Installation
+## Installation
 
-  +$ npm install "project name"
+```sh
+  $ npm install "project name"
+```
 
-#Usage
+## Usage
+
 ```javascript
   import Carousel from "project name"
 
@@ -16,7 +19,7 @@
                 width={500}
              />
 ```
-#Options
+## Options
 
 | option      | type      | description                           |
 |------------ |-----------|---------------------------------------|
@@ -25,16 +28,23 @@
 
 
 
-#Development
+## Development
 
-  ##Install dependencies:
-    +$ npm install
+Install dependencies:
 
-  ##Run the example app at http://localhost:3000:
-    +$ npm start
+```sh
+$ npm install
+```
+Run the example app at http://localhost:3000:
 
-  ##Run tests using jest:
-    +$ npm test
+```sh
++$ npm start
+```
+Run tests using jest:
+
+```sh
+$ npm test
+```
 
 #License
   ?
