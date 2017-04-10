@@ -1,5 +1,5 @@
 import React from 'react';
-import ImageCarousel from './ImageCarousel';
+import ImageCarousel from '../src/index';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
