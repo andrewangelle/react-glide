@@ -43,6 +43,7 @@ export default class ImageCarousel extends React.Component {
    }
 
   render(){
+
     var style={
       position: "relative",
       width: this.props.width
@@ -50,6 +51,7 @@ export default class ImageCarousel extends React.Component {
 
     return (
       <div className="container" style={style}>
+
         <Preload
             loadingIndicator={loadingIndicator}
             images={images}
@@ -57,25 +59,28 @@ export default class ImageCarousel extends React.Component {
             onError={this._handleImageLoadError}
             onSuccess={this._handleImageLoadSuccess}
             resolveOnError={true}
-            mountChildren={true}
-        >
+            mountChildren={true}>
+
         <ReactCSSTransitionGroup
           transitionName='current'
           transitionAppear={true}
           transitionAppearTimeout={500}
           transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-          >
+          transitionLeaveTimeout={300}>
+
         <img 
           className='carousel-image' 
           key={this.state.currentIndex} 
-          src={this.props.images[this.state.currentIndex]}
-        />
+          src={this.props.images[this.state.currentIndex]} />
+
+          <button onClick={this.goToPrevImage.bind(this)}> Next </button>
+          <button className="next" onClick={this.goToNextImage.bind(this)}> Prev </button>
+
+
         </ReactCSSTransitionGroup>
         </Preload>
 
-        <button onClick={this.goToPrevImage.bind(this)}> Next </button>
-        <button className="next" onClick={this.goToNextImage.bind(this)}> Prev </button>
+
       </div>
 
      );
