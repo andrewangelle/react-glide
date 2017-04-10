@@ -17,10 +17,11 @@
              />
 ```
 #Options
-| option      | type      | description
-|------------ |:---------:|:-------------------------------------- |
-|images       |object     | the items to be displayed by component |
-|width        |integer    | the size of the carousel container     |
+
+| option      | type      | description                           |
+|------------ |-----------|---------------------------------------|
+|`images`     |object     | the items to be displayed by component |
+|`width`      |integer    | the size of the carousel container     |
 
 
 
