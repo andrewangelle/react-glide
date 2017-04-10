@@ -10,7 +10,6 @@ button {
 	z-index: 10;
 }
 
-
 .next {
 	right:0;
 }
@@ -20,16 +19,13 @@ button {
 	z-index: 9;
 }
 
-.container {
-	position: relative;
-	width:500px;
-}
+
 
 
 
 
 /*
-* classnames and settings for animations and transitions
+* classnames and settings for <ReactCSSTransitionGroup />
 */
 .current-enter {
   opacity: 0.01;

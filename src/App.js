@@ -20,6 +20,7 @@ export default class App extends React.Component{
         <div>
             <ImageCarousel 
                 images={images}
+                width={500}
              />
         </div>
       );
