@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import ImageCarousel from './ImageCarousel';
-import './index.css'
-
-
+import Glide from '../src/index';
 
 const images = [
   'https://unsplash.it/500/?random',
@@ -13,16 +10,14 @@ const images = [
   'https://unsplash.it/505/?random'
 ];
 
-
-export default class App extends React.Component{
-   render() {
+export default class Example extends Component {
+  render() {
     return (
-        <div>
-            <ImageCarousel 
-                images={images}
-                width={500}
-             />
-        </div>
-      );
-   }
+      <div>
+        <h1>react-glide</h1>
+
+        <Glide images={images} width={500} />
+      </div>
+    );
+  }
 }
