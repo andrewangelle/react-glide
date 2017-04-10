@@ -73,8 +73,8 @@ export default class ImageCarousel extends React.Component {
           key={this.state.currentIndex} 
           src={this.props.images[this.state.currentIndex]} />
 
-          <button onClick={this.goToPrevImage.bind(this)}> Next </button>
-          <button className="next" onClick={this.goToNextImage.bind(this)}> Prev </button>
+          <button onClick={this.goToPrevImage.bind(this)}> Prev </button>
+          <button className="next" onClick={this.goToNextImage.bind(this)}> Next </button>
 
 
         </ReactCSSTransitionGroup>
