@@ -5,15 +5,6 @@ import Preload from 'react-preload';
 
 const loadingIndicator = (<div>Loading...</div>);
     
-const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-      ];
-
 
 export default class ImageCarousel extends React.Component {
   constructor(props) {
@@ -53,7 +44,7 @@ export default class ImageCarousel extends React.Component {
       <div className="container" style={style}>
         <Preload
             loadingIndicator={loadingIndicator}
-            images={images}
+            images={this.props.images}
             autoResolveDelay={3000}
             onError={this._handleImageLoadError}
             onSuccess={this._handleImageLoadSuccess}
