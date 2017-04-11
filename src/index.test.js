@@ -126,7 +126,7 @@ describe('ImageCarousel', () => {
 		const nextButton = componenet.find('button').last();
 		nextButton.simulate('click');
 
-		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/500/?random');
+		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/501/?random');
 	});
 
 	it('changes to previous image when prev button is clicked', () => {
@@ -148,7 +148,7 @@ describe('ImageCarousel', () => {
 		const prevButton = componenet.find('button').first();
 		prevButton.simulate('click');
 
-		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/500/?random');
+		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/505/?random');
 	});
 
 });
