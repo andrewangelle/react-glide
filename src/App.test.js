@@ -1,5 +1,5 @@
 import React from 'react';
-import ImageCarousel from './ImageCarousel';
+import ImageCarousel from './ImageCarousel.js';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
@@ -104,7 +104,7 @@ describe('ImageCarousel', () => {
 		);
 
 
-		expect(componenet.find('img').props().src).toEqual('https://placehold.it/500x100');
+		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/500/?random');
 	});
 
 	it('changes to next image when next button is clicked', () => {
@@ -126,7 +126,7 @@ describe('ImageCarousel', () => {
 		const nextButton = componenet.find('button').last();
 		nextButton.simulate('click');
 
-		expect(componenet.find('img').props().src).toEqual('https://placehold.it/510x100');
+		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/500/?random');
 	});
 
 	it('changes to previous image when prev button is clicked', () => {
@@ -148,7 +148,7 @@ describe('ImageCarousel', () => {
 		const prevButton = componenet.find('button').first();
 		prevButton.simulate('click');
 
-		expect(componenet.find('img').props().src).toEqual('https://placehold.it/550x100');
+		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/500/?random');
 	});
 
 });

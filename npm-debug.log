@@ -1,48 +1,39 @@
 0 info it worked if it ends with ok
 1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
 1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'start' ]
+1 verbose cli   'test' ]
 2 info using npm@4.0.5
 3 info using node@v7.4.0
-4 verbose run-script [ 'prestart', 'start', 'poststart' ]
-5 info lifecycle react-glide@0.1.0~prestart: react-glide@0.1.0
-6 silly lifecycle react-glide@0.1.0~prestart: no script for prestart, continuing
-7 info lifecycle react-glide@0.1.0~start: react-glide@0.1.0
-8 verbose lifecycle react-glide@0.1.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle react-glide@0.1.0~start: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\subli_000\Desktop\react-carousel\node_modules\.bin;C:\Users\subli_000\AppData\Local\GitHub\PortableGit_f02737a78695063deace08e96d5042710d3e32db\cmd;C:\Users\subli_000\AppData\Local\GitHub\PortableGit_f02737a78695063deace08e96d5042710d3e32db\usr\bin;C:\Users\subli_000\AppData\Local\GitHub\PortableGit_f02737a78695063deace08e96d5042710d3e32db\usr\share\git-tfs;C:\Users\subli_000\AppData\Local\Apps\2.0\86ZNLCHD.YZN\0C5DQLY1.RKY\gith..tion_317444273a93ac29_0003.0003_5794af8169eeff14;C:\Users\subli_000\AppData\Local\GitHub\lfs-amd64_1.5.5;c:\Program Files (x86)\Intel\iCLS Client\;c:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\nodejs\;C:\Users\subli_000\AppData\Roaming\npm;C:\Program Files\PostgreSQL\9.6\bin;C:\Windows\Microsoft.NET\Framework\v4.0.30319\
-10 verbose lifecycle react-glide@0.1.0~start: CWD: C:\Users\subli_000\Desktop\react-carousel
-11 silly lifecycle react-glide@0.1.0~start: Args: [ '/d /s /c',
-11 silly lifecycle   'webpack-dev-server --config example/webpack.config.js' ]
-12 silly lifecycle react-glide@0.1.0~start: Returned: code: 3221225786  signal: null
-13 info lifecycle react-glide@0.1.0~start: Failed to exec start script
-14 verbose stack Error: react-glide@0.1.0 start: `webpack-dev-server --config example/webpack.config.js`
-14 verbose stack Exit status 3221225786
-14 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:279:16)
-14 verbose stack     at emitTwo (events.js:106:13)
-14 verbose stack     at EventEmitter.emit (events.js:191:7)
-14 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
-14 verbose stack     at emitTwo (events.js:106:13)
-14 verbose stack     at ChildProcess.emit (events.js:191:7)
-14 verbose stack     at maybeClose (internal/child_process.js:885:16)
-14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
-15 verbose pkgid react-glide@0.1.0
-16 verbose cwd C:\Users\subli_000\Desktop\react-carousel
-17 error Windows_NT 6.3.9600
-18 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
-19 error node v7.4.0
-20 error npm  v4.0.5
-21 error code ELIFECYCLE
-22 error react-glide@0.1.0 start: `webpack-dev-server --config example/webpack.config.js`
-22 error Exit status 3221225786
-23 error Failed at the react-glide@0.1.0 start script 'webpack-dev-server --config example/webpack.config.js'.
-23 error Make sure you have the latest version of node.js and npm installed.
-23 error If you do, this is most likely a problem with the react-glide package,
-23 error not with npm itself.
-23 error Tell the author that this fails on your system:
-23 error     webpack-dev-server --config example/webpack.config.js
-23 error You can get information on how to open an issue for this project with:
-23 error     npm bugs react-glide
-23 error Or if that isn't available, you can get their info via:
-23 error     npm owner ls react-glide
-23 error There is likely additional logging output above.
-24 verbose exit [ 1, true ]
+4 verbose run-script [ 'pretest', 'test', 'posttest' ]
+5 info lifecycle react-glide@0.1.0~pretest: react-glide@0.1.0
+6 silly lifecycle react-glide@0.1.0~pretest: no script for pretest, continuing
+7 info lifecycle react-glide@0.1.0~test: react-glide@0.1.0
+8 verbose lifecycle react-glide@0.1.0~test: unsafe-perm in lifecycle true
+9 verbose lifecycle react-glide@0.1.0~test: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\subli_000\Desktop\react-carousel\node_modules\.bin;C:\Users\subli_000\AppData\Local\GitHub\PortableGit_f02737a78695063deace08e96d5042710d3e32db\cmd;C:\Users\subli_000\AppData\Local\GitHub\PortableGit_f02737a78695063deace08e96d5042710d3e32db\usr\bin;C:\Users\subli_000\AppData\Local\GitHub\PortableGit_f02737a78695063deace08e96d5042710d3e32db\usr\share\git-tfs;C:\Users\subli_000\AppData\Local\Apps\2.0\86ZNLCHD.YZN\0C5DQLY1.RKY\gith..tion_317444273a93ac29_0003.0003_5794af8169eeff14;C:\Users\subli_000\AppData\Local\GitHub\lfs-amd64_1.5.5;c:\Program Files (x86)\Intel\iCLS Client\;c:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\nodejs\;C:\Users\subli_000\AppData\Roaming\npm;C:\Program Files\PostgreSQL\9.6\bin;C:\Windows\Microsoft.NET\Framework\v4.0.30319\
+10 verbose lifecycle react-glide@0.1.0~test: CWD: C:\Users\subli_000\Desktop\react-carousel
+11 silly lifecycle react-glide@0.1.0~test: Args: [ '/d /s /c', 'jest --watchAll' ]
+12 silly lifecycle react-glide@0.1.0~test: Returned: code: 3221225786  signal: null
+13 info lifecycle react-glide@0.1.0~test: Failed to exec test script
+14 error Test failed.  See above for more details.
+15 verbose exit [ 1, true ]
+16 verbose stack Error: kill ENOSYS
+16 verbose stack     at exports._errnoException (util.js:1022:11)
+16 verbose stack     at process.kill (internal/process.js:173:13)
+16 verbose stack     at process.listener (C:\Program Files\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:86:15)
+16 verbose stack     at emitNone (events.js:91:20)
+16 verbose stack     at process.emit (events.js:185:7)
+16 verbose stack     at processEmit (C:\Program Files\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+16 verbose stack     at processEmit (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+16 verbose stack     at Signal.wrap.onsignal (internal/process.js:200:44)
+17 verbose cwd C:\Users\subli_000\Desktop\react-carousel
+18 error Windows_NT 6.3.9600
+19 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "test"
+20 error node v7.4.0
+21 error npm  v4.0.5
+22 error code ENOSYS
+23 error errno ENOSYS
+24 error syscall kill
+25 error kill ENOSYS
+26 error If you need help, you may report this error at:
+26 error     <https://github.com/npm/npm/issues>
+27 verbose exit [ 1, true ]

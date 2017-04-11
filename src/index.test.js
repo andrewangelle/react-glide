@@ -11,12 +11,12 @@ describe('ImageCarousel', () => {
 	it('renders without crashing', () => {
 
 		const images = [
-  			'https://placehold.it/500x100',
-  			'https://placehold.it/510x100',
-  			'https://placehold.it/520x100',
-  			'https://placehold.it/530x100',
-  			'https://placehold.it/540x100',
-  			'https://placehold.it/550x100'
+  			'https://unsplash.it/500/?random',
+  			'https://unsplash.it/501/?random',
+  			'https://unsplash.it/502/?random',
+  			'https://unsplash.it/503/?random',
+  			'https://unsplash.it/504/?random',
+  			'https://unsplash.it/505/?random'
 		];
 
 		const tree = renderer.create(
@@ -29,12 +29,12 @@ describe('ImageCarousel', () => {
 		it('has images array that contains images', () => {
 
 		const images = [
-  			'https://placehold.it/500x100',
-  			'https://placehold.it/510x100',
-  			'https://placehold.it/520x100',
-  			'https://placehold.it/530x100',
-  			'https://placehold.it/540x100',
-  			'https://placehold.it/550x100'
+  			'https://unsplash.it/500/?random',
+  			'https://unsplash.it/501/?random',
+  			'https://unsplash.it/502/?random',
+  			'https://unsplash.it/503/?random',
+  			'https://unsplash.it/504/?random',
+  			'https://unsplash.it/505/?random'
 		];
 
 		const componenet = shallow(
@@ -47,12 +47,12 @@ describe('ImageCarousel', () => {
 	it('changes to next index when next button is clicked', () => {
 
 		const images = [
-  			'https://placehold.it/500x100',
-  			'https://placehold.it/510x100',
-  			'https://placehold.it/520x100',
-  			'https://placehold.it/530x100',
-  			'https://placehold.it/540x100',
-  			'https://placehold.it/550x100'
+  			'https://unsplash.it/500/?random',
+  			'https://unsplash.it/501/?random',
+  			'https://unsplash.it/502/?random',
+  			'https://unsplash.it/503/?random',
+  			'https://unsplash.it/504/?random',
+  			'https://unsplash.it/505/?random'
 		];
 
 		const componenet = shallow(
@@ -69,12 +69,12 @@ describe('ImageCarousel', () => {
 	it('changes to previous index when prev button is clicked', () => {
 
 		const images = [
-  			'https://placehold.it/500x100',
-  			'https://placehold.it/510x100',
-  			'https://placehold.it/520x100',
-  			'https://placehold.it/530x100',
-  			'https://placehold.it/540x100',
-  			'https://placehold.it/550x100'
+  			'https://unsplash.it/500/?random',
+  			'https://unsplash.it/501/?random',
+  			'https://unsplash.it/502/?random',
+  			'https://unsplash.it/503/?random',
+  			'https://unsplash.it/504/?random',
+  			'https://unsplash.it/505/?random'
 		];
 
 		const componenet = shallow(
@@ -91,12 +91,12 @@ describe('ImageCarousel', () => {
 	it('renders first image in array as first image displayed', () => {
 
 		const images = [
-  			'https://placehold.it/500x100',
-  			'https://placehold.it/510x100',
-  			'https://placehold.it/520x100',
-  			'https://placehold.it/530x100',
-  			'https://placehold.it/540x100',
-  			'https://placehold.it/550x100'
+  			'https://unsplash.it/500/?random',
+  			'https://unsplash.it/501/?random',
+  			'https://unsplash.it/502/?random',
+  			'https://unsplash.it/503/?random',
+  			'https://unsplash.it/504/?random',
+  			'https://unsplash.it/505/?random'
 		];
 
 		const componenet = shallow(
@@ -104,18 +104,18 @@ describe('ImageCarousel', () => {
 		);
 
 
-		expect(componenet.find('img').props().src).toEqual('https://placehold.it/500x100');
+		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/500/?random');
 	});
 
 	it('changes to next image when next button is clicked', () => {
 
 		const images = [
-  			'https://placehold.it/500x100',
-  			'https://placehold.it/510x100',
-  			'https://placehold.it/520x100',
-  			'https://placehold.it/530x100',
-  			'https://placehold.it/540x100',
-  			'https://placehold.it/550x100'
+  			'https://unsplash.it/500/?random',
+  			'https://unsplash.it/501/?random',
+  			'https://unsplash.it/502/?random',
+  			'https://unsplash.it/503/?random',
+  			'https://unsplash.it/504/?random',
+  			'https://unsplash.it/505/?random'
 		];
 
 		const componenet = shallow(
@@ -126,20 +126,20 @@ describe('ImageCarousel', () => {
 		const nextButton = componenet.find('button').last();
 		nextButton.simulate('click');
 
-		expect(componenet.find('img').props().src).toEqual('https://placehold.it/510x100');
+		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/500/?random');
 	});
 
 	it('changes to previous image when prev button is clicked', () => {
 
 		const images = [
-  			'https://placehold.it/500x100',
-  			'https://placehold.it/510x100',
-  			'https://placehold.it/520x100',
-  			'https://placehold.it/530x100',
-  			'https://placehold.it/540x100',
-  			'https://placehold.it/550x100'
+  			'https://unsplash.it/500/?random',
+  			'https://unsplash.it/501/?random',
+  			'https://unsplash.it/502/?random',
+  			'https://unsplash.it/503/?random',
+  			'https://unsplash.it/504/?random',
+  			'https://unsplash.it/505/?random'
 		];
-
+		
 		const componenet = shallow(
 			<ImageCarousel images={images} />
 		);
@@ -148,7 +148,7 @@ describe('ImageCarousel', () => {
 		const prevButton = componenet.find('button').first();
 		prevButton.simulate('click');
 
-		expect(componenet.find('img').props().src).toEqual('https://placehold.it/550x100');
+		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/500/?random');
 	});
 
 });
