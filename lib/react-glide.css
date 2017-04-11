@@ -1,0 +1,50 @@
+button {
+	margin-top: 45%;
+	position: absolute;
+	z-index: 10;
+}
+
+.next {
+	right:0;
+}
+
+.carousel-image {
+	position: absolute;
+	width: 100%;
+	z-index: 9;
+}
+
+
+
+
+
+
+/*
+* classnames and settings for <ReactCSSTransitionGroup />
+*/
+.current-enter {
+  opacity: 0.01;
+}
+
+.current-enter.current-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.current-appear {
+  opacity: 0.01;
+}
+
+.current-appear.current-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.current-leave {
+  opacity: 1;
+}
+
+.current-leave.current-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
