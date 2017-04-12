@@ -11,12 +11,13 @@ const images = [
 ];
 
 export default class Example extends Component {
+
   render() {
     return (
       <div>
         <h1>react-glide</h1>
 
-        <Glide images={images} width={500} />
+        <Glide images={images} width={500} autoPlay={true} />
       </div>
     );
   }
