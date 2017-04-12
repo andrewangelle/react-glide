@@ -21,8 +21,9 @@ export default class Example extends Component {
           images={images} 
           width={500} 
           autoPlay={true}
-          autoPlaySpeed={2000} 
+          autoPlaySpeed={1000}
         />
+
       </div>
     );
   }

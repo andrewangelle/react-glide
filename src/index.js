@@ -15,22 +15,17 @@ export default class Glide extends React.Component {
      }
   };
 
-   componentDidMount(){
+   startTimer(){
 
     if(this.props.autoPlay){
+
       this.autoPlay = setInterval(
         () => this.goToNextImage(),
-        5000
-      );
+        this.props.autoPlaySpeed || 5000
+        );
     }
 
-    if (this.props.autoPlaySpeed){  
-      this.autoPlay = setInterval(
-        () => this.goToNextImage(),
-        this.props.autoPlaySpeed
-      );
-    }
-    
+
    }
 
    componentWillUnmount(){
@@ -66,7 +61,7 @@ export default class Glide extends React.Component {
           loadingIndicator={loadingIndicator}
           images={this.props.images}
           onError={this._handleImageLoadError}
-          onSuccess={this._handleImageLoadSuccess}
+          onSuccess={this.startTimer.bind(this)}
           resolveOnError={true}
           mountChildren={true}
         >
