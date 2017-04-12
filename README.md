@@ -24,6 +24,8 @@ const images = [
 <Glide
   images={images}
   width={500}
+  autoPlay={true}
+  autoPlaySpeed={1000}
 />
 ```
 

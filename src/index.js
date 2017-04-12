@@ -26,12 +26,6 @@ export default class Glide extends React.Component {
 
    }
 
-   componentWillUnmount(){
-
-    clearInterval(this.autoPlay);
-
-   }
-
    goToPrevImage() {
 
     const { currentIndex }=this.state;
@@ -84,8 +78,17 @@ export default class Glide extends React.Component {
               key={this.state.currentIndex}
               src={this.props.images[this.state.currentIndex]} />
 
-            <button onClick={this.goToPrevImage.bind(this)}>Prev</button>
-            <button className="next" onClick={this.goToNextImage.bind(this)}>Next</button>
+            <button onClick={() => {
+              this.goToPrevImage.bind(this);
+              clearInterval(this.autoPlay);
+            }}>Prev
+            </button>
+
+            <button className="next" onClick={() => {
+              this.goToNextImage.bind(this);
+              clearInterval(this.autoPlay);
+            }}>Next
+            </button>
 
           </ReactCSSTransitionGroup>
 
