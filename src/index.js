@@ -16,14 +16,21 @@ export default class Glide extends React.Component {
   };
 
    componentDidMount(){
-    if(this.props.autoPlay){
 
+    if(this.props.autoPlay){
       this.autoPlay = setInterval(
         () => this.goToNextImage(),
         5000
       );
-      
     }
+
+    if (this.props.autoPlaySpeed){  
+      this.autoPlay = setInterval(
+        () => this.goToNextImage(),
+        this.props.autoPlaySpeed
+      );
+    }
+    
    }
 
    componentWillUnmount(){
