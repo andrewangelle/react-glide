@@ -33,6 +33,8 @@ const images = [
 |------------ |-----------|---------------------------------------|
 |`images`     |array      | the images to be displayed by component |
 |`width`      |integer    | the width of the carousel container     |
+|`autoPlay`   |bool       | enables or disables autoPlay feature     |
+|`autoPlaySpeed` |integer    | the rate of change between slides, defined in ms   |
 
 
 ## Development

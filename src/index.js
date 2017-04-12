@@ -18,21 +18,22 @@ export default class Glide extends React.Component {
    startTimer(){
 
     if(this.props.autoPlay){
-
       this.autoPlay = setInterval(
         () => this.goToNextImage(),
         this.props.autoPlaySpeed || 5000
-        );
+      );
     }
-
 
    }
 
    componentWillUnmount(){
+
     clearInterval(this.autoPlay);
+
    }
 
    goToPrevImage() {
+
     const { currentIndex }=this.state;
     const nextIndex = currentIndex === 0 ?
           this.props.images.length - 1 : currentIndex - 1;
@@ -42,6 +43,7 @@ export default class Glide extends React.Component {
    }
 
    goToNextImage() {
+
     const { currentIndex }=this.state;
     const nextIndex = currentIndex === this.props.images.length - 1 ?
           0 : currentIndex + 1;
@@ -50,38 +52,45 @@ export default class Glide extends React.Component {
    }
 
   render(){
+
     var style={
+
       position: "relative",
       width: this.props.width
+
     }
 
     return (
+
       <div className="container" style={style}>
+
         <Preload
           loadingIndicator={loadingIndicator}
           images={this.props.images}
           onError={this._handleImageLoadError}
           onSuccess={this.startTimer.bind(this)}
           resolveOnError={true}
-          mountChildren={true}
-        >
+          mountChildren={true} >
+
           <ReactCSSTransitionGroup
             transitionName='current'
             transitionAppear={true}
             transitionAppearTimeout={500}
             transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}
-          >
+            transitionLeaveTimeout={300} >
+
             <img
               className='carousel-image'
               key={this.state.currentIndex}
-              src={this.props.images[this.state.currentIndex]}
-            />
+              src={this.props.images[this.state.currentIndex]} />
 
             <button onClick={this.goToPrevImage.bind(this)}>Prev</button>
             <button className="next" onClick={this.goToNextImage.bind(this)}>Next</button>
+
           </ReactCSSTransitionGroup>
+
         </Preload>
+
       </div>
     );
   }
