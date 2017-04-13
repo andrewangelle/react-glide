@@ -79,14 +79,14 @@ export default class Glide extends React.Component {
               src={this.props.images[this.state.currentIndex]} />
 
             <button onClick={() => {
-              this.goToPrevImage.bind(this);
               clearInterval(this.autoPlay);
+              this.goToPrevImage();
             }}>Prev
             </button>
 
             <button className="next" onClick={() => {
-              this.goToNextImage.bind(this);
               clearInterval(this.autoPlay);
+              this.goToNextImage();
             }}>Next
             </button>
 
