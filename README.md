@@ -1,6 +1,8 @@
 # react-glide
 
-A multi purpose carousel module built in React.
+A multi purpose carousel module built in React.  
+Find this component on the npm registry...https://www.npmjs.com/package/react-glide
+
 
 ## Installation
 
