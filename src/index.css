@@ -2,10 +2,18 @@ button {
 	margin-top: 45%;
 	position: absolute;
 	z-index: 10;
+  height: 60px;
 }
 
 .next {
 	right:0;
+  color: hsl(190, 95%, 80%);
+  background-color: hsl(190, 10%, 10%);
+}
+
+.prev {
+  color: hsl(190, 95%, 80%);
+  background-color: hsl(190, 10%, 10%);
 }
 
 .carousel-image {
@@ -14,14 +22,10 @@ button {
 	z-index: 9;
 }
 
-
-
-
-
-
 /*
 * classnames and settings for <ReactCSSTransitionGroup />
 */
+
 .current-enter {
   opacity: 0.01;
 }

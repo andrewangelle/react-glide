@@ -48,10 +48,8 @@ export default class Glide extends React.Component {
   render(){
 
     var style={
-
       position: "relative",
       width: this.props.width
-
     }
 
     return (
@@ -78,16 +76,20 @@ export default class Glide extends React.Component {
               key={this.state.currentIndex}
               src={this.props.images[this.state.currentIndex]} />
 
-            <button onClick={() => {
+            <button className="buttons"
+                    className="prev" 
+                    onClick={() => {
               clearInterval(this.autoPlay);
               this.goToPrevImage();
-            }}>Prev
+            }}>&#10094;
             </button>
 
-            <button className="next" onClick={() => {
+            <button className="buttons"
+                    className="next" 
+                    onClick={() => {
               clearInterval(this.autoPlay);
               this.goToNextImage();
-            }}>Next
+            }}>&#10095;
             </button>
 
           </ReactCSSTransitionGroup>
