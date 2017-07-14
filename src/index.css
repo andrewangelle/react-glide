@@ -3,6 +3,9 @@ button {
 	position: absolute;
 	z-index: 10;
   height: 60px;
+  width: 35px;
+  border: none;
+  font-size: 25px;
 }
 
 .next {
@@ -14,6 +17,10 @@ button {
 .prev {
   color: hsl(190, 95%, 80%);
   background-color: hsl(190, 10%, 10%);
+}
+
+.hide {
+  display: none;
 }
 
 .carousel-image {

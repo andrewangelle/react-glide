@@ -17,11 +17,12 @@ export default class Example extends Component {
       <div>
         <h1>react-glide</h1>
 
-        <Glide 
-          images={images} 
-          width={500} 
-          autoPlay={true}
+        <Glide
+          images={images}
+          width={500}
+          autoPlay={false}
           autoPlaySpeed={1000}
+          infinite={false}
         />
 
       </div>
