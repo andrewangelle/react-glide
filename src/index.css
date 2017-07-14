@@ -1,3 +1,24 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+  cursor: default;
+}
+
+.container{
+  position: relative;
+  height: 100%;
+}
+
+.carousel-image {
+  position: absolute;
+  width: 100%;
+  z-index: 9;
+}
+
 button {
 	margin-top: 45%;
 	position: absolute;
@@ -6,6 +27,7 @@ button {
   width: 35px;
   border: none;
   font-size: 25px;
+  cursor: pointer;
 }
 
 .next {
@@ -23,11 +45,21 @@ button {
   display: none;
 }
 
-.carousel-image {
-	position: absolute;
-	width: 100%;
-	z-index: 9;
+.dots{
+  position: absolute;
+  z-index: 100;
+  cursor: pointer;
 }
+
+ul.dots li{
+  list-style: none;
+  display: inline;
+  font-size: 64px;
+}
+
+
+
+
 
 /*
 * classnames and settings for <ReactCSSTransitionGroup />

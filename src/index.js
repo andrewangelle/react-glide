@@ -22,6 +22,10 @@ export default class Glide extends React.Component {
     }
    }
 
+   goToSelectedDot(index){
+    this.setState({ currentIndex: index });
+   }
+
    goToPrevImage() {
     const { currentIndex }=this.state;
     const nextIndex = currentIndex === 0 ?
@@ -40,7 +44,7 @@ export default class Glide extends React.Component {
 
   render(){
     const { currentIndex } = this.state;
-    const infinite = this.props.infinite;
+    const { infinite, images } = this.props;
 
     var style={
       position: "relative",
@@ -58,37 +62,51 @@ export default class Glide extends React.Component {
           resolveOnError={true}
           mountChildren={true} >
 
-          <ReactCSSTransitionGroup
-            transitionName='current'
-            transitionAppear={true}
-            transitionAppearTimeout={500}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={300} >
+          <div>
 
-            <img
-              className='carousel-image'
-              key={this.state.currentIndex}
-              src={this.props.images[this.state.currentIndex]} />
+            <ReactCSSTransitionGroup
+              transitionName='current'
+              transitionAppear={true}
+              transitionAppearTimeout={500}
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={300} >
 
-            {(infinite || currentIndex !== 0) &&
-              <button className="prev"
-                      onClick={() => {
-                clearInterval(this.autoPlay);
-                this.goToPrevImage();
-              }}>&#10094;</button>
-            }
+              <img
+                className='carousel-image'
+                key={this.state.currentIndex}
+                src={this.props.images[this.state.currentIndex]} />
 
-            {(infinite || currentIndex !== this.props.images.length-1) &&
-              <button className="next"
-                      onClick={() => {
-                clearInterval(this.autoPlay);
-                this.goToNextImage();
-              }}>&#10095;</button>
-            }
-          </ReactCSSTransitionGroup>
+              {(infinite || currentIndex !== 0) &&
+                <button className="prev"
+                        onClick={() => {
+                          clearInterval(this.autoPlay);
+                          this.goToPrevImage();
+                        }}>
+                        &#10094;
+                </button>
+              }
 
+              {(infinite || currentIndex !== this.props.images.length-1) &&
+                <button className="next"
+                        onClick={() => {
+                  clearInterval(this.autoPlay);
+                  this.goToNextImage();
+                }}>&#10095;</button>
+              }
+            </ReactCSSTransitionGroup>
+
+            <ul className="dots">
+              {images.map((image,index) =>
+                <li key={image}
+                    onClick={() => {
+                      this.goToSelectedDot(index);
+                    }}>
+                  &middot;
+                </li>
+              )}
+            </ul>
+          </div>
         </Preload>
-
       </div>
     );
   }

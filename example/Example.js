@@ -22,7 +22,7 @@ export default class Example extends Component {
           width={500}
           autoPlay={false}
           autoPlaySpeed={1000}
-          infinite={false}
+          infinite={true}
         />
 
       </div>
