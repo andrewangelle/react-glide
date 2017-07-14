@@ -24,6 +24,7 @@ const images = [
   width={500}
   autoPlay={true}
   autoPlaySpeed={1000}
+  infinite={true}
 />
 ```
 
