@@ -45,20 +45,20 @@ button {
   display: none;
 }
 
-.dots{
+.dots {
   position: absolute;
   z-index: 100;
   cursor: pointer;
 }
 
-.dots li{
+.dots li {
   list-style: none;
-  display: inline;
+  display: inline-flex;
   font-size: 64px;
 }
 
 .dots .active-dot {
-  font-size: 72px;
+  color: hsl(190, 95%, 80%);;
 }
 
 

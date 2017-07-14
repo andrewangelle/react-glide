@@ -99,7 +99,7 @@ export default class Glide extends React.Component {
             <ul className="dots">
               {images.map((image,index) =>
                 <li key={image}
-                    className={(currentIndex === index ? "active-dot" : "")}
+                    className={(currentIndex === index ? "active-dot" : "inactive-dot")}
                     onClick={() => {
                       this.goToSelectedDot(index);
                     }}>
