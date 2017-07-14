@@ -51,14 +51,15 @@ button {
   cursor: pointer;
 }
 
-ul.dots li{
+.dots li{
   list-style: none;
   display: inline;
   font-size: 64px;
 }
 
-
-
+.dots .active-dot {
+  font-size: 72px;
+}
 
 
 /*

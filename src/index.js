@@ -46,7 +46,7 @@ export default class Glide extends React.Component {
     const { currentIndex } = this.state;
     const { infinite, images } = this.props;
 
-    var style={
+    const style={
       position: "relative",
       width: this.props.width
     }
@@ -74,7 +74,8 @@ export default class Glide extends React.Component {
               <img
                 className='carousel-image'
                 key={this.state.currentIndex}
-                src={this.props.images[this.state.currentIndex]} />
+                src={this.props.images[this.state.currentIndex]}
+              />
 
               {(infinite || currentIndex !== 0) &&
                 <button className="prev"
@@ -98,6 +99,7 @@ export default class Glide extends React.Component {
             <ul className="dots">
               {images.map((image,index) =>
                 <li key={image}
+                    className={(currentIndex === index ? "active-dot" : "")}
                     onClick={() => {
                       this.goToSelectedDot(index);
                     }}>
