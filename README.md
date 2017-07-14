@@ -1,5 +1,9 @@
 # react-glide
 
+A lightweight image carousel react component
+
+<img src="glide.jpg" width="400px" />
+
 ## Installation
 
 ```sh
