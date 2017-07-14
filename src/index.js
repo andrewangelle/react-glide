@@ -13,49 +13,6 @@ export default class Glide extends React.Component {
      }
   };
 
-  firstIndex(){
-    const { currentIndex } = this.state;
-
-    console.log(currentIndex);
-  }
-
-  hideOrShowButtons(){
-    const { currentIndex } = this.state;
-    const infinite = this.props.infinite;
-    const endOfImages = this.props.images.length-1;
-    const nextButton = document.querySelectorAll('.next');
-    const prevButton = document.querySelectorAll('.prev');
-
-    if(!infinite && currentIndex >= 0){
-      prevButton[0].classList.remove('hide');
-      console.log(currentIndex)
-    }
-    else if(!infinite && currentIndex == endOfImages) {
-      console.log('ok')
-    }
-  }
-
-  hidePrevButtonOnLoad(){
-    const { currentIndex } = this.state;
-    const infinite = this.props.infinite;
-    const prevButton = document.querySelectorAll('.prev');
-
-    if(!infinite && currentIndex === 0){
-      prevButton[0].classList.add('hide');
-    }
-  }
-
-  showButton(){
-    const { currentIndex } = this.state;
-    const nextButton = document.querySelectorAll('.next');
-    const prevButton = document.querySelectorAll('.prev');
-    const isHidden = prevButton.classList.contains('hide');
-
-    if(currentIndex > 0){
-      prevButton.classList.remove('hide');
-    }
-  }
-
    startTimer(){
     if(this.props.autoPlay){
       this.autoPlay = setInterval(
@@ -82,6 +39,8 @@ export default class Glide extends React.Component {
    }
 
   render(){
+    const { currentIndex } = this.state;
+    const infinite = this.props.infinite;
 
     var style={
       position: "relative",
@@ -95,10 +54,7 @@ export default class Glide extends React.Component {
           loadingIndicator={loadingIndicator}
           images={this.props.images}
           onError={this._handleImageLoadError}
-          onSuccess={
-            this.startTimer.bind(this),
-            this.hidePrevButtonOnLoad.bind(this)
-          }
+          onSuccess={this.startTimer.bind(this)}
           resolveOnError={true}
           mountChildren={true} >
 
@@ -114,22 +70,21 @@ export default class Glide extends React.Component {
               key={this.state.currentIndex}
               src={this.props.images[this.state.currentIndex]} />
 
-            <button className="prev"
-                    onClick={() => {
-              clearInterval(this.autoPlay);
-              this.goToPrevImage();
-              this.hideOrShowButtons();
-            }}>&#10094;
-            </button>
+            {(infinite || currentIndex !== 0) &&
+              <button className="prev"
+                      onClick={() => {
+                clearInterval(this.autoPlay);
+                this.goToPrevImage();
+              }}>&#10094;</button>
+            }
 
-            <button className="next"
-                    onClick={() => {
-              clearInterval(this.autoPlay);
-              this.goToNextImage();
-              this.hideOrShowButtons();
-            }}>&#10095;
-            </button>
-
+            {(infinite || currentIndex !== this.props.images.length-1) &&
+              <button className="next"
+                      onClick={() => {
+                clearInterval(this.autoPlay);
+                this.goToNextImage();
+              }}>&#10095;</button>
+            }
           </ReactCSSTransitionGroup>
 
         </Preload>
