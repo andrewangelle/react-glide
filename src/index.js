@@ -98,6 +98,7 @@ export default class Glide extends React.Component {
                   className="next"
                   onClick={() => {
                     clearInterval(this.autoPlay);
+                    this.goToNextImage();
                   }}
                 >
                   &#10095;
