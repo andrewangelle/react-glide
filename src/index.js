@@ -63,7 +63,8 @@ export default class Glide extends React.Component {
           onError={this._handleImageLoadError}
           onSuccess={this.startTimer.bind(this)}
           resolveOnError={true}
-          mountChildren={true} >
+          mountChildren={true}
+        >
 
           <div>
 
