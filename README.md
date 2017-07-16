@@ -2,7 +2,7 @@
 
 A lightweight image carousel react component
 
-<img src="glide.jpg" width="400px" />
+<img src="glide.png" width="400px" />
 
 ## Installation
 
