@@ -29,6 +29,7 @@ const images = [
   autoPlay={true}
   autoPlaySpeed={1000}
   infinite={true}
+  dots={true}
 />
 ```
 
@@ -41,6 +42,7 @@ const images = [
 |`autoPlay`   |bool       | enables or disables autoPlay feature     |
 |`autoPlaySpeed` |integer    | the rate of change between slides, defined in ms   |
 |`infinite` |bool    | carousel will loop infinitely   |
+|`dots` |bool    | dot navigation & pagination   |
 
 
 ## Development
