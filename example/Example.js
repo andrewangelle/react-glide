@@ -23,6 +23,7 @@ export default class Example extends Component {
           autoPlay={false}
           autoPlaySpeed={1000}
           infinite={true}
+          dots={true}
         />
 
       </div>

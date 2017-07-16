@@ -44,7 +44,7 @@ export default class Glide extends React.Component {
 
   render(){
     const { currentIndex } = this.state;
-    const { infinite, images } = this.props;
+    const { infinite, images, dots } = this.props;
 
     const style={
       position: "relative",
@@ -52,7 +52,10 @@ export default class Glide extends React.Component {
     }
 
     return (
-      <div className="container" style={style}>
+      <div 
+        className="container" 
+        style={style}
+      >
 
         <Preload
           loadingIndicator={loadingIndicator}
@@ -69,7 +72,8 @@ export default class Glide extends React.Component {
               transitionAppear={true}
               transitionAppearTimeout={500}
               transitionEnterTimeout={500}
-              transitionLeaveTimeout={300} >
+              transitionLeaveTimeout={300}
+            >
 
               <img
                 className='carousel-image'
@@ -78,35 +82,46 @@ export default class Glide extends React.Component {
               />
 
               {(infinite || currentIndex !== 0) &&
-                <button className="prev"
-                        onClick={() => {
-                          clearInterval(this.autoPlay);
-                          this.goToPrevImage();
-                        }}>
-                        &#10094;
+                <button 
+                  className="prev"
+                  onClick={() => {
+                    clearInterval(this.autoPlay);
+                    this.goToPrevImage();
+                  }}
+                >
+                  &#10094;
                 </button>
               }
 
               {(infinite || currentIndex !== this.props.images.length-1) &&
-                <button className="next"
-                        onClick={() => {
-                  clearInterval(this.autoPlay);
-                  this.goToNextImage();
-                }}>&#10095;</button>
+                <button 
+                  className="next"
+                  onClick={() => {
+                    clearInterval(this.autoPlay);
+                  }}
+                >
+                  &#10095;
+                </button>
               }
             </ReactCSSTransitionGroup>
 
-            <ul className="dots">
-              {images.map((image,index) =>
-                <li key={image}
+            {(dots) &&
+              <ul 
+                className="dots"
+              >
+                {images.map((image,index) =>
+                  <li 
+                    key={image}
                     className={(currentIndex === index ? "active-dot" : "inactive-dot")}
                     onClick={() => {
                       this.goToSelectedDot(index);
-                    }}>
-                  &middot;
-                </li>
-              )}
-            </ul>
+                    }}
+                  >
+                    &middot;
+                  </li>
+                )}
+              </ul>
+            }
           </div>
         </Preload>
       </div>
