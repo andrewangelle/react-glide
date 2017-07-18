@@ -1,6 +1,6 @@
 exports[`ImageCarousel renders without crashing 1`] = `
 <div
-  className="container"
+  className="glide--container"
   style={
     Object {
       "position": "relative",

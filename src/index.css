@@ -8,11 +8,11 @@ html, body {
   cursor: default;
 }
 
-.container{
+.glide--container{
   height: 100%;
 }
 
-.carousel-image {
+.glide--image {
   position: absolute;
   width: 100%;
   z-index: 9;
@@ -29,13 +29,13 @@ button {
   cursor: pointer;
 }
 
-.next {
+.glide--next-btn {
 	right:0;
   color: hsl(190, 95%, 80%);
   background-color: hsl(190, 10%, 10%);
 }
 
-.prev {
+.glide--prev-btn {
   color: hsl(190, 95%, 80%);
   background-color: hsl(190, 10%, 10%);
 }
@@ -44,7 +44,7 @@ button {
   display: none;
 }
 
-.dots {
+.glide--dots {
   position: absolute;
   margin-top: 85%;
   right: 43%;
@@ -52,13 +52,13 @@ button {
   cursor: pointer;
 }
 
-.dots li {
+.glide--dots li {
   list-style: none;
   display: inline-flex;
   font-size: 64px;
 }
 
-.dots .active-dot {
+.glide--dots .active-dot {
   color: hsl(190, 95%, 80%);;
 }
 

@@ -46,15 +46,15 @@ export default class Glide extends React.Component {
     const { currentIndex } = this.state;
     const { infinite, images, dots } = this.props;
 
-    const style={
+    const glideWidth={
       position: "relative",
       width: this.props.width
     }
 
     return (
       <div 
-        className="container" 
-        style={style}
+        className="glide--container" 
+        style={glideWidth}
       >
 
         <Preload
@@ -77,14 +77,14 @@ export default class Glide extends React.Component {
             >
 
               <img
-                className='carousel-image'
+                className='glide--image'
                 key={this.state.currentIndex}
                 src={this.props.images[this.state.currentIndex]}
               />
 
               {(infinite || currentIndex !== 0) &&
                 <button 
-                  className="prev"
+                  className="glide--prev-btn"
                   onClick={() => {
                     clearInterval(this.autoPlay);
                     this.goToPrevImage();
@@ -96,7 +96,7 @@ export default class Glide extends React.Component {
 
               {(infinite || currentIndex !== this.props.images.length-1) &&
                 <button 
-                  className="next"
+                  className="glide--next-btn"
                   onClick={() => {
                     clearInterval(this.autoPlay);
                     this.goToNextImage();
@@ -109,7 +109,7 @@ export default class Glide extends React.Component {
 
             {(dots) &&
               <ul 
-                className="dots"
+                className="glide--dots"
               >
                 {images.map((image,index) =>
                   <li 
