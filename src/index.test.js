@@ -1,10 +1,12 @@
 import React from 'react';
-import ImageCarousel from '../src/index';
+import Glide from '../src/index';
 import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 
-describe('ImageCarousel', () => {
-	it('renders without crashing', () => {
+jest.useFakeTimers();
+
+describe('Glide', () => {
+	it('renders without crashing', () => {Glide
 
 		const images = [
   			'https://unsplash.it/500/?random',
@@ -16,7 +18,10 @@ describe('ImageCarousel', () => {
 		];
 
 		const tree = renderer.create(
-			<ImageCarousel images={images} infinite={true} />
+			<Glide 
+				images={images} 
+				infinite={true} 
+			/>
 		).toJSON();
 
 		expect(tree).toMatchSnapshot();
@@ -34,7 +39,10 @@ describe('ImageCarousel', () => {
 		];
 
 		const componenet = shallow(
-			<ImageCarousel images={images} infinite={true} />
+			<Glide 
+				images={images} 
+				infinite={true} 
+			/>
 		);
 
 		expect(images.length).toBeGreaterThan(0);
@@ -52,7 +60,10 @@ describe('ImageCarousel', () => {
 		];
 
 		const componenet = shallow(
-			<ImageCarousel images={images} infinite={true} />
+			<Glide 
+				images={images} 
+				infinite={true} 
+			/>
 		);
 
 		//find next button and simulate a user click event.
@@ -74,7 +85,10 @@ describe('ImageCarousel', () => {
 		];
 
 		const componenet = shallow(
-			<ImageCarousel images={images} infinite={true} />
+			<Glide 
+				images={images} 
+				infinite={true} 
+			/>
 		);
 
 		//find prev button and simulate a user click event.
@@ -96,7 +110,10 @@ describe('ImageCarousel', () => {
 		];
 
 		const componenet = shallow(
-			<ImageCarousel images={images} infinite={true} />
+			<Glide 
+				images={images} 
+				infinite={true} 
+			/>
 		);
 
 
@@ -115,7 +132,10 @@ describe('ImageCarousel', () => {
 		];
 
 		const componenet = shallow(
-			<ImageCarousel images={images} infinite={true} />
+			<Glide 
+				images={images} 
+				infinite={true} 
+			/>
 		);
 
 		//find prev button and simulate a user click event.
@@ -137,7 +157,10 @@ describe('ImageCarousel', () => {
 		];
 
 		const componenet = shallow(
-			<ImageCarousel images={images} infinite={true} />
+			<Glide 
+				images={images} 
+				infinite={true} 
+			/>
 		);
 
 		//find prev button and simulate a user click event.
@@ -146,5 +169,30 @@ describe('ImageCarousel', () => {
 
 		expect(componenet.find('img').props().src).toEqual('https://unsplash.it/505/?random');
 	});
+
+	it('runs autoPlay'), () => {
+
+		const images = [
+  			'https://unsplash.it/500/?random',
+  			'https://unsplash.it/501/?random',
+  			'https://unsplash.it/502/?random',
+  			'https://unsplash.it/503/?random',
+  			'https://unsplash.it/504/?random',
+  			'https://unsplash.it/505/?random'
+		];
+
+		const componenet = shallow(
+			<Glide 
+				images={images} 
+				infinite={true} 
+				autoPlay={true}
+			/>
+		);
+
+		const callback = jest.fn();
+
+  		expect(setTimeout.mock.calls.length).toBe(1);
+  		expect(setTimeout.mock.calls[0][1]).toBe(5000);		
+	}
 
 });

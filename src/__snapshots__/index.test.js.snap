@@ -1,4 +1,4 @@
-exports[`ImageCarousel renders without crashing 1`] = `
+exports[`Glide renders without crashing 1`] = `
 <div
   className="glide--container"
   style={

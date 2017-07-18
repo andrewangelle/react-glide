@@ -45,6 +45,19 @@ const images = [
 |`dots` |bool    | dot navigation & pagination   |
 
 
+## Overiding Styles
+
+in order to fit the design of your project, you can override the default styles by using the classnames below in your projects own stylesheet
+
+| element     | classname | 
+|------------ |-----------|
+|  buttons	|	.glide--next-btn 	|
+|           |   .glide--prev-btn |
+|  dots     |   .glide--dots   |
+|			|   .glide--dots-active   |
+|			|   .glide--dots-inactive   |
+
+
 ## Development
 
 Install dependencies:

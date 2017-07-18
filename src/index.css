@@ -22,6 +22,12 @@ button {
 	margin-top: 45%;
 	position: absolute;
 	z-index: 10;
+}
+
+.glide--next-btn {
+  right:0;
+  color: hsl(190, 95%, 80%);
+  background-color: hsl(190, 10%, 10%);
   height: 60px;
   width: 35px;
   border: none;
@@ -29,15 +35,14 @@ button {
   cursor: pointer;
 }
 
-.glide--next-btn {
-	right:0;
-  color: hsl(190, 95%, 80%);
-  background-color: hsl(190, 10%, 10%);
-}
-
 .glide--prev-btn {
   color: hsl(190, 95%, 80%);
   background-color: hsl(190, 10%, 10%);
+  height: 60px;
+  width: 35px;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
 }
 
 .hide {
