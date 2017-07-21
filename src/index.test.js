@@ -3,7 +3,8 @@ import Glide from '../src/index';
 import renderer from 'react-test-renderer';
 import {
   mount,
-  shallow
+  shallow,
+  render
 } from 'enzyme';
 
 jest.useFakeTimers();
@@ -165,6 +166,8 @@ describe('Glide', () => {
 
 
   it('fires callback when autoPlay prop is on', () => {
+    jest.useFakeTimers();
+
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
