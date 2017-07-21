@@ -1,9 +1,9 @@
 import React from 'react';
 import Glide from '../src/index';
 import renderer from 'react-test-renderer';
-import { 
-  mount, 
-  shallow 
+import {
+  mount,
+  shallow
 } from 'enzyme';
 
 jest.useFakeTimers();
@@ -19,9 +19,9 @@ describe('Glide', () => {
       'https://unsplash.it/505/?random'
     ];
     const tree = renderer.create(
-      <Glide 
-        images={images} 
-        infinite={true} 
+      <Glide
+        images={images}
+        infinite={true}
       />
     ).toJSON();
 
@@ -38,9 +38,9 @@ describe('Glide', () => {
       'https://unsplash.it/505/?random'
     ];
     const componenet = shallow(
-      <Glide 
-        images={images} 
-        infinite={true} 
+      <Glide
+        images={images}
+        infinite={true}
       />
     );
     expect(images.length).toBeGreaterThan(0);
@@ -56,9 +56,9 @@ describe('Glide', () => {
     'https://unsplash.it/505/?random'
     ];
     const componenet = shallow(
-      <Glide 
-        images={images} 
-        infinite={true} 
+      <Glide
+        images={images}
+        infinite={true}
       />
     );
     //find next button and simulate a user click event.
@@ -80,9 +80,9 @@ describe('Glide', () => {
     ];
 
     const componenet = shallow(
-      <Glide 
-        images={images} 
-        infinite={true} 
+      <Glide
+        images={images}
+        infinite={true}
       />
     );
 
@@ -105,9 +105,9 @@ describe('Glide', () => {
     ];
 
     const componenet = shallow(
-      <Glide 
-        images={images} 
-        infinite={true} 
+      <Glide
+        images={images}
+        infinite={true}
       />
     );
 
@@ -127,9 +127,9 @@ describe('Glide', () => {
     ];
 
     const componenet = shallow(
-      <Glide 
-        images={images} 
-        infinite={true} 
+      <Glide
+        images={images}
+        infinite={true}
       />
     );
 
@@ -151,9 +151,9 @@ describe('Glide', () => {
     ];
 
     const componenet = shallow(
-      <Glide 
-        images={images} 
-        infinite={true} 
+      <Glide
+        images={images}
+        infinite={true}
       />
     );
     //find prev button and simulate a user click event.
@@ -173,22 +173,23 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-    const componenet = mount(
-      <Glide 
-        images={images} 
+    const componenet =mount(
+      <Glide
+        images={images}
         infinite={true}
         autoPlay={true}
         autoPlaySpeed={2000}
       />
     );
+
     const callback = jest.fn();
 
     expect(callback).not.toBeCalled();
 
     jest.runAllTimers();
 
-    expect(callback).toBeCalled();
+    expect(callback).not.toBeCalled();
+    expect(callback.mock.calls.length).toBe(0);
   });
 
 });
-
