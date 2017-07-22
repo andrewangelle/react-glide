@@ -196,7 +196,7 @@ describe('Glide', () => {
 
   it('changes slides when autoPlay is on', () => {
 
-    jest.useFakeTimers();
+
     
     const images = [
       'https://unsplash.it/500/?random',
@@ -207,14 +207,14 @@ describe('Glide', () => {
       'https://unsplash.it/505/?random'
     ];
     const component = mount(
-          <Glide
-            images={images}
-            width={600}
-            autoPlay={true}
-            autoPlaySpeed={2000}
-            infinite={true}
-            dots={true}
-          />
+      <Glide
+        images={images}
+        width={600}
+        autoPlay={true}
+        autoPlaySpeed={2000}
+        infinite={true}
+        dots={true}
+      />
     );
     const stateBefore = { currentIndex: 0 };
     const stateAfter = { currentIndex: 1 };
@@ -225,10 +225,43 @@ describe('Glide', () => {
 
     expect(component.state()).toEqual(stateAfter)
   });
+
+
+  it('changes slides using users speed prop', () => {
+
+    jest.useFakeTimers();
+
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+    ];
+    const component = mount(
+      <Glide
+        images={images}
+        width={600}
+        autoPlay={true}
+        autoPlaySpeed={2000}
+        infinite={true}
+        dots={true}
+      />
+    );
+
+    const stateBefore = { currentIndex: 0 };
+    const stateAfter = { currentIndex: 1 };
+    const userProp = component.find('.glide--container').root.node.props.autoPlaySpeed
+
+    expect(component.state()).toEqual(stateBefore);
+
+    jest.runTimersToTime(userProp);
+
+    expect(component.state()).toEqual(stateAfter)
+
+  });
 });
-
-
-
 
 
 
