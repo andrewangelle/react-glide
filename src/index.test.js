@@ -19,7 +19,6 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-
     const component = render(
       <Glide
         images={images}
@@ -56,7 +55,6 @@ describe('Glide', () => {
   });
 
   it('renders first image in array as first image displayed', () => {
-
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -65,7 +63,6 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-
     const component = shallow(
       <Glide
         images={images}
@@ -77,12 +74,10 @@ describe('Glide', () => {
       />
     );
 
-
     expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random');
 });
 
   it('sets width according to prop', () => {
-
      const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -136,7 +131,6 @@ describe('Glide', () => {
   });
 
   it('changes to previous index when prev button is clicked', () => {
-
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -145,7 +139,6 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-
     const component = shallow(
       <Glide
         images={images}
@@ -156,7 +149,6 @@ describe('Glide', () => {
         dots={true}
       />
     );
-
     //find prev button and simulate a user click event.
     const prevButton = component.find('button').first();
     prevButton.simulate('click');
@@ -165,7 +157,6 @@ describe('Glide', () => {
   });
 
   it('changes to next image when next button is clicked', () => {
-
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -174,7 +165,6 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-
     const component = shallow(
       <Glide
         images={images}
@@ -185,7 +175,6 @@ describe('Glide', () => {
         dots={true}
       />
     );
-
     //find prev button and simulate a user click event.
     const nextButton = component.find('button').last();
     nextButton.simulate('click');
@@ -202,7 +191,6 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-
     const component = shallow(
       <Glide
         images={images}
@@ -215,6 +203,7 @@ describe('Glide', () => {
     );
     //find prev button and simulate a user click event.
     const prevButton = component.find('button').first();
+
     prevButton.simulate('click');
 
     expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random');
@@ -222,7 +211,6 @@ describe('Glide', () => {
 
 
   it('changes slides when autoPlay is on', () => {
-
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -274,7 +262,6 @@ describe('Glide', () => {
         dots={true}
       />
     );
-
     const stateBefore = { currentIndex: 0 };
     const stateAfter = { currentIndex: 1 };
     const userProp = component.find('.glide--container').root.node.props.autoPlaySpeed
@@ -324,7 +311,6 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-
     const component = shallow(
       <Glide
         images={images}
@@ -335,9 +321,9 @@ describe('Glide', () => {
         dots={true}
       />
     );
-
     //find prev button and simulate a user click event.
     const nextButton = component.find('button').last();
+
     nextButton.simulate('click');
     nextButton.simulate('click');
     nextButton.simulate('click');
@@ -345,6 +331,7 @@ describe('Glide', () => {
     nextButton.simulate('click');
 
     expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random');
+    
     expect(component.find('.glide--next-btn').length).toEqual(0);
   });
 
@@ -357,7 +344,6 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-
     const component = shallow(
       <Glide
         images={images}
@@ -381,7 +367,6 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-
     const component = shallow(
       <Glide
         images={images}
@@ -407,7 +392,6 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-
     const component = shallow(
       <Glide
         images={images}
@@ -439,7 +423,6 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-
     const component = shallow(
       <Glide
         images={images}
@@ -486,6 +469,7 @@ describe('Glide', () => {
   const dotClassName = component.find('li').first().props().className;
 
   expect(currentImage).toEqual('https://unsplash.it/500/?random');
+
   expect(dotClassName).toEqual('active-dot');
   })
 
