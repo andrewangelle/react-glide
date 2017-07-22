@@ -1,20 +1,16 @@
 import React from 'react';
 import Glide from '../src/index';
 import renderer from 'react-test-renderer';
-<<<<<<< HEAD
 import { shallow } from 'enzyme';
-=======
 import {
   mount,
   shallow,
   render
 } from 'enzyme';
->>>>>>> new-tests
 
 jest.useFakeTimers();
 
 describe('Glide', () => {
-<<<<<<< HEAD
 	it('renders without crashing', () => {Glide
 
 		const images = [
@@ -27,9 +23,9 @@ describe('Glide', () => {
 		];
 
 		const tree = renderer.create(
-			<Glide 
-				images={images} 
-				infinite={true} 
+			<Glide
+				images={images}
+				infinite={true}
 			/>
 		).toJSON();
 
@@ -48,9 +44,9 @@ describe('Glide', () => {
 		];
 
 		const componenet = shallow(
-			<Glide 
-				images={images} 
-				infinite={true} 
+			<Glide
+				images={images}
+				infinite={true}
 			/>
 		);
 
@@ -69,9 +65,9 @@ describe('Glide', () => {
 		];
 
 		const componenet = shallow(
-			<Glide 
-				images={images} 
-				infinite={true} 
+			<Glide
+				images={images}
+				infinite={true}
 			/>
 		);
 
@@ -94,9 +90,9 @@ describe('Glide', () => {
 		];
 
 		const componenet = shallow(
-			<Glide 
-				images={images} 
-				infinite={true} 
+			<Glide
+				images={images}
+				infinite={true}
 			/>
 		);
 
@@ -119,9 +115,9 @@ describe('Glide', () => {
 		];
 
 		const componenet = shallow(
-			<Glide 
-				images={images} 
-				infinite={true} 
+			<Glide
+				images={images}
+				infinite={true}
 			/>
 		);
 
@@ -141,9 +137,9 @@ describe('Glide', () => {
 		];
 
 		const componenet = shallow(
-			<Glide 
-				images={images} 
-				infinite={true} 
+			<Glide
+				images={images}
+				infinite={true}
 			/>
 		);
 
@@ -166,9 +162,9 @@ describe('Glide', () => {
 		];
 
 		const componenet = shallow(
-			<Glide 
-				images={images} 
-				infinite={true} 
+			<Glide
+				images={images}
+				infinite={true}
 			/>
 		);
 
@@ -191,9 +187,9 @@ describe('Glide', () => {
 		];
 
 		const componenet = shallow(
-			<Glide 
-				images={images} 
-				infinite={true} 
+			<Glide
+				images={images}
+				infinite={true}
 				autoPlay={true}
 			/>
 		);
@@ -201,10 +197,10 @@ describe('Glide', () => {
 		const callback = jest.fn();
 
   		expect(setTimeout.mock.calls.length).toBe(1);
-  		expect(setTimeout.mock.calls[0][1]).toBe(5000);		
+  		expect(setTimeout.mock.calls[0][1]).toBe(5000);
 	}
 
-=======
+
   it('renders without crashing', () => { Glide
     const images = [
       'https://unsplash.it/500/?random',
@@ -681,7 +677,7 @@ describe('Glide', () => {
   const dotClassName = component.find('li').first().props().className;
 
   expect(currentImage).toEqual('https://unsplash.it/500/?random');
-  expect(dotClassName).toEqual('active-dot');  
+  expect(dotClassName).toEqual('active-dot');
   })
->>>>>>> new-tests
+
 });
