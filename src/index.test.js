@@ -287,7 +287,7 @@ describe('Glide', () => {
 
   });
 
-  it('when infinite is false it only renders one button on first slide', () => {
+  it('when infinite prop is false it only renders one button on first slide', () => {
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -315,9 +315,7 @@ describe('Glide', () => {
 
   });
 
-  it.skip('when infinite is false it only renders one button on last slide', () => {
-    jest.useFakeTimers();
-
+  it('when infinite prop is false it only renders one button on last slide', () => {
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -326,25 +324,29 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-    const component = mount(
+
+    const component = shallow(
       <Glide
         images={images}
-        width={600}
-        autoPlay={true}
-        autoPlaySpeed={2000}
+        width={500}
+        autoPlay={false}
+        autoPlaySpeed={1000}
         infinite={false}
         dots={true}
       />
     );
 
-    jest.runTimersToTime(10000);
+    //find prev button and simulate a user click event.
+    const nextButton = component.find('button').last();
+    nextButton.simulate('click');
+    nextButton.simulate('click');
+    nextButton.simulate('click');
+    nextButton.simulate('click');
+    nextButton.simulate('click');
 
+    expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random');
+    expect(component.find('.glide--next-btn').length).toEqual(0);
 
-    const lastSlide = { currentIndex: 5 }
-    const button = component.find('button').length
-
-    expect(component.state()).toEqual(lastSlide);
-    console.log(component.find('button').length)
 
   });
 });
