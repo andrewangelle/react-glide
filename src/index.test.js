@@ -307,11 +307,11 @@ describe('Glide', () => {
       />
     );
     const firstSlide = { currentIndex: 0 };
-    const button = component.find('button').length
+    const button = component.find('.glide--prev-btn').length
 
     expect(component.state()).toEqual(firstSlide);
 
-    expect(button).toEqual(1);
+    expect(button).toEqual(0);
 
   });
 
@@ -346,7 +346,146 @@ describe('Glide', () => {
 
     expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random');
     expect(component.find('.glide--next-btn').length).toEqual(0);
-
-
   });
+
+  it('renders dots', () => {
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+    ];
+
+    const component = shallow(
+      <Glide
+        images={images}
+        width={500}
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        infinite={false}
+        dots={true}
+      />
+    );
+
+    expect(component.find('.glide--dots').length).toEqual(1);
+  });
+
+  it('number of dots rendered equals the number of images', () => {
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+    ];
+
+    const component = shallow(
+      <Glide
+        images={images}
+        width={500}
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        infinite={false}
+        dots={true}
+      />
+    );
+    const numberOfImages = component.find('.glide--container').root.node.props.children.props.images.length;
+    const numberOfDots = component.find('li').length;
+
+    expect(numberOfDots).toEqual(numberOfImages);
+  });
+
+  it('updates state when dot is clicked', () => {
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+    ];
+
+    const component = shallow(
+      <Glide
+        images={images}
+        width={500}
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        infinite={true}
+        dots={true}
+      />
+    );
+
+    const sixthDot = component.find('li').last();
+    const stateBefore = { currentIndex: 0 };
+    const stateAfter = { currentIndex: 5 };
+
+    expect(component.state()).toEqual(stateBefore);
+
+    sixthDot.simulate('click');
+
+    expect(component.state()).toEqual(stateAfter);
+  });
+
+  it('changes image when dot is clicked', () => {
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+    ];
+
+    const component = shallow(
+      <Glide
+        images={images}
+        width={500}
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        infinite={true}
+        dots={true}
+      />
+    );
+
+    const sixthDot = component.find('li').last();
+    const stateBefore = { currentIndex: 0 };
+    const stateAfter = { currentIndex: 5 };
+
+    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random')
+
+    sixthDot.simulate('click');
+
+    expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random')
+  });
+
+  it('adds active class to dot according to current image', () => {
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+    ];
+
+    const component = shallow(
+      <Glide
+        images={images}
+        width={500}
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        infinite={true}
+        dots={true}
+      />
+    );
+  const currentImage = component.find('img').props().src;
+  const dotClassName = component.find('li').first().props().className;
+
+  expect(currentImage).toEqual('https://unsplash.it/500/?random');
+  expect(dotClassName).toEqual('active-dot');  
+  })
 });
