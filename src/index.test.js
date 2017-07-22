@@ -6,7 +6,6 @@ import {
   shallow,
   render
 } from 'enzyme';
-import sinon from 'sinon';
 
 jest.useFakeTimers();
 
@@ -106,8 +105,8 @@ describe('Glide', () => {
     );
     const userProp = componentMount.find('.glide--container').root.node.props.width
     const containerWidth = componentRendered.renderer._instance._currentElement.props.width;
-    
-    expect(containerWidth).toEqual(userProp);  
+
+    expect(containerWidth).toEqual(userProp);
   });
 
   it('changes to next index when next button is clicked', () => {
@@ -223,7 +222,7 @@ describe('Glide', () => {
 
 
   it('changes slides when autoPlay is on', () => {
-    
+
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -285,6 +284,67 @@ describe('Glide', () => {
     jest.runTimersToTime(userProp);
 
     expect(component.state()).toEqual(stateAfter)
+
+  });
+
+  it('when infinite is false it only renders one button on first slide', () => {
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+    ];
+    const component = shallow(
+      <Glide
+        images={images}
+        width={600}
+        autoPlay={false}
+        autoPlaySpeed={2000}
+        infinite={false}
+        dots={true}
+      />
+    );
+    const firstSlide = { currentIndex: 0 };
+    const button = component.find('button').length
+
+    expect(component.state()).toEqual(firstSlide);
+
+    expect(button).toEqual(1);
+
+  });
+
+  it.skip('when infinite is false it only renders one button on last slide', () => {
+    jest.useFakeTimers();
+
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+    ];
+    const component = mount(
+      <Glide
+        images={images}
+        width={600}
+        autoPlay={true}
+        autoPlaySpeed={2000}
+        infinite={false}
+        dots={true}
+      />
+    );
+
+    jest.runTimersToTime(10000);
+
+
+    const lastSlide = { currentIndex: 5 }
+    const button = component.find('button').length
+
+    expect(component.state()).toEqual(lastSlide);
+    console.log(component.find('button').length)
 
   });
 });
