@@ -11,7 +11,7 @@ import sinon from 'sinon';
 jest.useFakeTimers();
 
 describe('Glide', () => {
-  it.skip('renders without crashing', () => { Glide
+  it('renders without crashing', () => { Glide
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -20,14 +20,18 @@ describe('Glide', () => {
       'https://unsplash.it/504/?random',
       'https://unsplash.it/505/?random'
     ];
-    const tree = renderer.create(
+
+    const component = render(
       <Glide
         images={images}
         width={500}
-      />
-    ).toJSON();
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        infinite={true}
+        dots={true}
+      />)
 
-    expect(tree).toMatchSnapshot();
+    expect(component).toBeTruthy();
   });
 
   it('has images array that contains images', () => {
