@@ -146,7 +146,7 @@ Glide.propTypes = {
 };
 
 Glide.defaultProps = {
-  autoPlay: true,
+  autoPlay: false,
   autoPlaySpeed: 2000,
   infinite: true,
   dots: true
