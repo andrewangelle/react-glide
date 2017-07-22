@@ -20,7 +20,7 @@ export default class Example extends Component {
         <Glide
           images={images}
           width={500}
-          autoPlay={false}
+          autoPlay={true}
           autoPlaySpeed={1000}
           infinite={true}
           dots={true}

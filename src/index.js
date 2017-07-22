@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Preload from 'react-preload';
+import PropTypes from 'prop-types';
 import './index.css';
 
 const loadingIndicator = (<div>Loading...</div>);
@@ -42,6 +43,10 @@ export default class Glide extends React.Component {
      this.setState({ currentIndex : nextIndex })
    }
 
+   componentDidMount() {
+    this.startTimer();
+   }
+
   render(){
     const { currentIndex } = this.state;
     const { infinite, images, dots } = this.props;
@@ -61,7 +66,6 @@ export default class Glide extends React.Component {
           loadingIndicator={loadingIndicator}
           images={this.props.images}
           onError={this._handleImageLoadError}
-          onSuccess={this.startTimer.bind(this)}
           resolveOnError={true}
           mountChildren={true}
         >
@@ -130,3 +134,20 @@ export default class Glide extends React.Component {
     );
   }
 }
+
+
+Glide.propTypes = {
+  images: PropTypes.array.isRequired,
+  width: PropTypes.number.isRequired,
+  autoPlay: PropTypes.bool,
+  autoPlaySpeed: PropTypes.number,
+  infinite: PropTypes.bool,
+  dots: PropTypes.bool
+};
+
+Glide.defaultProps = {
+  autoPlay: false,
+  autoPlaySpeed: 2000,
+  infinite: true,
+  dots: true
+};
