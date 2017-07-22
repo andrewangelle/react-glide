@@ -43,6 +43,10 @@ export default class Glide extends React.Component {
      this.setState({ currentIndex : nextIndex })
    }
 
+   componentDidMount() {
+    this.startTimer();
+   }
+
   render(){
     const { currentIndex } = this.state;
     const { infinite, images, dots } = this.props;
@@ -62,7 +66,6 @@ export default class Glide extends React.Component {
           loadingIndicator={loadingIndicator}
           images={this.props.images}
           onError={this._handleImageLoadError}
-          onSuccess={this.startTimer.bind(this)}
           resolveOnError={true}
           mountChildren={true}
         >
@@ -143,7 +146,7 @@ Glide.propTypes = {
 };
 
 Glide.defaultProps = {
-  autoPlay: false,
+  autoPlay: true,
   autoPlaySpeed: 2000,
   infinite: true,
   dots: true
