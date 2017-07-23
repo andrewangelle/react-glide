@@ -1,4 +1,3 @@
-import React from 'react';
 import Glide from '../src/index';
 import renderer from 'react-test-renderer';
 import {
@@ -331,7 +330,7 @@ describe('Glide', () => {
     nextButton.simulate('click');
 
     expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random');
-    
+
     expect(component.find('.glide--next-btn').length).toEqual(0);
   });
 
