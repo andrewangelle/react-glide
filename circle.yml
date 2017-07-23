@@ -1,7 +1,3 @@
 machine:
   node:
     version: 6.11.0
-
-dependencies:
-  override:
-    - npm run test:once
