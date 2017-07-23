@@ -4,4 +4,4 @@ machine:
 
 dependencies:
   override:
-    - npm test
+    - npm run test:once
