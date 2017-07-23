@@ -2,6 +2,8 @@
 
 A lightweight image carousel react component
 
+[![CircleCI](https://circleci.com/gh/andrewangelle/react-glide.svg?style=svg)](https://circleci.com/gh/andrewangelle/react-glide)
+
 <img src="glide.png" width="400px" />
 
 ## Installation
@@ -49,7 +51,7 @@ const images = [
 
 in order to fit the design of your project, you can override the default styles by using the classnames below in your projects own stylesheet
 
-| element     | classname | 
+| element     | classname |
 |------------ |-----------|
 |  buttons	|	.glide--next-btn 	|
 |           |   .glide--prev-btn |
