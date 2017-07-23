@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --config example/webpack.config.js",
     "test": "jest --watchAll",
     "test:once": "jest",
-    "coverage": "cat ./coverage/lcov.info | coveralls",
+    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "lint": "eslint src test",
     "preversion": "npm run build && git add -A lib"
   },
