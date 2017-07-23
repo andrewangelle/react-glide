@@ -7,7 +7,7 @@
     "build": "webpack",
     "start": "webpack-dev-server --config example/webpack.config.js",
     "test": "jest --watchAll",
-    "test:once": "jest",
+    "test:once": "sudo jest",
     "lint": "eslint src test",
     "preversion": "npm run build && git add -A lib"
   },
