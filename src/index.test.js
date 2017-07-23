@@ -1,3 +1,4 @@
+import React from 'react';
 import Glide from '../src/index';
 import renderer from 'react-test-renderer';
 import {
