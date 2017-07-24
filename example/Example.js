@@ -11,7 +11,6 @@ const images = [
 ];
 
 export default class Example extends Component {
-
   render() {
     return (
       <div>
@@ -20,10 +19,13 @@ export default class Example extends Component {
         <Glide
           images={images}
           width={500}
-          autoPlay={true}
+          autoPlay={false}
           autoPlaySpeed={1000}
           infinite={true}
           dots={true}
+          onSlideChange={()=>{
+            console.log('on slide change function fired');
+          }}
         />
 
       </div>
