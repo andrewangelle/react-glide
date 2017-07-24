@@ -146,7 +146,8 @@ Glide.propTypes = {
   autoPlay: PropTypes.bool,
   autoPlaySpeed: PropTypes.number,
   infinite: PropTypes.bool,
-  dots: PropTypes.bool
+  dots: PropTypes.bool,
+  onSlideChange: PropTypes.func
 };
 
 Glide.defaultProps = {
