@@ -8,11 +8,11 @@ html, body {
   cursor: default;
 }
 
-.container{
+.glide--container{
   height: 100%;
 }
 
-.carousel-image {
+.glide--image {
   position: absolute;
   width: 100%;
   z-index: 9;
@@ -22,6 +22,12 @@ button {
 	margin-top: 45%;
 	position: absolute;
 	z-index: 10;
+}
+
+.glide--next-btn {
+  right:0;
+  color: hsl(190, 95%, 80%);
+  background-color: hsl(190, 10%, 10%);
   height: 60px;
   width: 35px;
   border: none;
@@ -29,22 +35,21 @@ button {
   cursor: pointer;
 }
 
-.next {
-	right:0;
+.glide--prev-btn {
   color: hsl(190, 95%, 80%);
   background-color: hsl(190, 10%, 10%);
-}
-
-.prev {
-  color: hsl(190, 95%, 80%);
-  background-color: hsl(190, 10%, 10%);
+  height: 60px;
+  width: 35px;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
 }
 
 .hide {
   display: none;
 }
 
-.dots {
+.glide--dots {
   position: absolute;
   margin-top: 85%;
   right: 43%;
@@ -52,13 +57,13 @@ button {
   cursor: pointer;
 }
 
-.dots li {
+.glide--dots li {
   list-style: none;
   display: inline-flex;
   font-size: 64px;
 }
 
-.dots .active-dot {
+.glide--dots .active-dot {
   color: hsl(190, 95%, 80%);;
 }
 
