@@ -56,8 +56,8 @@ in order to fit the design of your project, you can override the default styles 
 |  buttons	|	.glide--next-btn 	|
 |           |   .glide--prev-btn |
 |  dots     |   .glide--dots   |
-|			|   .glide--dots-active   |
-|			|   .glide--dots-inactive   |
+|			|   .active-dot   |
+|			|   .inactive-dot   |
 
 
 ## Development
