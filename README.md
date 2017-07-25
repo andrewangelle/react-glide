@@ -33,7 +33,7 @@ const images = [
   infinite={true}
   dots={true}
   onSlideChange={()=>{
-    console.log('onSlideChange function fired');
+    //function
   }}
 />
 ```
