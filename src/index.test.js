@@ -114,6 +114,7 @@ describe('Glide', () => {
     'https://unsplash.it/504/?random',
     'https://unsplash.it/505/?random'
     ];
+
     const component = shallow(
       <Glide
         images={images}
@@ -124,11 +125,29 @@ describe('Glide', () => {
         dots={true}
       />
     );
-    //find next button and simulate a user click event.
-    const nextButton = component.find('button').last();
-    nextButton.simulate('click');
 
+    const nextButton = component.find('button').last();
+
+    expect(component.state().currentIndex).toEqual(0);
+
+    nextButton.simulate('click');
     expect(component.state().currentIndex).toEqual(1);
+
+    nextButton.simulate('click');
+    expect(component.state().currentIndex).toEqual(2);
+
+    nextButton.simulate('click');
+    expect(component.state().currentIndex).toEqual(3);
+
+    nextButton.simulate('click');
+    expect(component.state().currentIndex).toEqual(4);
+
+    nextButton.simulate('click');
+    expect(component.state().currentIndex).toEqual(5);
+
+    nextButton.simulate('click');
+    expect(component.state().currentIndex).toEqual(0)
+
   });
 
   it('changes to previous index when prev button is clicked', () => {
@@ -150,11 +169,16 @@ describe('Glide', () => {
         dots={true}
       />
     );
-    //find prev button and simulate a user click event.
     const prevButton = component.find('button').first();
-    prevButton.simulate('click');
 
+    expect(component.state().currentIndex).toEqual(0);
+
+    prevButton.simulate('click');
     expect(component.state().currentIndex).toEqual(5);
+
+    prevButton.simulate('click')
+    expect(component.state().currentIndex).toEqual(4)
+
   });
 
   it('changes to next image when next button is clicked', () => {
@@ -178,8 +202,10 @@ describe('Glide', () => {
     );
     //find prev button and simulate a user click event.
     const nextButton = component.find('button').last();
-    nextButton.simulate('click');
 
+    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random')
+
+    nextButton.simulate('click');
     expect(component.find('img').props().src).toEqual('https://unsplash.it/501/?random');
   });
 
@@ -202,8 +228,9 @@ describe('Glide', () => {
         dots={true}
       />
     );
-    //find prev button and simulate a user click event.
     const prevButton = component.find('button').first();
+
+    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random');
 
     prevButton.simulate('click');
 
