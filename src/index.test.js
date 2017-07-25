@@ -302,7 +302,7 @@ describe('Glide', () => {
 
   });
 
-  it('when infinite prop is false it only renders one button on first slide', () => {
+  it('renders only one button on first slide when infinite is set to false', () => {
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -314,23 +314,17 @@ describe('Glide', () => {
     const component = shallow(
       <Glide
         images={images}
-        width={600}
+        width={500}
         autoPlay={false}
-        autoPlaySpeed={2000}
+        autoPlaySpeed={1000}
         infinite={false}
         dots={true}
       />
     );
-    const firstSlide = { currentIndex: 0 };
-    const button = component.find('.glide--prev-btn').length
-
-    expect(component.state()).toEqual(firstSlide);
-
-    expect(button).toEqual(0);
-
+    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random');
+    expect(component.find('button').length).toEqual(1);
   });
-
-  it('when infinite prop is false it only renders one button on last slide', () => {
+  it('renders only one button on last slide when infinite is set to false', () => {
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -359,9 +353,43 @@ describe('Glide', () => {
     nextButton.simulate('click');
 
     expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random');
-
-    expect(component.find('.glide--next-btn').length).toEqual(0);
+    expect(component.find('button').length).toEqual(1);
   });
+
+  it('renders both buttons on first and last slide when infinite is true', () => {
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+    ];
+    const component = shallow(
+      <Glide
+        images={images}
+        width={500}
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        infinite={true}
+        dots={true}
+      />
+    );
+    const nextButton = component.find('button').last();
+
+    expect(component.state().currentIndex).toEqual(0)
+    expect(component.find('button').length).toEqual(2);
+
+    nextButton.simulate('click');
+    nextButton.simulate('click');
+    nextButton.simulate('click');
+    nextButton.simulate('click');
+    nextButton.simulate('click');
+
+    expect(component.state().currentIndex).toEqual(images.length - 1)
+    expect(component.find('button').length).toEqual(2);
+  });
+
 
   it('renders dots', () => {
     const images = [
@@ -386,7 +414,7 @@ describe('Glide', () => {
     expect(component.find('.glide--dots').length).toEqual(1);
   });
 
-  it('number of dots rendered equals the number of images', () => {
+  it('renders number of dots equal to number of images', () => {
     const images = [
       'https://unsplash.it/500/?random',
       'https://unsplash.it/501/?random',
@@ -432,14 +460,12 @@ describe('Glide', () => {
     );
 
     const sixthDot = component.find('li').last();
-    const stateBefore = { currentIndex: 0 };
-    const stateAfter = { currentIndex: 5 };
-
-    expect(component.state()).toEqual(stateBefore);
+    
+    expect(component.state().currentIndex).toEqual(0);
 
     sixthDot.simulate('click');
 
-    expect(component.state()).toEqual(stateAfter);
+    expect(component.state().currentIndex).toEqual(5);
   });
 
   it('changes image when dot is clicked', () => {
@@ -524,9 +550,60 @@ describe('Glide', () => {
     const button = component.find('button').last();
 
     expect(onSlideChange.callCount).toEqual(0);
+    expect(component.state().currentIndex).toEqual(0)
 
     button.simulate('click');
-
     expect(onSlideChange.callCount).toEqual(1);
+    expect(component.state().currentIndex).toEqual(1)
+
+    button.simulate('click');
+    expect(onSlideChange.callCount).toEqual(2)
+    expect(component.state().currentIndex).toEqual(2)
+
+    button.simulate('click');
+    expect(onSlideChange.callCount).toEqual(3)
+    expect(component.state().currentIndex).toEqual(3)
+
+    button.simulate('click');
+    expect(onSlideChange.callCount).toEqual(4)
+    expect(component.state().currentIndex).toEqual(4)
+
+    button.simulate('click');
+    expect(onSlideChange.callCount).toEqual(5)
+    expect(component.state().currentIndex).toEqual(5)
+  });
+
+  it('does not fire onSlideChange callback when prop not passed', () => {
+    const images = [
+      'https://unsplash.it/500/?random',
+      'https://unsplash.it/501/?random',
+      'https://unsplash.it/502/?random',
+      'https://unsplash.it/503/?random',
+      'https://unsplash.it/504/?random',
+      'https://unsplash.it/505/?random'
+    ];
+    const onSlideChange = stub();
+    const component = shallow(
+      <Glide
+        images={images}
+        width={500}
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        infinite={true}
+        dots={true}
+      />
+    );
+    const button = component.find('button').last();
+
+    expect(onSlideChange.callCount).toEqual(0);
+    expect(component.state().currentIndex).toEqual(0)
+
+    button.simulate('click');
+    expect(onSlideChange.callCount).toEqual(0);
+    expect(component.state().currentIndex).toEqual(1)
+
+    button.simulate('click');
+    expect(onSlideChange.callCount).toEqual(0)
+    expect(component.state().currentIndex).toEqual(2)
   });
 });
