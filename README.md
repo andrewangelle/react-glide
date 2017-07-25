@@ -33,7 +33,7 @@ const images = [
   infinite={true}
   dots={true}
   onSlideChange={()=>{
-    //define a function to fire when the slide changes 
+    console.log('onSlideChange function fired');
   }}
 />
 ```
