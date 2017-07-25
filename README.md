@@ -32,6 +32,9 @@ const images = [
   autoPlaySpeed={1000}
   infinite={true}
   dots={true}
+  onSlideChange={()=>{
+    console.log('onSlideChange function fired');
+  }}
 />
 ```
 
@@ -45,6 +48,7 @@ const images = [
 |`autoPlaySpeed` |integer    | the rate of change between slides, defined in ms   |
 |`infinite` |bool    | carousel will loop infinitely   |
 |`dots` |bool    | dot navigation & pagination   |
+|`onSlideChange` |func    | a function that will fire when the slide changes  |
 
 
 ## Overiding Styles

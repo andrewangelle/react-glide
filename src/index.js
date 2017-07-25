@@ -47,6 +47,16 @@ export default class Glide extends React.Component {
     this.startTimer();
    }
 
+   componentDidUpdate(prevProps, prevState){
+    const { currentIndex } = this.state
+    const onSlideChange = this.props.onSlideChange;
+
+    if(onSlideChange){
+      currentIndex !== prevState ? this.props.onSlideChange() : '';
+    }
+
+   }
+
   render(){
     const { currentIndex } = this.state;
     const { infinite, images, dots } = this.props;
@@ -57,11 +67,10 @@ export default class Glide extends React.Component {
     }
 
     return (
-      <div 
-        className="glide--container" 
+      <div
+        className="glide--container"
         style={glideWidth}
       >
-
         <Preload
           loadingIndicator={loadingIndicator}
           images={this.props.images}
@@ -71,7 +80,6 @@ export default class Glide extends React.Component {
         >
 
           <div>
-
             <ReactCSSTransitionGroup
               transitionName='current'
               transitionAppear={true}
@@ -87,7 +95,7 @@ export default class Glide extends React.Component {
               />
 
               {(infinite || currentIndex !== 0) &&
-                <button 
+                <button
                   className="glide--prev-btn"
                   onClick={() => {
                     clearInterval(this.autoPlay);
@@ -99,7 +107,7 @@ export default class Glide extends React.Component {
               }
 
               {(infinite || currentIndex !== this.props.images.length-1) &&
-                <button 
+                <button
                   className="glide--next-btn"
                   onClick={() => {
                     clearInterval(this.autoPlay);
@@ -112,11 +120,11 @@ export default class Glide extends React.Component {
             </ReactCSSTransitionGroup>
 
             {(dots) &&
-              <ul 
+              <ul
                 className="glide--dots"
               >
                 {images.map((image,index) =>
-                  <li 
+                  <li
                     key={image}
                     className={(currentIndex === index ? "active-dot" : "inactive-dot")}
                     onClick={() => {
@@ -142,7 +150,8 @@ Glide.propTypes = {
   autoPlay: PropTypes.bool,
   autoPlaySpeed: PropTypes.number,
   infinite: PropTypes.bool,
-  dots: PropTypes.bool
+  dots: PropTypes.bool,
+  onSlideChange: PropTypes.func
 };
 
 Glide.defaultProps = {
