@@ -18,10 +18,8 @@
       "json"
     ],
     "moduleNameMapper": {
-      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules",
-      "Glide": "<roodDir>/src/index.js"
+      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
     },
-    "automock": true,
     "collectCoverage": true,
     "coverageDirectory": "coverage",
     "coverageReporters": [
