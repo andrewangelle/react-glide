@@ -51,17 +51,27 @@ const images = [
 |`onSlideChange` |func    | a function that will fire when the slide changes  |
 
 
-## Overiding Styles
+## Styles
+
+### Default Styles
+
+To use the default styles, import the css from react-glide at the top of your file
+
+```javascript
+import '../node_modules/react-glide/lib/react-glide.css';
+```
+
+### Overriding Default Styles
 
 in order to fit the design of your project, you can override the default styles by using the classnames below in your projects own stylesheet
 
 | element     | classname |
 |------------ |-----------|
-|  buttons	|	.glide--next-btn 	|
+|  buttons  | .glide--next-btn  |
 |           |   .glide--prev-btn |
 |  dots     |   .glide--dots   |
-|			|   .active-dot   |
-|			|   .inactive-dot   |
+|     |   .glide--dots-active   |
+|     |   .glide--dots-inactive   |
 
 
 ## Development
