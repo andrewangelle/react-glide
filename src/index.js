@@ -44,8 +44,12 @@ export default class Glide extends React.Component {
    }
 
    componentDidMount() {
-    this.startTimer();
-   }
+    const autoPlay = this.props.autoPlay;
+
+    if(autoPlay) {
+      this.startTimer();
+    };
+  }
 
    componentWillUpdate(nextProps, nextState){
     const { currentIndex } = this.state
