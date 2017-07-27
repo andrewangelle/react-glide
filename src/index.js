@@ -15,7 +15,7 @@ export default class Glide extends React.Component {
    startTimer(){
     if(this.props.autoPlay){
       this.autoPlay = setInterval(
-        () => this.goToNextImage(),
+        () => this.goToNextSlide(),
         this.props.autoPlaySpeed || 5000
       );
     }
@@ -42,11 +42,7 @@ export default class Glide extends React.Component {
    }
 
    componentDidMount() {
-    const autoPlay = this.props.autoPlay;
-
-    if(autoPlay) {
       this.startTimer();
-    };
   }
 
    componentWillUpdate(nextProps, nextState){
@@ -69,73 +65,75 @@ export default class Glide extends React.Component {
       width: this.props.width
     }
 
+    console.log(this.props.children)
+
     return (
       <div
         className="glide--container"
         style={glideWidth}
       >
-          <div
-            className="glide--item"
+        <div
+          className="glide--item"
+        >
+          <ReactCSSTransitionGroup
+            transitionName='current'
+            transitionAppear={true}
+            transitionAppearTimeout={500}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
           >
-            <ReactCSSTransitionGroup
-              transitionName='current'
-              transitionAppear={true}
-              transitionAppearTimeout={500}
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={300}
-            >
 
-              {
-                React.Children.map(children, (child, index) => {
-                  if (index !== currentIndex) return
-                  return child
-                })
-              }              
-            </ReactCSSTransitionGroup>
-          </div>
+            {
+              React.Children.map(children, (child, index) => {
+                if (index !== currentIndex) return
+                return child
+              })
+            }              
+          </ReactCSSTransitionGroup>
+        </div>
 
-          {(infinite || currentIndex !== 0) &&
-            <button
-              className="glide--prev-btn"
-              onClick={() => {
-                clearInterval(this.autoPlay);
-                this.goToPrevSlide();
-              }}
-            >
-              &#10094;
-            </button>
-          }
+        {(infinite || currentIndex !== 0) &&
+          <button
+            className="glide--prev-btn"
+            onClick={() => {
+              clearInterval(this.autoPlay);
+              this.goToPrevSlide();
+            }}
+          >
+            &#10094;
+          </button>
+        }
 
-          {(infinite || currentIndex !== this.props.images.children-1) &&
-            <button
-              className="glide--next-btn"
-              onClick={() => {
-                clearInterval(this.autoPlay);
-                this.goToNextSlide();
-              }}
-            >
-              &#10095;
-            </button>
-          }
+        {(infinite || currentIndex !== this.props.children.length-1) &&
+          <button
+            className="glide--next-btn"
+            onClick={() => {
+              clearInterval(this.autoPlay);
+              this.goToNextSlide();
+            }}
+          >
+            &#10095;
+          </button>
+        }
 
 
-          {(dots) &&
-            <ul
-              className="glide--dots"
-            >
-              {children.map((child,index) =>
-                <li
-                  key={child[index]}
-                  className={(currentIndex === index ? "active-dot" : "inactive-dot")}
-                  onClick={() => {
-                    this.goToSelectedDot(index);
-                  }}
-                >
-                  &middot;
-                </li>
-              )}
-            </ul>
-          }
+        {(dots) &&
+          <ul
+            className="glide--dots"
+          >
+            {children.map((child,index) =>
+              <li
+                key={index}
+                className={(currentIndex === index ? "active-dot" : "inactive-dot")}
+                onClick={() => {
+                  this.goToSelectedDot(index);
+                }}
+              >
+                &middot;
+              </li>
+            )}
+          </ul>
+        }
       </div>
     );
   }

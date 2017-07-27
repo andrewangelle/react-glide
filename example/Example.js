@@ -8,14 +8,13 @@ export default class Example extends Component {
         <Glide
           width={500}
           autoPlay={false}
-          autoPlaySpeed={1000}
+          autoPlaySpeed={2000}
           infinite={true}
           dots={true}
-
         >
-          <h1>Bitch Child</h1>
-          <h1>Bastard Child</h1>
-          <h1>Child with Both Parents</h1>
+          <h1>Slide One</h1>
+          <h1>Slide Two</h1>
+          <h1>Slide Three</h1>
         </Glide>
 
       </div>
