@@ -215,7 +215,6 @@ describe('Glide', () => {
 
 
   it('changes slides when autoPlay is on', () => {
-
     const component = mount(
       <Glide
         width={500}
@@ -238,82 +237,93 @@ describe('Glide', () => {
   });
 
 
-  it.skip('changes slides using autoPlaySpeed prop', () => {
-
-    jest.useFakeTimers();
-
-
+  it('changes slides using autoPlaySpeed prop', () => {
     const component = mount(
       <Glide
-        width={600}
+        width={500}
         autoPlay={true}
-        autoPlaySpeed={2000}
+        autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    const stateBefore = { currentIndex: 0 };
-    const stateAfter = { currentIndex: 1 };
-    const userProp = component.find('.glide--container').root.node.props.autoPlaySpeed
 
-    expect(component.state()).toEqual(stateBefore);
+    const userProp = component.instance().props.autoPlaySpeed
+
+    expect(component.state().currentIndex).toEqual(0);
 
     jest.runTimersToTime(userProp);
 
-    expect(component.state()).toEqual(stateAfter)
+    expect(component.state().currentIndex).toEqual(1);
 
   });
 
-  it.skip('renders only one button on first slide when infinite is set to false', () => {
-
+  it('renders only one button on first slide when infinite is set to false', () => {
     const component = shallow(
       <Glide
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={false}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random');
+
+    const slideRedered = component.instance().props.children[0].props.children
+
+    expect(slideRedered).toEqual('Slide One');
+    
     expect(component.find('button').length).toEqual(1);
   });
 
-  it.skip('renders only one button on last slide when infinite is set to false', () => {
-
+  it('renders only one button on last slide when infinite is set to false', () => {
     const component = shallow(
       <Glide
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={false}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    //find prev button and simulate a user click event.
+
     const nextButton = component.find('button').last();
 
     nextButton.simulate('click');
     nextButton.simulate('click');
-    nextButton.simulate('click');
-    nextButton.simulate('click');
-    nextButton.simulate('click');
 
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random');
     expect(component.find('button').length).toEqual(1);
   });
 
-  it.skip('renders both buttons on first and last slide when infinite is true', () => {
+  it('renders both buttons on first and last slide when infinite is true', () => {
 
     const component = shallow(
       <Glide
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
+
+
     const nextButton = component.find('button').last();
 
     expect(component.state().currentIndex).toEqual(0)
@@ -321,57 +331,63 @@ describe('Glide', () => {
 
     nextButton.simulate('click');
     nextButton.simulate('click');
-    nextButton.simulate('click');
-    nextButton.simulate('click');
-    nextButton.simulate('click');
 
-    expect(component.state().currentIndex).toEqual(images.length - 1)
+    expect(component.state().currentIndex).toEqual(2)
     expect(component.find('button').length).toEqual(2);
   });
 
 
-  it.skip('renders dots', () => {
-
+  it('renders dots', () => {
     const component = shallow(
       <Glide
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
-        infinite={false}
+        infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
 
     expect(component.find('.glide--dots').length).toEqual(1);
   });
 
-  it.skip('renders number of dots equal to number of images', () => {
-
+  it('renders number of dots equal to number of children', () => {
     const component = shallow(
       <Glide
         width={500}
-        autoPlay={false}
-        autoPlaySpeed={1000}
-        infinite={false}
-        dots={true}
-      />
-    );
-    const numberOfImages = component.find('.glide--container').root.node.props.children.props.images.length;
-    const numberOfDots = component.find('li').length;
-
-    expect(numberOfDots).toEqual(numberOfImages);
-  });
-
-  it.skip('updates state when dot is clicked', () => {
-
-    const component = shallow(
-      <Glide
-        width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+    const numberOfChildren = component.props().children.length -1
+    const numberOfDots = component.find('li').length;
+
+    expect(numberOfDots).toEqual(numberOfChildren);
+  });
+
+  it('updates state when dot is clicked', () => {
+    const component = shallow(
+      <Glide
+        width={500}
+        autoPlay={true}
+        autoPlaySpeed={1000}
+        infinite={true}
+        dots={true}
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
 
     const sixthDot = component.find('li').last();
@@ -380,30 +396,32 @@ describe('Glide', () => {
 
     sixthDot.simulate('click');
 
-    expect(component.state().currentIndex).toEqual(5);
+    expect(component.state().currentIndex).toEqual(2);
   });
 
-  it.skip('changes image when dot is clicked', () => {
+  it.skip('changes slide when dot is clicked', () => {
 
     const component = shallow(
       <Glide
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
+    console.log(component.node.props.children);
 
-    const sixthDot = component.find('li').last();
-    const stateBefore = { currentIndex: 0 };
-    const stateAfter = { currentIndex: 5 };
+    const lastDot = component.find('li').last();
 
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random')
 
-    sixthDot.simulate('click');
 
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random')
+    lastDot.simulate('click');
+
   });
 
   it.skip('adds active class to dot according to current image', () => {
