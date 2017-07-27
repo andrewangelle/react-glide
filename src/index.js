@@ -119,7 +119,7 @@ export default class Glide extends React.Component {
           <ul
             className="glide--dots"
           >
-            {children.map((child,index) =>
+            {React.Children.map(children, (child,index) =>
               <li
                 key={index}
                 className={(currentIndex === index ? "active-dot" : "inactive-dot")}
