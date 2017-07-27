@@ -25,7 +25,7 @@ export default class Glide extends React.Component {
     this.setState({ currentIndex: index });
    }   
 
-   goToPrevImage() {
+   goToPrevSlide() {
     const { currentIndex }=this.state;
     const nextIndex = currentIndex === 0 ?
           this.props.children.length - 1 : currentIndex - 1;
@@ -33,12 +33,31 @@ export default class Glide extends React.Component {
      this.setState({ currentIndex : nextIndex })
    }
 
-   goToNextImage() {
+   goToNextSlide() {
     const { currentIndex }=this.state;
     const nextIndex = currentIndex === this.props.children.length - 1 ?
       0 : currentIndex + 1;
 
     this.setState({ currentIndex : nextIndex })
+   }
+
+   componentDidMount() {
+    const autoPlay = this.props.autoPlay;
+
+    if(autoPlay) {
+      this.startTimer();
+    };
+  }
+
+   componentWillUpdate(nextProps, nextState){
+    const { currentIndex } = this.state
+    const onSlideChange = this.props.onSlideChange;
+    const willIndexChange = currentIndex !== nextState.currentIndex;
+
+    if(onSlideChange){
+      willIndexChange ? this.props.onSlideChange() : '';
+    }
+
    }
 
   render(){
@@ -50,14 +69,14 @@ export default class Glide extends React.Component {
       width: this.props.width
     }
 
-    console.log({children});
-
     return (
       <div
         className="glide--container"
         style={glideWidth}
       >
-          <div>
+          <div
+            className="glide--item"
+          >
             <ReactCSSTransitionGroup
               transitionName='current'
               transitionAppear={true}
@@ -65,62 +84,62 @@ export default class Glide extends React.Component {
               transitionEnterTimeout={500}
               transitionLeaveTimeout={300}
             >
-              
+
               {
-                React.Children.map(children, (child, i) => {
-                  if (i !== currentIndex) return
+                React.Children.map(children, (child, index) => {
+                  if (index !== currentIndex) return
                   return child
                 })
-              }
-
-              {(infinite || currentIndex !== 0) &&
-                <button
-                  className="glide--prev-btn"
-                  onClick={() => {
-                    clearInterval(this.autoPlay);
-                    this.goToPrevImage();
-                  }}
-                >
-                  &#10094;
-                </button>
-              }
-
-              {(infinite || currentIndex !== this.props.images.children-1) &&
-                <button
-                  className="glide--next-btn"
-                  onClick={() => {
-                    clearInterval(this.autoPlay);
-                    this.goToNextImage();
-                  }}
-                >
-                  &#10095;
-                </button>
-              }
+              }              
             </ReactCSSTransitionGroup>
-
-            {(dots) &&
-              <ul
-                className="glide--dots"
-              >
-                {children.map((child,index) =>
-                  <li
-                    key={child[index]}
-                    className={(currentIndex === index ? "active-dot" : "inactive-dot")}
-                    onClick={() => {
-                      this.goToSelectedDot(index);
-                    }}
-                  >
-                    &middot;
-                  </li>
-                )}
-              </ul>
-            }
           </div>
+
+          {(infinite || currentIndex !== 0) &&
+            <button
+              className="glide--prev-btn"
+              onClick={() => {
+                clearInterval(this.autoPlay);
+                this.goToPrevSlide();
+              }}
+            >
+              &#10094;
+            </button>
+          }
+
+          {(infinite || currentIndex !== this.props.images.children-1) &&
+            <button
+              className="glide--next-btn"
+              onClick={() => {
+                clearInterval(this.autoPlay);
+                this.goToNextSlide();
+              }}
+            >
+              &#10095;
+            </button>
+          }
+
+
+          {(dots) &&
+            <ul
+              className="glide--dots"
+            >
+              {children.map((child,index) =>
+                <li
+                  key={child[index]}
+                  className={(currentIndex === index ? "active-dot" : "inactive-dot")}
+                  onClick={() => {
+                    this.goToSelectedDot(index);
+                  }}
+                >
+                  &middot;
+                </li>
+              )}
+            </ul>
+          }
       </div>
     );
   }
 }
-
 
 Glide.propTypes = {
   width: PropTypes.number.isRequired,
