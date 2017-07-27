@@ -65,8 +65,6 @@ export default class Glide extends React.Component {
       width: this.props.width
     }
 
-    console.log(this.props.children)
-
     return (
       <div
         className="glide--container"
