@@ -4,8 +4,6 @@ import Preload from 'react-preload';
 import PropTypes from 'prop-types';
 import './index.css';
 
-const loadingIndicator = (<div>Loading...</div>);
-
 export default class Glide extends React.Component {
   constructor(props) {
     super(props);
@@ -25,65 +23,40 @@ export default class Glide extends React.Component {
 
    goToSelectedDot(index){
     this.setState({ currentIndex: index });
-   }
+   }   
 
    goToPrevImage() {
     const { currentIndex }=this.state;
     const nextIndex = currentIndex === 0 ?
-          this.props.images.length - 1 : currentIndex - 1;
+          this.props.children.length - 1 : currentIndex - 1;
 
      this.setState({ currentIndex : nextIndex })
    }
 
    goToNextImage() {
     const { currentIndex }=this.state;
-    const nextIndex = currentIndex === this.props.images.length - 1 ?
-          0 : currentIndex + 1;
+    const nextIndex = currentIndex === this.props.children.length - 1 ?
+      0 : currentIndex + 1;
 
-     this.setState({ currentIndex : nextIndex })
-   }
-
-   componentDidMount() {
-    const autoPlay = this.props.autoPlay;
-
-    if(autoPlay) {
-      this.startTimer();
-    };
-  }
-
-   componentWillUpdate(nextProps, nextState){
-    const { currentIndex } = this.state
-    const onSlideChange = this.props.onSlideChange;
-    const willIndexChange = currentIndex !== nextState;
-
-    if(onSlideChange){
-      willIndexChange ? this.props.onSlideChange() : '';
-    }
-
+    this.setState({ currentIndex : nextIndex })
    }
 
   render(){
     const { currentIndex } = this.state;
-    const { infinite, images, dots } = this.props;
+    const { infinite, children, dots } = this.props;
 
     const glideWidth={
       position: "relative",
       width: this.props.width
     }
 
+    console.log({children});
+
     return (
       <div
         className="glide--container"
         style={glideWidth}
       >
-        <Preload
-          loadingIndicator={loadingIndicator}
-          images={this.props.images}
-          onError={this._handleImageLoadError}
-          resolveOnError={true}
-          mountChildren={true}
-        >
-
           <div>
             <ReactCSSTransitionGroup
               transitionName='current'
@@ -92,12 +65,13 @@ export default class Glide extends React.Component {
               transitionEnterTimeout={500}
               transitionLeaveTimeout={300}
             >
-
-              <img
-                className='glide--image'
-                key={this.state.currentIndex}
-                src={this.props.images[this.state.currentIndex]}
-              />
+              
+              {
+                React.Children.map(children, (child, i) => {
+                  if (i !== currentIndex) return
+                  return child
+                })
+              }
 
               {(infinite || currentIndex !== 0) &&
                 <button
@@ -111,7 +85,7 @@ export default class Glide extends React.Component {
                 </button>
               }
 
-              {(infinite || currentIndex !== this.props.images.length-1) &&
+              {(infinite || currentIndex !== this.props.images.children-1) &&
                 <button
                   className="glide--next-btn"
                   onClick={() => {
@@ -128,9 +102,9 @@ export default class Glide extends React.Component {
               <ul
                 className="glide--dots"
               >
-                {images.map((image,index) =>
+                {children.map((child,index) =>
                   <li
-                    key={image}
+                    key={child[index]}
                     className={(currentIndex === index ? "active-dot" : "inactive-dot")}
                     onClick={() => {
                       this.goToSelectedDot(index);
@@ -142,7 +116,6 @@ export default class Glide extends React.Component {
               </ul>
             }
           </div>
-        </Preload>
       </div>
     );
   }
@@ -150,7 +123,6 @@ export default class Glide extends React.Component {
 
 
 Glide.propTypes = {
-  images: PropTypes.array.isRequired,
   width: PropTypes.number.isRequired,
   autoPlay: PropTypes.bool,
   autoPlaySpeed: PropTypes.number,
@@ -165,3 +137,4 @@ Glide.defaultProps = {
   infinite: true,
   dots: true
 };
+

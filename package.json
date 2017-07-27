@@ -35,7 +35,8 @@
   },
   "dependencies": {
     "react-preload": "^0.5.0",
-    "sinon": "^2.3.8"
+    "sinon": "^2.3.8",
+    "styled-components": "^2.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
