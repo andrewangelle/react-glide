@@ -34,8 +34,8 @@
     "react": "^0.14.6 || 15.x.x"
   },
   "dependencies": {
-    "react-preload": "^0.5.0",
-    "sinon": "^2.3.8"
+    "prop-types": "^15.5.10",
+    "react-preload": "^0.5.0"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
@@ -58,12 +58,12 @@
     "jest": "^18.1.0",
     "jest-cli": "^20.0.4",
     "jest-css-modules": "^1.1.0",
-    "prop-types": "^15.5.10",
     "react": "~15.4.2",
     "react-addons-css-transition-group": "~15.4.2",
     "react-addons-test-utils": "~15.4.2",
     "react-dom": "~15.4.2",
     "react-test-renderer": "~15.4.2",
+    "sinon": "^2.3.8",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^2.2.0"

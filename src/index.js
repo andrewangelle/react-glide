@@ -54,7 +54,7 @@ export default class Glide extends React.Component {
    componentWillUpdate(nextProps, nextState){
     const { currentIndex } = this.state
     const onSlideChange = this.props.onSlideChange;
-    const willIndexChange = currentIndex !== nextState;
+    const willIndexChange = currentIndex !== nextState.currentIndex;
 
     if(onSlideChange){
       willIndexChange ? this.props.onSlideChange() : '';
