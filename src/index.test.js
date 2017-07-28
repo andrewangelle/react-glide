@@ -399,8 +399,7 @@ describe('Glide', () => {
     expect(component.state().currentIndex).toEqual(2);
   });
 
-  it.skip('changes slide when dot is clicked', () => {
-
+  it('adds active class to dot according to current index', () => {
     const component = shallow(
       <Glide
         width={500}
@@ -414,47 +413,27 @@ describe('Glide', () => {
         <h1>Slide Three</h1>
       </Glide>
     );
-    console.log(component.node.props.children);
-
-    const lastDot = component.find('li').last();
-
-
-
-    lastDot.simulate('click');
-
-  });
-
-  it.skip('adds active class to dot according to current image', () => {
-
-
-    const component = shallow(
-      <Glide
-        width={500}
-        autoPlay={false}
-        autoPlaySpeed={1000}
-        infinite={true}
-        dots={true}
-      />
-    );
-  const currentImage = component.find('img').props().src;
+  
   const dotClassName = component.find('li').first().props().className;
 
-  expect(currentImage).toEqual('https://unsplash.it/500/?random');
   expect(dotClassName).toEqual('active-dot');
   });
 
-  it.skip('fires onSlideChange callback when index changes', () => {
-
+  it('fires onSlideChange callback when index changes', () => {
     const onSlideChange = stub();
     const component = shallow(
       <Glide
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
         onSlideChange={onSlideChange}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
     const button = component.find('button').last();
 
@@ -468,31 +447,22 @@ describe('Glide', () => {
     button.simulate('click');
     expect(onSlideChange.callCount).toEqual(2)
     expect(component.state().currentIndex).toEqual(2)
-
-    button.simulate('click');
-    expect(onSlideChange.callCount).toEqual(3)
-    expect(component.state().currentIndex).toEqual(3)
-
-    button.simulate('click');
-    expect(onSlideChange.callCount).toEqual(4)
-    expect(component.state().currentIndex).toEqual(4)
-
-    button.simulate('click');
-    expect(onSlideChange.callCount).toEqual(5)
-    expect(component.state().currentIndex).toEqual(5)
   });
 
-  it.skip('does not fire onSlideChange callback when prop not passed', () => {
-
+  it('does not fire onSlideChange callback when prop not passed', () => {
     const onSlideChange = stub();
     const component = shallow(
       <Glide
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
     const button = component.find('button').last();
 
