@@ -81,10 +81,10 @@ export default class Glide extends React.Component {
             transitionLeaveTimeout={300}
           >
 
-            {
-              React.Children.map(children, (child, index) => {
-                if (index !== currentIndex) return
-                return child
+            {React.Children.map(children, (child, index) => {
+                if(index === currentIndex) {
+                  return child 
+                }
               })
             }              
           </ReactCSSTransitionGroup>
