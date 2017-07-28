@@ -8,122 +8,115 @@ import {
 } from 'enzyme';
 import { stub } from 'sinon';
 
-jest.useFakeTimers();
+jest.useFakeTimers(); it.skip
 
 describe('Glide', () => {
   it('renders without crashing', () => { Glide
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
     const component = render(
       <Glide
-        images={images}
         width={500}
         autoPlay={false}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />)
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
 
     expect(component).toBeTruthy();
   });
 
-  it('has images array that contains images', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
+  it('has children elements', () => {
     const component = shallow(
       <Glide
-        images={images}
         width={500}
         autoPlay={false}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    expect(images.length).toBeGreaterThan(0);
+    expect(component.props().children.length).toBeGreaterThan(0)
   });
 
-  it('renders first image in array as first image displayed', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
+  it('renders first child element as first slide displayed', () => {
     const component = shallow(
       <Glide
-        images={images}
         width={500}
         autoPlay={false}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
+    const element = component.instance().props.children[0].props.children;
+    
+    expect(element).toEqual('Slide One');
+  });
 
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random');
-});
+  it('has width prop', () => {
+    const component = shallow(
+      <Glide
+        width={500}
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        infinite={true}
+        dots={true}
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+    const userProp = component.instance().props.width
 
-  it('sets width according to prop', () => {
-     const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
-    const componentMount = mount(
+    expect(userProp).toBeTruthy();
+  });  
+
+  it('sets container width according to prop', () => {
+    const component = shallow(
       <Glide
-        images={images}
         width={500}
-      />
+        autoPlay={false}
+        autoPlaySpeed={1000}
+        infinite={true}
+        dots={true}
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    const componentRendered = shallow(
-      <Glide
-        images={images}
-        width={500}
-      />
-    );
-    const userProp = componentMount.find('.glide--container').root.node.props.width
-    const containerWidth = componentRendered.renderer._instance._currentElement.props.width;
+    const userProp = component.instance().props.width
+    const containerWidth = component.renderer._instance._currentElement.props.width;
 
     expect(containerWidth).toEqual(userProp);
   });
 
   it('changes to next index when next button is clicked', () => {
-    const images = [
-    'https://unsplash.it/500/?random',
-    'https://unsplash.it/501/?random',
-    'https://unsplash.it/502/?random',
-    'https://unsplash.it/503/?random',
-    'https://unsplash.it/504/?random',
-    'https://unsplash.it/505/?random'
-    ];
-
     const component = shallow(
       <Glide
-        images={images}
         width={500}
         autoPlay={false}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
 
     const nextButton = component.find('button').last();
@@ -136,245 +129,201 @@ describe('Glide', () => {
     nextButton.simulate('click');
     expect(component.state().currentIndex).toEqual(2);
 
-    nextButton.simulate('click');
-    expect(component.state().currentIndex).toEqual(3);
-
-    nextButton.simulate('click');
-    expect(component.state().currentIndex).toEqual(4);
-
-    nextButton.simulate('click');
-    expect(component.state().currentIndex).toEqual(5);
-
-    nextButton.simulate('click');
-    expect(component.state().currentIndex).toEqual(0)
-
   });
 
   it('changes to previous index when prev button is clicked', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
     const component = shallow(
       <Glide
-        images={images}
         width={500}
         autoPlay={false}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
     const prevButton = component.find('button').first();
 
     expect(component.state().currentIndex).toEqual(0);
 
     prevButton.simulate('click');
-    expect(component.state().currentIndex).toEqual(5);
+    expect(component.state().currentIndex).toEqual(2);
 
     prevButton.simulate('click')
-    expect(component.state().currentIndex).toEqual(4)
+    expect(component.state().currentIndex).toEqual(1)
 
   });
 
-  it('changes to next image when next button is clicked', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
+  it('changes to next slide when next button is clicked', () => {
     const component = shallow(
       <Glide
-        images={images}
         width={500}
         autoPlay={false}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    //find prev button and simulate a user click event.
-    const nextButton = component.find('button').last();
-
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random')
+    const nextButton = component.find('button').last();    
+    const elementOne = component.instance().props.children[0].props.children;
+    const elementTwo = component.instance().props.children[1].props.children;
+    const elementThree = component.instance().props.children[2].props.children;
+    
+    expect(elementOne).toEqual('Slide One');
 
     nextButton.simulate('click');
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/501/?random');
+    expect(elementTwo).toEqual('Slide Two');
+
+    nextButton.simulate('click');
+    expect(elementThree).toEqual('Slide Three');    
   });
 
-  it('changes to previous image when prev button is clicked', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
+  it('changes to previous slide when prev button is clicked', () => {
     const component = shallow(
       <Glide
-        images={images}
         width={500}
         autoPlay={false}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    const prevButton = component.find('button').first();
-
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random');
+    const prevButton = component.find('button').first();    
+    const elementOne = component.instance().props.children[0].props.children;
+    const elementTwo = component.instance().props.children[1].props.children;
+    const elementThree = component.instance().props.children[2].props.children;
+    
+    expect(component.find('h1').props().children).toEqual('Slide One');
 
     prevButton.simulate('click');
+    expect(component.find('h1').props().children).toEqual('Slide Three');
 
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random');
+    prevButton.simulate('click');
+    expect(component.find('h1').props().children).toEqual('Slide Two');
   });
 
 
   it('changes slides when autoPlay is on', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
     const component = mount(
       <Glide
-        images={images}
-        width={600}
+        width={500}
         autoPlay={true}
-        autoPlaySpeed={2000}
+        autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    const stateBefore = { currentIndex: 0 };
-    const stateAfter = { currentIndex: 1 };
 
-    expect(component.state()).toEqual(stateBefore);
+    expect(component.state().currentIndex).toEqual(0);
 
     jest.runTimersToTime(2000);
 
-    expect(component.state()).toEqual(stateAfter)
+    expect(component.state().currentIndex).toEqual(2)
   });
 
 
   it('changes slides using autoPlaySpeed prop', () => {
-
-    jest.useFakeTimers();
-
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
     const component = mount(
       <Glide
-        images={images}
-        width={600}
+        width={500}
         autoPlay={true}
-        autoPlaySpeed={2000}
+        autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    const stateBefore = { currentIndex: 0 };
-    const stateAfter = { currentIndex: 1 };
-    const userProp = component.find('.glide--container').root.node.props.autoPlaySpeed
 
-    expect(component.state()).toEqual(stateBefore);
+    const userProp = component.instance().props.autoPlaySpeed
+
+    expect(component.state().currentIndex).toEqual(0);
 
     jest.runTimersToTime(userProp);
 
-    expect(component.state()).toEqual(stateAfter)
+    expect(component.state().currentIndex).toEqual(1);
 
   });
 
   it('renders only one button on first slide when infinite is set to false', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
     const component = shallow(
       <Glide
-        images={images}
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={false}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random');
+
+    const slideRedered = component.instance().props.children[0].props.children
+
+    expect(slideRedered).toEqual('Slide One');
+    
     expect(component.find('button').length).toEqual(1);
   });
+
   it('renders only one button on last slide when infinite is set to false', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
     const component = shallow(
       <Glide
-        images={images}
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={false}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-    //find prev button and simulate a user click event.
+
     const nextButton = component.find('button').last();
 
     nextButton.simulate('click');
     nextButton.simulate('click');
-    nextButton.simulate('click');
-    nextButton.simulate('click');
-    nextButton.simulate('click');
 
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random');
     expect(component.find('button').length).toEqual(1);
   });
 
   it('renders both buttons on first and last slide when infinite is true', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
+
     const component = shallow(
       <Glide
-        images={images}
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
+
+
     const nextButton = component.find('button').last();
 
     expect(component.state().currentIndex).toEqual(0)
@@ -382,81 +331,63 @@ describe('Glide', () => {
 
     nextButton.simulate('click');
     nextButton.simulate('click');
-    nextButton.simulate('click');
-    nextButton.simulate('click');
-    nextButton.simulate('click');
 
-    expect(component.state().currentIndex).toEqual(images.length - 1)
+    expect(component.state().currentIndex).toEqual(2)
     expect(component.find('button').length).toEqual(2);
   });
 
 
   it('renders dots', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
     const component = shallow(
       <Glide
-        images={images}
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
-        infinite={false}
+        infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
 
     expect(component.find('.glide--dots').length).toEqual(1);
   });
 
-  it('renders number of dots equal to number of images', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
+  it('renders number of dots equal to number of children', () => {
     const component = shallow(
       <Glide
-        images={images}
         width={500}
-        autoPlay={false}
-        autoPlaySpeed={1000}
-        infinite={false}
-        dots={true}
-      />
-    );
-    const numberOfImages = component.find('.glide--container').root.node.props.children.props.images.length;
-    const numberOfDots = component.find('li').length;
-
-    expect(numberOfDots).toEqual(numberOfImages);
-  });
-
-  it('updates state when dot is clicked', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
-    const component = shallow(
-      <Glide
-        images={images}
-        width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+    const numberOfChildren = component.props().children.length -1
+    const numberOfDots = component.find('li').length;
+
+    expect(numberOfDots).toEqual(numberOfChildren);
+  });
+
+  it('updates state when dot is clicked', () => {
+    const component = shallow(
+      <Glide
+        width={500}
+        autoPlay={true}
+        autoPlaySpeed={1000}
+        infinite={true}
+        dots={true}
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
 
     const sixthDot = component.find('li').last();
@@ -465,87 +396,44 @@ describe('Glide', () => {
 
     sixthDot.simulate('click');
 
-    expect(component.state().currentIndex).toEqual(5);
+    expect(component.state().currentIndex).toEqual(2);
   });
 
-  it('changes image when dot is clicked', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
+  it('adds active class to dot according to current index', () => {
     const component = shallow(
       <Glide
-        images={images}
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
-
-    const sixthDot = component.find('li').last();
-    const stateBefore = { currentIndex: 0 };
-    const stateAfter = { currentIndex: 5 };
-
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/500/?random')
-
-    sixthDot.simulate('click');
-
-    expect(component.find('img').props().src).toEqual('https://unsplash.it/505/?random')
-  });
-
-  it('adds active class to dot according to current image', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
-
-    const component = shallow(
-      <Glide
-        images={images}
-        width={500}
-        autoPlay={false}
-        autoPlaySpeed={1000}
-        infinite={true}
-        dots={true}
-      />
-    );
-  const currentImage = component.find('img').props().src;
+  
   const dotClassName = component.find('li').first().props().className;
 
-  expect(currentImage).toEqual('https://unsplash.it/500/?random');
   expect(dotClassName).toEqual('active-dot');
   });
 
   it('fires onSlideChange callback when index changes', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
     const onSlideChange = stub();
     const component = shallow(
       <Glide
-        images={images}
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
         onSlideChange={onSlideChange}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
     const button = component.find('button').last();
 
@@ -559,39 +447,22 @@ describe('Glide', () => {
     button.simulate('click');
     expect(onSlideChange.callCount).toEqual(2)
     expect(component.state().currentIndex).toEqual(2)
-
-    button.simulate('click');
-    expect(onSlideChange.callCount).toEqual(3)
-    expect(component.state().currentIndex).toEqual(3)
-
-    button.simulate('click');
-    expect(onSlideChange.callCount).toEqual(4)
-    expect(component.state().currentIndex).toEqual(4)
-
-    button.simulate('click');
-    expect(onSlideChange.callCount).toEqual(5)
-    expect(component.state().currentIndex).toEqual(5)
   });
 
   it('does not fire onSlideChange callback when prop not passed', () => {
-    const images = [
-      'https://unsplash.it/500/?random',
-      'https://unsplash.it/501/?random',
-      'https://unsplash.it/502/?random',
-      'https://unsplash.it/503/?random',
-      'https://unsplash.it/504/?random',
-      'https://unsplash.it/505/?random'
-    ];
     const onSlideChange = stub();
     const component = shallow(
       <Glide
-        images={images}
         width={500}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={1000}
         infinite={true}
         dots={true}
-      />
+      >
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
     );
     const button = component.find('button').last();
 
