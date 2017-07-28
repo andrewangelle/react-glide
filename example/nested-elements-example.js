@@ -13,21 +13,21 @@ export default class Example extends Component {
           dots={true}
         >
           <div>
-            <h1>div one</h1>
-            <h1>with three</h1>
-            <h1>nested h1 tags</h1>
+            <h1>Slide One</h1>
+              <span> span nested in slide one </span>
+                <p> p tag nested in span</p>
+            <h1>Slide Two</h1>
+            <h1>Slide Three</h1>
           </div>
 
           <div>
-            <h1>div two</h1>
-            <h1>with three</h1>
-            <h1>nested h1 tags</h1>
+            <h1>Slide Four</h1>
           </div>
 
           <div>
-            <h1>div three</h1>
-            <h1>with three</h1>
-            <h1>nested h1 tags</h1>
+            <h1>Slide Seven</h1>
+            <h1>Slide Eight</h1>
+            <h1>Slide Nine</h1>
           </div>
 
         </Glide>

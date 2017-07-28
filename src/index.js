@@ -23,7 +23,7 @@ export default class Glide extends React.Component {
 
    goToSelectedDot(index){
     this.setState({ currentIndex: index });
-   }   
+   }
 
    goToPrevSlide() {
     const { currentIndex }=this.state;
@@ -83,10 +83,10 @@ export default class Glide extends React.Component {
 
             {React.Children.map(children, (child, index) => {
                 if(index === currentIndex) {
-                  return child 
+                  return child
                 }
               })
-            }              
+            }
           </ReactCSSTransitionGroup>
         </div>
 
@@ -152,4 +152,3 @@ Glide.defaultProps = {
   infinite: true,
   dots: true
 };
-
