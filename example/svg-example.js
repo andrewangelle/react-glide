@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Glide from '../src/index';
+import '../node_modules/react-glide/lib/react-glide.css';
 
 export default class Example extends Component {
   render() {
