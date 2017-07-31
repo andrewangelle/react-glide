@@ -20,7 +20,7 @@ import the module at the top of your component page
 import Glide from 'react-glide';
 ```
 
-Glide functions as a wrapper and can be passed any type of element. See example folder for more detailed usage
+Glide functions as a wrapper and can be passed any type of element. See [example folder](https://github.com/andrewangelle/react-glide/tree/multi-purpose/example) for more detailed usage
 
 ```javascript
 
