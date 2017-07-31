@@ -24,13 +24,11 @@ Glide functions as a wrapper and can be passed any type of element. See example 
 
 ```javascript
 
-<Glide
-  width={500}
->
+<Glide width={500}>
   <img src='http:/path/to/image/url' />
   <img src='http:/path/to/image/url2' />
   <img src='http:/path/to/image1/url3' />
-</ Glide>
+</Glide>
 
 ```
 

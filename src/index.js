@@ -50,17 +50,16 @@ export default class Glide extends React.Component {
     const onSlideChange = this.props.onSlideChange;
     const willIndexChange = currentIndex !== nextState.currentIndex;
 
+
     if(onSlideChange){
       willIndexChange ? this.props.onSlideChange() : '';
     }
-
    }
 
   render(){
     const { currentIndex } = this.state;
     const { infinite, children, dots } = this.props;
-
-    const glideWidth={
+    const glideWidth = {
       position: "relative",
       width: this.props.width
     }
@@ -82,7 +81,7 @@ export default class Glide extends React.Component {
           >
 
             {React.Children.toArray(children)[currentIndex]}
-            
+
           </ReactCSSTransitionGroup>
         </div>
 
@@ -109,7 +108,6 @@ export default class Glide extends React.Component {
             &#10095;
           </button>
         }
-
 
         {(dots) &&
           <ul
