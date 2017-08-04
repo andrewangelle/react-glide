@@ -50,7 +50,6 @@ export default class Glide extends React.Component {
     const onSlideChange = this.props.onSlideChange;
     const willIndexChange = currentIndex !== nextState.currentIndex;
 
-
     if(onSlideChange){
       willIndexChange ? this.props.onSlideChange() : '';
     }
@@ -97,7 +96,7 @@ export default class Glide extends React.Component {
           </button>
         }
 
-        {(infinite || currentIndex !== this.props.children.length-1) &&
+        {(infinite || currentIndex !== this.props.children.length - 1) &&
           <button
             className="glide--next-btn"
             onClick={() => {

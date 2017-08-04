@@ -9,27 +9,40 @@ export default class Example extends Component {
           width={500}
           autoPlay={false}
           autoPlaySpeed={2000}
-          infinite={true}
+          infinite={false}
           dots={true}
         >
           <div>
-            <h1>div one</h1>
-            <h1>with three</h1>
-            <h1>nested h1 tags</h1>
+            <img src='https://unsplash.it/500/?random' />
           </div>
+
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/6emElQDVqF4"
+            frameBorder="0"
+            allowFullScreen
+          >
+          </iframe>
 
           <div>
-            <h1>div two</h1>
-            <h1>with three</h1>
-            <h1>nested h1 tags</h1>
+            <svg
+              width="200"
+              height="250"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="10"
+                y="10"
+                width="30"
+                height="30"
+                stroke="blue"
+                fill="transparent"
+                strokeWidth="5"
+              />
+            </svg>
           </div>
-
-          <div>
-            <h1>div three</h1>
-            <h1>with three</h1>
-            <h1>nested h1 tags</h1>
-          </div>
-
         </Glide>
       </div>
     );
