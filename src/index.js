@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import CSSTransition from 'react-transition-group/CSSTransition'
 import Preload from 'react-preload';
 import PropTypes from 'prop-types';
 import './index.css';
@@ -71,17 +71,15 @@ export default class Glide extends React.Component {
         <div
           className="glide--item"
         >
-          <ReactCSSTransitionGroup
-            transitionName='current'
-            transitionAppear={true}
-            transitionAppearTimeout={500}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}
+          <CSSTransition
+            classNames='current'
+            timeout={300}
+            appear={true}
           >
 
             {React.Children.toArray(children)[currentIndex]}
 
-          </ReactCSSTransitionGroup>
+          </CSSTransition>
         </div>
 
         {(infinite || currentIndex !== 0) &&

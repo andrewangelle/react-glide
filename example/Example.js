@@ -9,7 +9,7 @@ export default class Example extends Component {
           width={500}
           autoPlay={false}
           autoPlaySpeed={2000}
-          infinite={false}
+          infinite={true}
           dots={true}
         >
           <div>

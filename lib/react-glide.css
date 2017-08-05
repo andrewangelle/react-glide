@@ -12,7 +12,7 @@ html, body {
   height: 100%;
 }
 
-.glide--image {
+.glide--item > span > * {
   position: absolute;
   width: 100%;
   z-index: 9;
@@ -90,11 +90,11 @@ button {
   transition: opacity .5s ease-in;
 }
 
-.current-leave {
+.current-exit {
   opacity: 1;
 }
 
-.current-leave.current-leave-active {
+.current-exit.current-exit-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
