@@ -19,7 +19,7 @@ html, body {
 }
 
 button {
-	margin-top: 45%;
+	top: 45%;
 	position: absolute;
 	z-index: 10;
 }
@@ -36,6 +36,7 @@ button {
 }
 
 .glide--prev-btn {
+  left: 0;
   color: hsl(190, 95%, 80%);
   background-color: hsl(190, 10%, 10%);
   height: 60px;
@@ -51,7 +52,7 @@ button {
 
 .glide--dots {
   position: absolute;
-  margin-top: 85%;
+  top: 85%;
   right: 43%;
   z-index: 100;
   cursor: pointer;
