@@ -1,6 +1,5 @@
 import React from 'react';
 import CSSTransition from 'react-transition-group/CSSTransition'
-import Preload from 'react-preload';
 import PropTypes from 'prop-types';
 import './index.css';
 
@@ -8,7 +7,8 @@ export default class Glide extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-       currentIndex: 0
+       currentIndex: 0,
+       imagesLoaded: false
      }
   };
 
@@ -43,7 +43,7 @@ export default class Glide extends React.Component {
 
    componentDidMount() {
       this.startTimer();
-  }
+    }
 
    componentWillUpdate(nextProps, nextState){
     const { currentIndex } = this.state
@@ -56,13 +56,12 @@ export default class Glide extends React.Component {
    }
 
   render(){
-    const { currentIndex } = this.state;
+    const { currentIndex, imagesLoaded } = this.state;
     const { infinite, children, dots } = this.props;
     const glideWidth = {
       position: "relative",
       width: this.props.width
     }
-
     return (
       <div
         className="glide--container"
@@ -76,9 +75,7 @@ export default class Glide extends React.Component {
             timeout={300}
             appear={true}
           >
-
             {React.Children.toArray(children)[currentIndex]}
-
           </CSSTransition>
         </div>
 
@@ -129,6 +126,7 @@ export default class Glide extends React.Component {
 }
 
 Glide.propTypes = {
+  images: PropTypes.array,
   width: PropTypes.number.isRequired,
   autoPlay: PropTypes.bool,
   autoPlaySpeed: PropTypes.number,

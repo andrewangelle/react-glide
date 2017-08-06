@@ -15,7 +15,7 @@ export default class Example extends Component {
           <div>
             <img src='https://unsplash.it/500/?random' />
           </div>
-          
+
           <div>
             <iframe
               width="500"
