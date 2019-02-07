@@ -1,16 +1,28 @@
-import React from 'react';
-import CSSTransition from 'react-transition-group/CSSTransition'
-import PropTypes from 'prop-types';
+import React, { ReactChild } from 'react';
+import CSSTransition from 'react-transition-group'
 import './index.css';
 
-export default class Glide extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state={
-       currentIndex: 0,
-       imagesLoaded: false
-     }
-  };
+export interface GlideProps {
+  images: Array<HTMLElement>,
+  width: number,
+  autoPlay?: boolean, // false
+  autoPlaySpeed?: number, // 2000
+  infinite?: boolean, // true
+  dots?: boolean, //true
+  onSlideChange: () => void;
+}
+
+interface State {
+  currentIndex: number;
+  imagesLoaded: boolean;
+}
+
+class Glide extends React.Component<GlideProps, State> {
+  autoPlay: any;
+  state = {
+    currentIndex: 0,
+    imagesLoaded: false
+  }
 
    startTimer(){
     if(this.props.autoPlay){
@@ -21,21 +33,23 @@ export default class Glide extends React.Component {
     }
    }
 
-   goToSelectedDot(index){
+   goToSelectedDot(index: number){
     this.setState({ currentIndex: index });
    }
 
    goToPrevSlide() {
+    const  { children } = this.props;
     const { currentIndex }=this.state;
     const nextIndex = currentIndex === 0 ?
-          this.props.children.length - 1 : currentIndex - 1;
+      (children as ReactChild[]).length - 1 : currentIndex - 1;
 
      this.setState({ currentIndex : nextIndex })
    }
 
    goToNextSlide() {
+     const  { children } = this.props;
     const { currentIndex }=this.state;
-    const nextIndex = currentIndex === this.props.children.length - 1 ?
+    const nextIndex = currentIndex === (children as ReactChild[]).length - 1 ?
       0 : currentIndex + 1;
 
     this.setState({ currentIndex : nextIndex })
@@ -45,7 +59,7 @@ export default class Glide extends React.Component {
       this.startTimer();
     }
 
-   componentWillUpdate(nextProps, nextState){
+   componentWillUpdate(nextProps: GlideProps, nextState: any){
     const { currentIndex } = this.state
     const onSlideChange = this.props.onSlideChange;
     const willIndexChange = currentIndex !== nextState.currentIndex;
@@ -59,7 +73,7 @@ export default class Glide extends React.Component {
     const { currentIndex, imagesLoaded } = this.state;
     const { infinite, children, dots } = this.props;
     const glideWidth = {
-      position: "relative",
+      position: 'relative' as any,
       width: this.props.width
     }
     return (
@@ -91,7 +105,7 @@ export default class Glide extends React.Component {
           </button>
         }
 
-        {(infinite || currentIndex !== this.props.children.length - 1) &&
+        {(infinite || currentIndex !== (children as ReactChild[]).length - 1) &&
           <button
             className="glide--next-btn"
             onClick={() => {
@@ -125,19 +139,4 @@ export default class Glide extends React.Component {
   }
 }
 
-Glide.propTypes = {
-  images: PropTypes.array,
-  width: PropTypes.number.isRequired,
-  autoPlay: PropTypes.bool,
-  autoPlaySpeed: PropTypes.number,
-  infinite: PropTypes.bool,
-  dots: PropTypes.bool,
-  onSlideChange: PropTypes.func
-};
-
-Glide.defaultProps = {
-  autoPlay: false,
-  autoPlaySpeed: 2000,
-  infinite: true,
-  dots: true
-};
+export { Glide }

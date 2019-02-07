@@ -1,5 +1,5 @@
 import React from 'react';
-import Glide from '../src/index';
+import { Glide } from './';
 import renderer from 'react-test-renderer';
 import {
   mount,
@@ -8,11 +8,11 @@ import {
 } from 'enzyme';
 import { stub } from 'sinon';
 
-jest.useFakeTimers(); it.skip
+jest.useFakeTimers(); 
 
 describe('Glide', () => {
-  it('renders without crashing', () => { Glide
-    const component = render(
+  it('renders without crashing', () => {
+    const component = mount(
       <Glide
         width={500}
         autoPlay={false}
