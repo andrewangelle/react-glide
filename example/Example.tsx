@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Glide from '../src/index';
+import { Glide } from '../src/index';
 
-export default class Example extends Component {
+class Example extends Component {
   render() {
     return (
       <div>
@@ -11,6 +11,7 @@ export default class Example extends Component {
           autoPlaySpeed={2000}
           infinite={true}
           dots={true}
+          onSlideChange={() => null}
         >
           <div>
             <img src='https://unsplash.it/500/?random' />
@@ -50,3 +51,5 @@ export default class Example extends Component {
     );
   }
 }
+
+export { Example }
