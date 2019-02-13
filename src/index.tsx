@@ -1,22 +1,23 @@
 import React, { ReactChild } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import './index.css';
 
-export interface GlideProps {
-  images?: string[],
-  width: number,
-  autoPlay?: boolean, // false
-  autoPlaySpeed?: number, // 2000
-  infinite?: boolean, // true
-  dots?: boolean, //true
+interface GlideProps {
+  images?: string[];
+  width: number;
+  autoPlay?: boolean;
+  autoPlaySpeed?: number;
+  infinite?: boolean;
+  dots?: boolean;
   onSlideChange: () => void;
 }
 
-export interface GlideState {
+interface GlideState {
   currentIndex: number;
   imagesLoaded: boolean;
 }
 
-class Glide extends React.Component<GlideProps, GlideState> {
+export class Glide extends React.Component<GlideProps, GlideState> {
   autoPlay: any;
 
   state: GlideState = {
@@ -84,13 +85,13 @@ class Glide extends React.Component<GlideProps, GlideState> {
         <div
           className="glide--item"
         >
-          {/* <CSSTransition
+          <CSSTransition
             classNames='current'
             timeout={300}
             appear={true}
-          > */}
-          {React.Children.toArray(children)[currentIndex]}
-          {/* </CSSTransition> */}
+          >
+            {React.Children.toArray(children)[currentIndex]}
+          </CSSTransition>
         </div>
 
         {(infinite || currentIndex !== 0) &&
@@ -139,4 +140,3 @@ class Glide extends React.Component<GlideProps, GlideState> {
   }
 }
 
-export { Glide }

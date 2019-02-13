@@ -1,12 +1,13 @@
 import React from 'react';
-import { Glide, GlideProps, GlideState } from '..';
+import { Glide } from '..';
 import {
   mount,
   shallow,
-} from 'enzyme'
+} from './setupTests'
 
 jest.useFakeTimers();
-const props: GlideProps = {
+
+const props: any = {
   width: 500,
   autoPlay: false,
   autoPlaySpeed: 1000,
@@ -15,10 +16,11 @@ const props: GlideProps = {
   onSlideChange: jest.fn()
 }
 
-const state: GlideState = {
+const state: any = {
   currentIndex: 0,
   imagesLoaded: false
 }
+
 describe('Glide', () => {
   it('renders without crashing', () => {
     const component = shallow(
@@ -96,7 +98,7 @@ describe('Glide', () => {
     );
 
     const nextButton = component.find('button').last();
-    const state = component.state() as GlideState;
+    const state = component.state() as any;
     expect(state.currentIndex).toEqual(0);
 
     nextButton.simulate('click');
@@ -116,7 +118,7 @@ describe('Glide', () => {
       </Glide>
     );
     const prevButton = component.find('button').first();
-    const state = component.state() as GlideState
+    const state = component.state() as any
     expect(state.currentIndex).toEqual(0);
 
     prevButton.simulate('click');
@@ -178,7 +180,7 @@ describe('Glide', () => {
         <h1>Slide Three</h1>
       </Glide>
     );
-    const state = component.state() as GlideState
+    const state = component.state() as any
 
     expect(state.currentIndex).toEqual(0);
 
@@ -186,4 +188,4 @@ describe('Glide', () => {
 
     expect(state.currentIndex).toEqual(2)
   });
-
+});

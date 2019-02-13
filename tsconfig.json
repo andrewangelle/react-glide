@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "outDir": "dist",
+    "noEmit": true,
+    "outDir": "lib",
     "module": "es6",
     "target": "es2015",
     "lib": [
@@ -26,10 +27,10 @@
   "exclude": [
     "unit",
     "dist",
-    "example"
+    "example",
   ],
   "include": [
     "example",
-    "src/**/*"
+    "src/index.tsx"
   ]
 }

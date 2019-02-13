@@ -25,8 +25,7 @@ module.exports = {
     },
     minimizer: [
       new UglifyJsPlugin({
-        include: /dist/,
-        exclude: /\.html/,
+        include: /\.js/,
         parallel: true,
         sourceMap: true
       }),
@@ -36,7 +35,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx/,
+        test: /^(?!.*test\.tsx?$).*\.tsx?$/,
         exclude: /node_modules/,
         use: ['babel-loader']
       },
@@ -49,7 +48,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.tsx/,
+        test: /^(?!.*test\.js?$).*\.js?$/,
         exclude: /node_modules/,
         use: ["source-map-loader"],
         enforce: "pre"
@@ -73,6 +72,5 @@ module.exports = {
       filename: libraryName + '.css',
       chunkFilename: libraryName + '.[id].css'
     }),
-
   ]
 };
