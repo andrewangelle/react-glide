@@ -13,16 +13,6 @@ module.exports = {
     publicPath: 'lib'
   },
   optimization: {
-    splitChunks: {
-      cacheGroups: {
-        styles: {
-          name: 'styles',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true
-        }
-      }
-    },
     minimizer: [
       new UglifyJsPlugin({
         include: /\.js/,
@@ -56,14 +46,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.tsx', '.css'],
-  },
-  devServer: {
-    contentBase: 'dist',
-    port: 3000,
-    open: true,
-    host: 'localhost',
-    hot: true
+    extensions: ['.js', '.tsx', '.css', '.ts', '.jsx'],
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

@@ -2,7 +2,7 @@ import React, { ReactChild } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import './index.css';
 
-interface GlideProps {
+export interface GlideProps {
   images?: string[];
   width: number;
   autoPlay?: boolean;
@@ -12,12 +12,12 @@ interface GlideProps {
   onSlideChange: () => void;
 }
 
-interface GlideState {
+export interface GlideState {
   currentIndex: number;
   imagesLoaded: boolean;
 }
 
-export class Glide extends React.Component<GlideProps, GlideState> {
+class Glide extends React.Component<GlideProps, GlideState> {
   autoPlay: any;
 
   state: GlideState = {
@@ -71,19 +71,24 @@ export class Glide extends React.Component<GlideProps, GlideState> {
 
   render() {
     const { currentIndex } = this.state;
-    const { infinite, children, dots } = this.props;
+
+    const {
+      infinite = false,
+      children,
+      dots = true
+    } = this.props;
+
     const glideWidth = {
       position: 'relative' as any,
       width: this.props.width
     }
+
     return (
       <div
         className="glide--container"
         style={glideWidth}
       >
-        <div
-          className="glide--item"
-        >
+        <div className="glide--item">
           <CSSTransition
             classNames='current'
             timeout={300}
@@ -117,10 +122,8 @@ export class Glide extends React.Component<GlideProps, GlideState> {
           </button>
         }
 
-        {(dots) &&
-          <ul
-            className="glide--dots"
-          >
+        {dots &&
+          <ul className="glide--dots" >
             {React.Children.map(children, (child, index) =>
               <li
                 key={index}
@@ -139,3 +142,4 @@ export class Glide extends React.Component<GlideProps, GlideState> {
   }
 }
 
+export { Glide }

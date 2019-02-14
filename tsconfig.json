@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "outDir": "lib",
+    "outDir": "dist",
     "module": "es6",
     "target": "es2015",
     "lib": [
@@ -26,6 +26,7 @@
   "exclude": [
     "dist",
     "example",
+    "src/tests/*"
   ],
   "include": [
     "example",

@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const devMode = process.env.NODE_ENV !== 'production'
 const libraryName = 'reactGlide';
 
 module.exports = {
@@ -29,7 +28,7 @@ module.exports = {
       new UglifyJsPlugin({
         exclude: /\.html/,
         parallel: true,
-        sourceMap: true // set to true if you want JS source maps
+        sourceMap: true
       }),
       new OptimizeCSSAssetsPlugin({})
     ]
@@ -39,13 +38,12 @@ module.exports = {
       {
         test: /\.tsx/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'ts-loader']
+        use: ['babel-loader']
       },
       {
         test: /\.css/,
         exclude: /node_modules/,
         use: [
-          //  MiniCssExtractPlugin.loader,
           'style-loader',
           'css-loader',
         ]
@@ -59,7 +57,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.tsx', '.css', '.ts'],
+    extensions: ['.js', '.tsx', '.css', '.ts', '.jsx'],
   },
   devServer: {
     contentBase: 'dist',
@@ -76,8 +74,6 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       entry: 'src/index.css',
-      // filename: devMode ? '[name].css' : '[name].[hash].css',
-      // chunkFilename: devMode ? '.css' : '[id].[hash].css',
       filename: libraryName + '.css',
       chunkFilename: libraryName + '.[id].css'
     }),

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Glide } from '../src/index';
+import { Glide } from '../src';
 
 class Example extends Component {
   render() {
@@ -8,9 +8,6 @@ class Example extends Component {
         <Glide
           width={500}
           autoPlay={false}
-          autoPlaySpeed={2000}
-          infinite={true}
-          dots={true}
           onSlideChange={() => null}
         >
           <div>
