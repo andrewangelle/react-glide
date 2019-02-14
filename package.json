@@ -4,8 +4,8 @@
   "description": "A multi purpose carousel module built in React.",
   "author": "andrewangelle",
   "repository": "http://github.com/andrewangelle/react-glide.git",
-  "main": "lib/main.js",
   "license": "MIT",
+  "main": "lib/main.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "npm run build:types && npm run build:js && npm run build:bundle",

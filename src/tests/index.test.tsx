@@ -1,9 +1,6 @@
 import React from 'react';
 import { Glide } from '..';
-import {
-  mount,
-  shallow,
-} from './setupTests'
+import { shallow } from './setupTests'
 
 jest.useFakeTimers();
 
@@ -22,6 +19,7 @@ const state: any = {
 }
 
 describe('Glide', () => {
+  afterEach(() => jest.clearAllMocks())
   it('renders without crashing', () => {
     const component = shallow(
       <Glide  {...props} {...state}>
@@ -60,7 +58,7 @@ describe('Glide', () => {
   });
 
   it('has width prop', () => {
-    const component = mount(
+    const component = shallow(
       <Glide  {...props} {...state}>
 
         <h1>Slide One</h1>
@@ -98,14 +96,14 @@ describe('Glide', () => {
     );
 
     const nextButton = component.find('button').last();
-    const state = component.state() as any;
-    expect(state.currentIndex).toEqual(0);
+    expect((component.instance().state as any).currentIndex).toEqual(0);
 
     nextButton.simulate('click');
-    expect(state.currentIndex).toEqual(1);
+
+    expect((component.instance().state as any).currentIndex).toEqual(1);
 
     nextButton.simulate('click');
-    expect(state.currentIndex).toEqual(2);
+    expect((component.instance().state as any).currentIndex).toEqual(2);
 
   });
 
@@ -118,14 +116,13 @@ describe('Glide', () => {
       </Glide>
     );
     const prevButton = component.find('button').first();
-    const state = component.state() as any
-    expect(state.currentIndex).toEqual(0);
+    expect((component.instance().state as any).currentIndex).toEqual(0);
 
     prevButton.simulate('click');
-    expect(state.currentIndex).toEqual(2);
+    expect((component.instance().state as any).currentIndex).toEqual(2);
 
     prevButton.simulate('click')
-    expect(state.currentIndex).toEqual(1)
+    expect((component.instance().state as any).currentIndex).toEqual(1)
 
   });
 
@@ -173,19 +170,18 @@ describe('Glide', () => {
 
 
   it('changes slides when autoPlay is on', () => {
-    const component = mount(
-      <Glide {...props}>
+    const component = shallow(
+      <Glide {...props} autoPlay={true}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
-    const state = component.state() as any
 
     expect(state.currentIndex).toEqual(0);
 
     jest.runTimersToTime(2000);
 
-    expect(state.currentIndex).toEqual(2)
+    expect((component.instance().state as any).currentIndex).toEqual(2)
   });
 });
