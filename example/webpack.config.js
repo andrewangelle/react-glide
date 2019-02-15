@@ -9,9 +9,7 @@ const libraryName = 'reactGlide';
 module.exports = {
   entry: path.join(__dirname),
   output: {
-    path: path.join(__dirname, 'dist'),
-    library: libraryName,
-    publicPath: '/'
+    path: path.join(__dirname, 'dist')
   },
   optimization: {
     splitChunks: {

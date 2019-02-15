@@ -10,7 +10,10 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'lib'),
     library: libraryName,
-    publicPath: 'lib'
+    filename: libraryName + '.js',
+    libraryTarget: "umd",
+    umdNamedDefine: true,
+    publicPath: '/'
   },
   optimization: {
     minimizer: [
@@ -25,7 +28,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /^(?!.*test\.tsx?$).*\.tsx?$/,
+        test: /^(?!.*test\.tsx|\.ts?$).*\.tsx|\.ts?$/,
         exclude: /node_modules/,
         use: ['babel-loader']
       },
@@ -52,7 +55,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       entry: 'src/index.css',
-      filename: libraryName + '.css',
+      filename: 'index.css',
       chunkFilename: libraryName + '.[id].css'
     }),
   ]

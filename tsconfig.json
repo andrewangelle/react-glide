@@ -22,6 +22,12 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "src": [
+        "src/*"
+      ]
+    }
   },
   "exclude": [
     "dist",
