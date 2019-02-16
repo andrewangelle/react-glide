@@ -6,4 +6,7 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "e5:dd:fd:db:be:f1:90:4d:54:74:56:61:bf:68:c7:8e"
       - run: npm run test
