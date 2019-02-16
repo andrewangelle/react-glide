@@ -4,16 +4,15 @@ import { shallow } from './setupTests'
 
 jest.useFakeTimers();
 
-const props: any = {
+const props = {
   width: 500,
   autoPlay: false,
-  autoPlaySpeed: 1000,
   infinite: true,
   dots: true,
   onSlideChange: jest.fn()
 }
 
-const state: any = {
+const state = {
   currentIndex: 0,
   imagesLoaded: false
 }
@@ -21,15 +20,20 @@ const state: any = {
 describe('Glide', () => {
   afterEach(() => jest.clearAllMocks())
   it('renders without crashing', () => {
+    const baseProps = {
+      width: 500,
+      autoPlay: false,
+      onSlideChange: jest.fn()
+    }
     const component = shallow(
-      <Glide  {...props} {...state}>
+      <Glide {...baseProps}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
 
-    expect(component).toBeTruthy();
+    expect(component.getElement()).toMatchSnapshot();
   });
 
   it('has children elements', () => {
@@ -107,6 +111,28 @@ describe('Glide', () => {
 
   });
 
+  it('loops when next button is clicked', () => {
+    const component = shallow(
+      <Glide {...props}>
+
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+
+    component.setState({ currentIndex: 2 })
+
+    component
+      .find('button')
+      .last()
+      .simulate('click');
+
+    expect((component.instance().state as any).currentIndex).toEqual(0);
+
+  });
+
+
   it('changes to previous index when prev button is clicked', () => {
     const component = shallow(
       <Glide  {...props}>
@@ -126,10 +152,10 @@ describe('Glide', () => {
 
   });
 
+
   it('changes to next slide when next button is clicked', () => {
     const component = shallow(
       <Glide  {...props} {...state}>
-
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -147,6 +173,9 @@ describe('Glide', () => {
 
     nextButton.simulate('click');
     expect(elementThree).toEqual('Slide Three');
+
+    nextButton.simulate('click');
+    expect((component.instance().state as any).currentIndex).toEqual(0)
   });
 
   it('changes to previous slide when prev button is clicked', () => {
@@ -178,10 +207,59 @@ describe('Glide', () => {
       </Glide>
     );
 
-    expect(state.currentIndex).toEqual(0);
+    expect((component.instance().state as any).currentIndex).toEqual(0);
 
-    jest.runTimersToTime(2000);
+    jest.runTimersToTime(10000);
 
     expect((component.instance().state as any).currentIndex).toEqual(2)
+  });
+
+  it('fires callback when when pagination is clicked', () => {
+    const component = shallow(
+      <Glide {...props}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+
+    expect(props.onSlideChange).not.toHaveBeenCalled()
+
+    component
+      .find('.inactive-dot')
+      .first()
+      .simulate('click')
+
+    expect(props.onSlideChange).toHaveBeenCalled()
+  })
+
+  it('does not fire callback if index does not change', () => {
+    const component = shallow(
+      <Glide {...props}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+
+    component.setState({ currentIndex: 0 })
+
+    expect(props.onSlideChange).not.toHaveBeenCalled();
+
+  });
+
+  it('does not fire callback if not provided', () => {
+    const component = shallow(
+      <Glide {...props} onSlideChange={undefined}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+
+    component.setState({ currentIndex: 1 })
+
+    expect(props.onSlideChange).not.toHaveBeenCalled();
+
   });
 });

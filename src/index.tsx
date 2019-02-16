@@ -27,9 +27,10 @@ class Glide extends React.Component<GlideProps, GlideState> {
 
   startTimer() {
     if (this.props.autoPlay) {
+      const { autoPlaySpeed = 5000 } = this.props
       this.autoPlay = setInterval(
         () => this.goToNextSlide(),
-        this.props.autoPlaySpeed || 5000
+        autoPlaySpeed
       );
     }
   }
