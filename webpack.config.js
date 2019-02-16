@@ -1,46 +1,62 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const libraryName = 'reactGlide';
 
 module.exports = {
-  entry: path.join(__dirname, 'src/index.js'),
+  entry: path.join(__dirname, 'src'),
   output: {
     path: path.join(__dirname, 'lib'),
-    filename: 'react-glide.min.js',
-    library: 'reactGlide',
-    libraryTarget: 'umd',
-    umdNamedDefine: true
+    library: libraryName,
+    filename: libraryName + '.js',
+    libraryTarget: "umd",
+    umdNamedDefine: true,
+    publicPath: '/'
   },
-  externals: {
-    react: 'react'
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        include: /\.js/,
+        parallel: true,
+        sourceMap: true
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
   },
   module: {
     rules: [
       {
-        test: /(\.jsx|\.js)$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
+        test: /^(?!.*test\.tsx|\.ts?$).*\.tsx|\.ts?$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
       },
       {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
-      }
+        test: /\.css/,
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ]
+      },
+      {
+        test: /^(?!.*test\.js?$).*\.js?$/,
+        exclude: /node_modules/,
+        use: ["source-map-loader"],
+        enforce: "pre"
+      },
     ]
   },
+  resolve: {
+    extensions: ['.js', '.tsx', '.css', '.ts', '.jsx'],
+  },
   plugins: [
-    new UglifyJsPlugin({ minimize: true }),
-    new ExtractTextPlugin({
-      filename: 'react-glide.css',
-      allChunks: true
+    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      entry: 'src/index.css',
+      filename: 'index.css',
+      chunkFilename: libraryName + '.[id].css'
     }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    })
   ]
 };

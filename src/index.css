@@ -1,9 +1,7 @@
-* {
-  padding: 0;
-  margin: 0;
-}
 
 html, body {
+  padding: 0;
+  margin: 0;
   height: 100%;
   cursor: default;
 }
@@ -65,7 +63,7 @@ button {
 }
 
 .glide--dots .active-dot {
-  color: hsl(190, 95%, 80%);;
+  color: hsl(190, 95%, 80%);
 }
 
 

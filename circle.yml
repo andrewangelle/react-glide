@@ -1,3 +1,15 @@
-machine:
-  node:
-    version: 6.11.0
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "1a:c6:58:1f:5e:f5:4e:10:dc:40:d8:da:4d:77:fd:ce"
+      - run:
+          command: npm install
+      - run:
+          command: npm run test:once
