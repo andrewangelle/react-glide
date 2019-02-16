@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Glide renders without crashing 1`] = `
+<div
+  className="glide--container"
+  style={
+    Object {
+      "position": "relative",
+      "width": 500,
+    }
+  }
+>
+  <div
+    className="glide--item"
+  >
+    <CSSTransition
+      appear={true}
+      classNames="current"
+      timeout={300}
+    >
+      <h1>
+        Slide One
+      </h1>
+    </CSSTransition>
+  </div>
+  <button
+    className="glide--next-btn"
+    onClick={[Function]}
+  >
+    ❯
+  </button>
+  <ul
+    className="glide--dots"
+  >
+    <li
+      className="active-dot"
+      onClick={[Function]}
+    >
+      ·
+    </li>
+    <li
+      className="inactive-dot"
+      onClick={[Function]}
+    >
+      ·
+    </li>
+    <li
+      className="inactive-dot"
+      onClick={[Function]}
+    >
+      ·
+    </li>
+  </ul>
+</div>
+`;
