@@ -9,4 +9,5 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "1a:c6:58:1f:5e:f5:4e:10:dc:40:d8:da:4d:77:fd:ce"
+      - run: npm install
       - run: npm run test
