@@ -1,1 +1,11 @@
 src
+.env
+.babelrc
+jest.config.js
+coverage
+tsconfig.json
+tsconfig.test.json
+tslint.json
+webpack.config.js
+circle.yml
+example
