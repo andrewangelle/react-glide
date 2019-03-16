@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Glide } from '../src';
-import { Preloader } from '../src/Preloader';
 
 class Example extends Component {
   render() {
