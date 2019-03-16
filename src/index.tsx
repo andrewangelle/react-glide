@@ -1,5 +1,7 @@
 import React, { ReactChild } from 'react';
 import { CSSTransition } from 'react-transition-group';
+
+import { Preloader } from './Preloader';
 import './index.css';
 
 export interface GlideProps {
@@ -9,21 +11,40 @@ export interface GlideProps {
   autoPlaySpeed?: number;
   infinite?: boolean;
   dots?: boolean;
-  onSlideChange: () => void;
+  onSlideChange?: () => void;
 }
 
 export interface GlideState {
+  loading: true;
   currentIndex: number;
   imagesLoaded: boolean;
 }
+
 
 class Glide extends React.Component<GlideProps, GlideState> {
   autoPlay: any;
 
   state: GlideState = {
+    loading: true,
     currentIndex: 0,
     imagesLoaded: false
   }
+
+  componentDidMount() {
+    this.startTimer();
+  }
+
+  componentDidUpdate(_prevProps: GlideProps, prevState: GlideState) {
+    const { currentIndex: prevIndex } = prevState;
+    const { currentIndex } = this.state;
+    const { onSlideChange = () => null } = this.props;
+
+    if (currentIndex !== prevIndex) {
+      onSlideChange();
+    }
+  }
+
+
 
   startTimer() {
     if (this.props.autoPlay) {
@@ -57,19 +78,6 @@ class Glide extends React.Component<GlideProps, GlideState> {
     this.setState({ currentIndex: nextIndex })
   }
 
-  componentDidMount() {
-    this.startTimer();
-  }
-
-  componentDidUpdate(prevProps: GlideProps, prevState: GlideState) {
-    const onSlideChange = this.props.onSlideChange;
-    const indexUpdated = this.state.currentIndex !== prevState.currentIndex;
-
-    if (indexUpdated && onSlideChange) {
-      this.props.onSlideChange();
-    }
-  }
-
   render() {
     const { currentIndex } = this.state;
 
@@ -89,6 +97,7 @@ class Glide extends React.Component<GlideProps, GlideState> {
         className="glide--container"
         style={glideWidth}
       >
+
         <div className="glide--item">
           <CSSTransition
             classNames='current'
@@ -98,7 +107,6 @@ class Glide extends React.Component<GlideProps, GlideState> {
             {React.Children.toArray(children)[currentIndex]}
           </CSSTransition>
         </div>
-
         {(infinite || currentIndex !== 0) &&
           <button
             className="glide--prev-btn"
