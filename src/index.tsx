@@ -43,9 +43,9 @@ class Glide extends React.Component<GlideProps, GlideState> {
   componentDidUpdate(_prevProps: GlideProps, prevState: GlideState) {
     const { currentIndex: prevIndex } = prevState;
     const { currentIndex } = this.state;
-    const { onSlideChange = () => null } = this.props;
+    const { onSlideChange } = this.props;
 
-    if (currentIndex !== prevIndex) {
+    if (currentIndex !== prevIndex && onSlideChange) {
       onSlideChange();
     }
   }
@@ -108,11 +108,14 @@ class Glide extends React.Component<GlideProps, GlideState> {
             appear={true}
           >
             <Preloader
-              elements={this.props.children}
               currentIndex={currentIndex}
-            />
+              {...this.props}
+            >
+              {children}
+            </Preloader>
           </CSSTransition>
         </div>
+
         {(infinite || currentIndex !== 0) &&
           <button
             className="glide--prev-btn"

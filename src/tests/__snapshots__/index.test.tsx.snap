@@ -18,9 +18,22 @@ exports[`Glide renders without crashing 1`] = `
       classNames="current"
       timeout={300}
     >
-      <h1>
-        Slide One
-      </h1>
+      <Preloader
+        currentIndex={0}
+        elements={
+          Array [
+            <h1>
+              Slide One
+            </h1>,
+            <h1>
+              Slide Two
+            </h1>,
+            <h1>
+              Slide Three
+            </h1>,
+          ]
+        }
+      />
     </CSSTransition>
   </div>
   <button

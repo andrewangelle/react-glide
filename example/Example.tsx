@@ -7,20 +7,20 @@ class Example extends Component {
     return (
       <div>
         <Glide
-          width={500}
+          width={700}
           autoPlay={false}
           autoPlaySpeed={2000}
           onSlideChange={() => console.log('slide changed')}
           infinite={true}
           dots={true}
         >
-          <img src='https://picsum.photos/500' />
-          <img src='https://picsum.photos/501' />
-          <img src='https://picsum.photos/502' />
+          <img src='https://picsum.photos/700' />
+          <img src='https://picsum.photos/699' />
+          <img src='https://picsum.photos/698' />
           <div>
             <iframe
-              width="500"
-              height="315"
+              width="700"
+              height="450"
               src="https://www.youtube.com/embed/6emElQDVqF4"
               frameBorder="0"
               allowFullScreen

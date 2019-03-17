@@ -1,13 +1,27 @@
 import React, { Component, ReactElement } from 'react';
+import { GlideProps } from 'src/';
+import './index.css'
 
-export interface PreloaderProps {
-  elements: any;
+export interface PreloaderProps extends GlideProps {
   currentIndex: number;
 }
 
 export interface PreloaderState {
   loading: boolean;
   done: boolean;
+}
+
+function LoadingSpinner({ width }: { width: number }) {
+  return (
+    <div
+      style={{
+        width: `${width}px`,
+        height: `${(width / 66) * 50}px`
+      }}
+    >
+      <div className='loading-indicator' />
+    </div>
+  )
 }
 
 export class Preloader extends Component<PreloaderProps, PreloaderState> {
@@ -35,7 +49,6 @@ export class Preloader extends Component<PreloaderProps, PreloaderState> {
 
     if (urls.length > 0) {
       urls.forEach(child => {
-        console.log(child)
         newImage = new Image();
         newImage.onload = handleImageLoad;
         newImage.src = child;
@@ -47,41 +60,42 @@ export class Preloader extends Component<PreloaderProps, PreloaderState> {
     }
   }
 
-  traverseTree = (element: ReactElement<any>) => {
+  traverseElementTree(element: ReactElement<any>) {
     const results: string[] = []
     if (element.type === 'img') {
       results.push(element.props.src)
     }
     if (element.props.children) {
-      return this.traverseTree(element.props.children)
+      return this.traverseElementTree(element.props.children)
     }
     return results
   }
 
   getImageUrls() {
     let urlResults: string[] = []
+    const { children } = this.props;
 
-    this.props.elements.map((child: ReactElement<any>) => {
-      const res = this.traverseTree(child)
+    React.Children.map(children, (child: ReactElement<any>) => {
+      const res = this.traverseElementTree(child)
       urlResults = [...urlResults, ...res]
     })
-    console.log(urlResults)
+
     return urlResults
   }
 
   updateImageState() {
-    this.setState({
-      done: true,
-      loading: false,
-    });
+    this.setState({ done: true, loading: false });
   }
 
   render() {
-    const { elements, currentIndex } = this.props
+    const { children, currentIndex } = this.props
+    const { loading, done } = this.state;
     return (
       <>
-        {this.state.loading && 'Loading ....'}
-        {this.state.done && elements[currentIndex]}
+        {loading && <LoadingSpinner width={this.props.width} />}
+        {done &&
+          React.Children.toArray(children)[currentIndex]
+        }
       </>
     )
   }

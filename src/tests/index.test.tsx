@@ -1,6 +1,8 @@
 import React from 'react';
-import { Glide } from '..';
 import { shallow } from './setupTests'
+
+import { Glide, GlideState, GlideProps } from '..';
+import { PreloaderProps } from '../Preloader';
 
 jest.useFakeTimers();
 
@@ -70,7 +72,7 @@ describe('Glide', () => {
         <h1>Slide Three</h1>
       </Glide>
     );
-    const userProp = (component.instance().props as any).width
+    const userProp = (component.instance().props as GlideProps).width
 
     expect(userProp).toBeTruthy();
   });
@@ -84,7 +86,7 @@ describe('Glide', () => {
         <h1>Slide Three</h1>
       </Glide>
     );
-    const userProp = (component.instance().props as any).width
+    const userProp = (component.instance().props as GlideProps).width
 
     expect(userProp).toEqual(userProp);
   });
@@ -100,14 +102,14 @@ describe('Glide', () => {
     );
 
     const nextButton = component.find('button').last();
-    expect((component.instance().state as any).currentIndex).toEqual(0);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
 
     nextButton.simulate('click');
 
-    expect((component.instance().state as any).currentIndex).toEqual(1);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(1);
 
     nextButton.simulate('click');
-    expect((component.instance().state as any).currentIndex).toEqual(2);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(2);
 
   });
 
@@ -128,7 +130,7 @@ describe('Glide', () => {
       .last()
       .simulate('click');
 
-    expect((component.instance().state as any).currentIndex).toEqual(0);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
 
   });
 
@@ -142,13 +144,13 @@ describe('Glide', () => {
       </Glide>
     );
     const prevButton = component.find('button').first();
-    expect((component.instance().state as any).currentIndex).toEqual(0);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
 
     prevButton.simulate('click');
-    expect((component.instance().state as any).currentIndex).toEqual(2);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(2);
 
     prevButton.simulate('click')
-    expect((component.instance().state as any).currentIndex).toEqual(1)
+    expect((component.instance().state as GlideState).currentIndex).toEqual(1)
 
   });
 
@@ -175,7 +177,7 @@ describe('Glide', () => {
     expect(elementThree).toEqual('Slide Three');
 
     nextButton.simulate('click');
-    expect((component.instance().state as any).currentIndex).toEqual(0)
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0)
   });
 
   it('changes to previous slide when prev button is clicked', () => {
@@ -188,13 +190,14 @@ describe('Glide', () => {
     );
     const prevButton = component.find('button').first();
 
-    expect(component.find('h1').props().children).toEqual('Slide One');
+    expect((component.find('Preloader').props() as PreloaderProps).currentIndex).toEqual(0)
 
     prevButton.simulate('click');
-    expect(component.find('h1').props().children).toEqual('Slide Three');
+    expect((component.find('Preloader').props() as PreloaderProps).currentIndex).toEqual(2)
 
     prevButton.simulate('click');
-    expect(component.find('h1').props().children).toEqual('Slide Two');
+    expect((component.find('Preloader').props() as PreloaderProps).currentIndex).toEqual(1)
+
   });
 
 
@@ -207,11 +210,11 @@ describe('Glide', () => {
       </Glide>
     );
 
-    expect((component.instance().state as any).currentIndex).toEqual(0);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
 
     jest.runTimersToTime(10000);
 
-    expect((component.instance().state as any).currentIndex).toEqual(2)
+    expect((component.instance().state as GlideState).currentIndex).toEqual(2)
   });
 
   it('fires callback when when pagination is clicked', () => {
