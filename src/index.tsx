@@ -31,7 +31,13 @@ class Glide extends React.Component<GlideProps, GlideState> {
   }
 
   componentDidMount() {
-    this.startTimer();
+    if (this.props.autoPlay) {
+      this.startTimer();
+    }
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.props.autoPlaySpeed)
   }
 
   componentDidUpdate(_prevProps: GlideProps, prevState: GlideState) {
@@ -43,8 +49,6 @@ class Glide extends React.Component<GlideProps, GlideState> {
       onSlideChange();
     }
   }
-
-
 
   startTimer() {
     if (this.props.autoPlay) {
@@ -97,14 +101,16 @@ class Glide extends React.Component<GlideProps, GlideState> {
         className="glide--container"
         style={glideWidth}
       >
-
         <div className="glide--item">
           <CSSTransition
             classNames='current'
             timeout={300}
             appear={true}
           >
-            {React.Children.toArray(children)[currentIndex]}
+            <Preloader
+              elements={this.props.children}
+              currentIndex={currentIndex}
+            />
           </CSSTransition>
         </div>
         {(infinite || currentIndex !== 0) &&

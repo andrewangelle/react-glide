@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Glide } from '../src';
 
+
 class Example extends Component {
   render() {
     return (
@@ -8,8 +9,44 @@ class Example extends Component {
         <Glide
           width={500}
           autoPlay={false}
-          images={['https://unsplash.it/500/?random', 'https://unsplash.it/501/?random', 'https://unsplash.it/502/?random']}
-        />
+          autoPlaySpeed={2000}
+          onSlideChange={() => console.log('slide changed')}
+          infinite={true}
+          dots={true}
+        >
+          <img src='https://picsum.photos/500' />
+          <img src='https://picsum.photos/501' />
+          <img src='https://picsum.photos/502' />
+          <div>
+            <iframe
+              width="500"
+              height="315"
+              src="https://www.youtube.com/embed/6emElQDVqF4"
+              frameBorder="0"
+              allowFullScreen
+            >
+            </iframe>
+          </div>
+
+          <div>
+            <svg
+              width="200"
+              height="250"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="10"
+                y="10"
+                width="30"
+                height="30"
+                stroke="blue"
+                fill="transparent"
+                strokeWidth="5"
+              />
+            </svg>
+          </div>
+        </Glide>
       </div>
     );
   }

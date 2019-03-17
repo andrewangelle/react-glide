@@ -1,7 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { Component, ReactElement } from 'react';
 
 export interface PreloaderProps {
-  images: string[];
+  elements: any;
+  currentIndex: number;
 }
 
 export interface PreloaderState {
@@ -9,7 +10,7 @@ export interface PreloaderState {
   done: boolean;
 }
 
-export class Preloader extends React.Component<PreloaderProps, PreloaderState> {
+export class Preloader extends Component<PreloaderProps, PreloaderState> {
   state: PreloaderState = {
     loading: true,
     done: false
@@ -19,21 +20,8 @@ export class Preloader extends React.Component<PreloaderProps, PreloaderState> {
     this.preloadImages()
   }
 
-  urls = () => {
-    let urlResults: string[] = []
-
-    React.Children.map(this.props.children,
-      child => {
-        const res = this.getImageUrls(child as ReactElement<any>)
-        urlResults = [...urlResults, ...res]
-      }
-    )
-
-    return urlResults
-  }
-
   preloadImages() {
-    const urls = [...this.props.images, ...this.urls()]
+    const urls = this.getImageUrls()
     let newImage
     let loadCount = 0
 
@@ -59,21 +47,26 @@ export class Preloader extends React.Component<PreloaderProps, PreloaderState> {
     }
   }
 
-  getImageUrls(parent: ReactElement<any>) {
+  traverseTree = (element: ReactElement<any>) => {
     const results: string[] = []
-    const traverseTree = (object: any) => {
-      if (object.type === 'img') {
-        results.push(object.props.src)
-      }
-      if (object.props.children) {
-        traverseTree(object.props.children)
-      }
-      return results
+    if (element.type === 'img') {
+      results.push(element.props.src)
     }
+    if (element.props.children) {
+      return this.traverseTree(element.props.children)
+    }
+    return results
+  }
 
-    const res = traverseTree(parent)
-    console.log({ res })
-    return res
+  getImageUrls() {
+    let urlResults: string[] = []
+
+    this.props.elements.map((child: ReactElement<any>) => {
+      const res = this.traverseTree(child)
+      urlResults = [...urlResults, ...res]
+    })
+    console.log(urlResults)
+    return urlResults
   }
 
   updateImageState() {
@@ -82,11 +75,13 @@ export class Preloader extends React.Component<PreloaderProps, PreloaderState> {
       loading: false,
     });
   }
+
   render() {
+    const { elements, currentIndex } = this.props
     return (
       <>
         {this.state.loading && 'Loading ....'}
-        {this.state.done && this.props.children}
+        {this.state.done && elements[currentIndex]}
       </>
     )
   }

@@ -6,8 +6,10 @@ export class MultiElement extends Component {
     return (
       <Glide
         width={500}
-        autoPlay={true}
+        autoPlay={false}
         autoPlaySpeed={2000}
+        onSlideChange={() => console.log('slide changed')}
+        dots={true}
       >
         <div>
           <img src='https://unsplash.it/500/?random' />
