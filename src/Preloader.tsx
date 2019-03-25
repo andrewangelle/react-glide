@@ -1,91 +1,93 @@
 import React, { Component, ReactElement } from 'react';
-import { GlideProps } from 'src/';
-import './index.css'
+import { GlideProps, GlideState } from './Glide';
+import { LoadingSpinner } from './LoadingSpinner';
 
-export interface PreloaderProps extends GlideProps {
+export interface PreloaderProps extends GlideProps, GlideState {
   currentIndex: number;
+  startTimer: () => void;
 }
 
-export interface PreloaderState {
+interface PreloaderState {
   loading: boolean;
   done: boolean;
+  loadCount: number;
 }
 
-function LoadingSpinner({ width }: { width: number }) {
-  return (
-    <div
-      style={{
-        width: `${width}px`,
-        height: `${(width / 66) * 50}px`
-      }}
-    >
-      <div className='loading-indicator' />
-    </div>
-  )
-}
+class Preloader extends Component<PreloaderProps, PreloaderState> {
+  urls: string[] = [];
 
-export class Preloader extends Component<PreloaderProps, PreloaderState> {
   state: PreloaderState = {
     loading: true,
-    done: false
+    done: false,
+    loadCount: 0,
   }
 
   componentDidMount() {
     this.preloadImages()
   }
 
-  preloadImages() {
-    const urls = this.getImageUrls()
-    let newImage
-    let loadCount = 0
+  componentDidUpdate(prevProps: PreloaderProps, prevState: PreloaderState) {
+    const loadCountUpdated = prevState.loadCount !== this.state.loadCount;
+    const allLoaded = this.state.loadCount === this.urls.length;
+    const done = this.state.done !== prevState.done && this.state.done
 
-    const handleImageLoad = () => {
-      loadCount = loadCount + 1
-
-      if (loadCount === urls.length) {
-        this.updateImageState();
-      }
+    if (loadCountUpdated && allLoaded) {
+      this.updateLoadState();
     }
 
+    if (done && this.props.autoPlay) {
+      this.props.startTimer()
+    }
+
+  }
+
+  preloadImages = () => {
+    const urls = this.getImageUrls()
+
     if (urls.length > 0) {
-      urls.forEach(child => {
-        newImage = new Image();
-        newImage.onload = handleImageLoad;
-        newImage.src = child;
+      urls.map(src => {
+        const newImage = new Image();
+        newImage.src = src;
+        newImage.onload = this.updateLoadCount
       });
     }
 
-    if (urls.length == 0) {
-      this.updateImageState();
+    if (urls.length === 0) {
+      this.updateLoadState()
     }
   }
 
-  traverseElementTree(element: ReactElement<any>) {
-    const results: string[] = []
+  getImageUrls = () => {
+    let urlResults: string[] = []
+    const { children } = this.props;
+
+    React.Children.map(children, (child: ReactElement, index) => {
+      const res = this.traverseElementTree(child)
+      urlResults = [...urlResults, ...res];
+    })
+
+    this.urls = [...urlResults]
+    return urlResults
+  }
+
+  traverseElementTree = (element: ReactElement): string[] => {
+    const results: string[] = [];
     if (element.type === 'img') {
       results.push(element.props.src)
     }
-    if (element.props.children) {
+    if (element.props && element.props.children) {
       return this.traverseElementTree(element.props.children)
     }
     return results
   }
 
-  getImageUrls() {
-    let urlResults: string[] = []
-    const { children } = this.props;
+  updateLoadCount = () =>
+    this.setState(prevState => ({ loadCount: prevState.loadCount + 1 }));
+  ;
 
-    React.Children.map(children, (child: ReactElement<any>) => {
-      const res = this.traverseElementTree(child)
-      urlResults = [...urlResults, ...res]
-    })
-
-    return urlResults
-  }
-
-  updateImageState() {
-    this.setState({ done: true, loading: false });
-  }
+  updateLoadState = () =>
+    this.setState(prevState => ({ done: true, loading: false }));
+  ;
 
   render() {
     const { children, currentIndex } = this.props
@@ -94,9 +96,17 @@ export class Preloader extends Component<PreloaderProps, PreloaderState> {
       <>
         {loading && <LoadingSpinner width={this.props.width} />}
         {done &&
-          React.Children.toArray(children)[currentIndex]
+          React.Children.map(children, (child: ReactElement, index) => {
+            const className = currentIndex === index ? 'current' : ''
+            return child && (
+              <child.type className={`glide--item ${className}`} {...child.props} />
+
+            )
+          })
         }
       </>
     )
   }
 }
+
+export { Preloader }

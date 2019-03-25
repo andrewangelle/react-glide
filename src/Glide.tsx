@@ -1,16 +1,14 @@
 import React, { ReactChild } from 'react';
-import { CSSTransition } from 'react-transition-group';
-
 import { Preloader } from './Preloader';
-import './index.css';
+import './reactGlide.css';
 
 export interface GlideProps {
-  images?: string[];
-  width: number;
   autoPlay?: boolean;
   autoPlaySpeed?: number;
-  infinite?: boolean;
   dots?: boolean;
+  height?: number;
+  infinite?: boolean;
+  width: number;
   onSlideChange?: () => void;
 }
 
@@ -20,20 +18,13 @@ export interface GlideState {
   imagesLoaded: boolean;
 }
 
-
 class Glide extends React.Component<GlideProps, GlideState> {
-  autoPlay: any;
+  autoPlay: NodeJS.Timeout;
 
   state: GlideState = {
     loading: true,
     currentIndex: 0,
     imagesLoaded: false
-  }
-
-  componentDidMount() {
-    if (this.props.autoPlay) {
-      this.startTimer();
-    }
   }
 
   componentWillUnMount() {
@@ -50,7 +41,7 @@ class Glide extends React.Component<GlideProps, GlideState> {
     }
   }
 
-  startTimer() {
+  startTimer = () => {
     if (this.props.autoPlay) {
       const { autoPlaySpeed = 5000 } = this.props
       this.autoPlay = setInterval(
@@ -60,24 +51,26 @@ class Glide extends React.Component<GlideProps, GlideState> {
     }
   }
 
-  goToSelectedDot(index: number) {
+  goToSelectedDot = (index: number) => {
     this.setState({ currentIndex: index });
   }
 
-  goToPrevSlide() {
+  goToPrevSlide = () => {
     const { children } = this.props;
     const { currentIndex } = this.state;
-    const nextIndex = currentIndex === 0 ?
-      (children as ReactChild[]).length - 1 : currentIndex - 1;
+
+    const lastSlide = React.Children.toArray(children).length - 1
+    const nextIndex = currentIndex === 0 ? lastSlide : currentIndex - 1;
 
     this.setState({ currentIndex: nextIndex })
   }
 
-  goToNextSlide() {
+  goToNextSlide = () => {
     const { children } = this.props;
     const { currentIndex } = this.state;
-    const nextIndex = currentIndex === (children as ReactChild[]).length - 1 ?
-      0 : currentIndex + 1;
+
+    const lastSlide = React.Children.toArray(children).length - 1
+    const nextIndex = currentIndex === lastSlide ? 0 : currentIndex + 1;
 
     this.setState({ currentIndex: nextIndex })
   }
@@ -91,37 +84,28 @@ class Glide extends React.Component<GlideProps, GlideState> {
       dots = true
     } = this.props;
 
-    const glideWidth = {
-      position: 'relative' as any,
-      width: this.props.width
+    const styleProps = {
+      height: this.props.height,
+      width: this.props.width,
     }
 
     return (
-      <div
-        className="glide--container"
-        style={glideWidth}
-      >
-        <div className="glide--item">
-          <CSSTransition
-            classNames='current'
-            timeout={300}
-            appear={true}
-          >
-            <Preloader
-              currentIndex={currentIndex}
-              {...this.props}
-            >
-              {children}
-            </Preloader>
-          </CSSTransition>
-        </div>
+      <div className="glide--container" style={styleProps}>
+        <Preloader
+          startTimer={() => this.startTimer()}
+          {...this.props}
+          {...this.state}
+        >
+          {children}
+        </Preloader>
+
 
         {(infinite || currentIndex !== 0) &&
           <button
             className="glide--prev-btn"
             onClick={() => {
-              clearInterval(this.autoPlay);
-              this.goToPrevSlide();
+              clearInterval(this.autoPlay)
+              this.goToPrevSlide()
             }}
           >
             &#10094;
@@ -132,7 +116,7 @@ class Glide extends React.Component<GlideProps, GlideState> {
           <button
             className="glide--next-btn"
             onClick={() => {
-              clearInterval(this.autoPlay);
+              clearInterval(this.autoPlay)
               this.goToNextSlide();
             }}
           >
@@ -141,19 +125,20 @@ class Glide extends React.Component<GlideProps, GlideState> {
         }
 
         {dots &&
-          <ul className="glide--dots" >
+          <section className="glide--dots" >
             {React.Children.map(children, (child, index) =>
-              <li
+              <span
                 key={index}
-                className={(currentIndex === index ? "active-dot" : "inactive-dot")}
+                className={(currentIndex === index ? 'active-dot' : 'inactive-dot')}
                 onClick={() => {
-                  this.goToSelectedDot(index);
+                  clearInterval(this.autoPlay)
+                  this.goToSelectedDot(index)
                 }}
               >
                 &middot;
-              </li>
+              </span>
             )}
-          </ul>
+          </section>
         }
       </div>
     );

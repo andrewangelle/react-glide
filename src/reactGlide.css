@@ -2,102 +2,72 @@
 html, body {
   padding: 0;
   margin: 0;
-  height: 100%;
   cursor: default;
 }
 
-.glide--container{
-  height: 100%;
+.glide--container {
+  position: relative;
 }
 
-.glide--item > span > * {
+.glide--item {
   position: absolute;
-  width: 100%;
-  z-index: 9;
+  left: 0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+  opacity: 0;
 }
+
+.glide--item.current {
+  position: absolute;
+  left: 0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
+}
+
 
 button {
-	top: 45%;
-	position: absolute;
-	z-index: 10;
+  position: absolute;
+  z-index: 10;
+  color: hsl(190, 95%, 80%);
+  background-color: hsl(190, 10%, 10%);
+  height: 60px;
+  width: 35px;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  top: 45%;
 }
 
 .glide--next-btn {
   right:0;
-  color: hsl(190, 95%, 80%);
-  background-color: hsl(190, 10%, 10%);
-  height: 60px;
-  width: 35px;
-  border: none;
-  font-size: 25px;
-  cursor: pointer;
 }
 
 .glide--prev-btn {
+
   left: 0;
-  color: hsl(190, 95%, 80%);
-  background-color: hsl(190, 10%, 10%);
-  height: 60px;
-  width: 35px;
-  border: none;
-  font-size: 25px;
-  cursor: pointer;
 }
 
-.hide {
-  display: none;
-}
 
 .glide--dots {
   position: absolute;
-  top: 85%;
-  right: 43%;
-  z-index: 100;
-  cursor: pointer;
-}
-
-.glide--dots li {
-  list-style: none;
+  left: 40%;
+  right: 40%;
+  bottom: 0;
   display: inline-flex;
   font-size: 64px;
+  margin-top: 100%;
+  z-index: 100;
+  cursor: pointer;
 }
 
 .glide--dots .active-dot {
   color: hsl(190, 95%, 80%);
 }
-
-
-/*
-* classnames and settings for <ReactCSSTransitionGroup />
-*/
-
-.current-enter {
-  opacity: 0.01;
-}
-
-.current-enter.current-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.current-appear {
-  opacity: 0.01;
-}
-
-.current-appear.current-appear-active {
-  opacity: 1;
-  transition: opacity .5s ease-in;
-}
-
-.current-exit {
-  opacity: 1;
-}
-
-.current-exit.current-exit-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
-}
-
 
 /** Loading spinner */
 .loading-indicator {

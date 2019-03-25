@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "rootDir": "src",
     "outDir": "dist",
     "module": "es6",
     "target": "es2015",
@@ -36,6 +37,6 @@
   ],
   "include": [
     "example",
-    "src/index.tsx"
+    "src"
   ]
 }

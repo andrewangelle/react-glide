@@ -2,14 +2,14 @@ const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const libraryName = 'reactGlide';
+const libraryName = '';
 
 module.exports = {
   entry: path.join(__dirname, 'src'),
   output: {
     path: path.join(__dirname, 'lib'),
     library: libraryName,
-    filename: libraryName + '.js',
+    filename: 'index' + '.js',
     libraryTarget: "umd",
     umdNamedDefine: true,
     publicPath: '/'
@@ -52,9 +52,9 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      entry: 'src/index.css',
-      filename: libraryName + '.css',
-      chunkFilename: libraryName + '.[id].css'
+      entry: 'src/reactGlide.css',
+      filename: 'reactGlide' + '.css',
+      chunkFilename: 'reactGlide' + '.[id].css'
     }),
   ]
 };

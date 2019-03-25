@@ -5,64 +5,87 @@ exports[`Glide renders without crashing 1`] = `
   className="glide--container"
   style={
     Object {
-      "position": "relative",
       "width": 500,
     }
   }
 >
-  <div
-    className="glide--item"
+  <Preloader
+    autoPlay={false}
+    currentIndex={0}
+    imagesLoaded={false}
+    loading={true}
+    onSlideChange={[MockFunction]}
+    startTimer={[Function]}
+    width={500}
   >
-    <CSSTransition
-      appear={true}
-      classNames="current"
-      timeout={300}
-    >
-      <Preloader
-        currentIndex={0}
-        elements={
-          Array [
-            <h1>
-              Slide One
-            </h1>,
-            <h1>
-              Slide Two
-            </h1>,
-            <h1>
-              Slide Three
-            </h1>,
-          ]
-        }
-      />
-    </CSSTransition>
-  </div>
+    <h1>
+      Slide One
+    </h1>
+    <h1>
+      Slide Two
+    </h1>
+    <h1>
+      Slide Three
+    </h1>
+  </Preloader>
   <button
     className="glide--next-btn"
     onClick={[Function]}
   >
     ❯
   </button>
-  <ul
+  <section
     className="glide--dots"
   >
-    <li
+    <span
       className="active-dot"
       onClick={[Function]}
     >
       ·
-    </li>
-    <li
+    </span>
+    <span
       className="inactive-dot"
       onClick={[Function]}
     >
       ·
-    </li>
-    <li
+    </span>
+    <span
       className="inactive-dot"
       onClick={[Function]}
     >
       ·
-    </li>
-  </ul>
+    </span>
+  </section>
 </div>
+`;
+
+exports[`Preloader shows loader 1`] = `
+<Preloader
+  autoPlay={false}
+  currentIndex={0}
+  dots={true}
+  imagesLoaded={false}
+  infinite={true}
+  loading={true}
+  onSlideChange={[MockFunction]}
+  startTimer={[MockFunction]}
+  width={500}
+>
+  <LoadingSpinner
+    width={500}
+  >
+    <div
+      style={
+        Object {
+          "height": "378.7878787878788px",
+          "width": "500px",
+        }
+      }
+    >
+      <div
+        className="loading-indicator"
+      />
+    </div>
+  </LoadingSpinner>
+</Preloader>
 `;
