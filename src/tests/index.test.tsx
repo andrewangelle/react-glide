@@ -7,6 +7,7 @@ import { PreloaderProps, Preloader } from '../Preloader';
 jest.useFakeTimers();
 
 const props = {
+  height: 500,
   width: 500,
   autoPlay: false,
   infinite: true,
@@ -63,7 +64,7 @@ describe('Glide', () => {
     expect(element).toEqual('Slide One');
   });
 
-  it('has width prop', () => {
+  it('has width and height props', () => {
     const component = shallow(
       <Glide  {...props} {...state}>
         <h1>Slide One</h1>
@@ -71,15 +72,14 @@ describe('Glide', () => {
         <h1>Slide Three</h1>
       </Glide>
     );
-    const userProp = (component.instance().props as GlideProps).width
-
-    expect(userProp).toBeTruthy();
+    const widthProp = (component.instance().props as GlideProps).width
+    const heightProp = (component.instance().props as GlideProps).height
+    expect([widthProp, heightProp]).toBeTruthy();
   });
 
   it('sets container width according to prop', () => {
     const component = shallow(
       <Glide  {...props} {...state}>
-
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>

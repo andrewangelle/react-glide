@@ -5,6 +5,7 @@ exports[`Glide renders without crashing 1`] = `
   className="glide--container"
   style={
     Object {
+      "height": undefined,
       "width": 500,
     }
   }
@@ -64,6 +65,7 @@ exports[`Preloader shows loader 1`] = `
   autoPlay={false}
   currentIndex={0}
   dots={true}
+  height={500}
   imagesLoaded={false}
   infinite={true}
   loading={true}

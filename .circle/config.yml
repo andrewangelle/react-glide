@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
@@ -8,7 +8,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "1a:c6:58:1f:5e:f5:4e:10:dc:40:d8:da:4d:77:fd:ce"
+            - $FINGERPRINT
       - run:
           command: npm install
       - run:

@@ -4,6 +4,8 @@ A lightweight, multi-purpose carousel component for React.
 
 [![CircleCI](https://circleci.com/gh/andrewangelle/react-glide.svg?style=shield)](https://circleci.com/gh/andrewangelle/react-glide) [![Coverage Status](https://coveralls.io/repos/github/andrewangelle/react-glide/badge.svg?branch=master)](https://coveralls.io/github/andrewangelle/react-glide?branch=master)
 
+[demo](https://codesandbox.io/s/r7166733lm)
+
 <img src="glide.png" width="400px" />
 
 ## Installation
@@ -17,10 +19,10 @@ $ npm install react-glide
 Import the module at the top of your component page:
 
 ```javascript
-import Glide from 'react-glide';
+import { Glide } from 'react-glide';
 ```
 
-Glide functions as a wrapper and can be passed any type of element. See [example folder](https://github.com/andrewangelle/react-glide/tree/master/example) for more detailed usage:
+Glide functions as a wrapper and can be passed any type of element. See [example folder](https://github.com/andrewangelle/react-glide/tree/master/example):
 
 ```javascript
 <Glide height={500} width={500}>
@@ -32,6 +34,7 @@ Glide functions as a wrapper and can be passed any type of element. See [example
 
 ## Options
 
+### Types
 ```typescript
 interface GlideProps {
   autoPlay?: boolean;
@@ -44,6 +47,7 @@ interface GlideProps {
 }
 ```
 
+### Props Description
 | option      | type      | description                           | default | required  |
 |------------ |-----------|---------------------------------------|---------|-----------|
 |`width`      |integer    | the width of the carousel container. |  none  |   Yes  |
@@ -71,6 +75,9 @@ in order to fit the design of your project, you can override the default styles 
 
 | element     | class name |
 |------------ |-----------|
+|  containers  | `.glide--container` |
+|           |   `.glide--item`|
+|           | `.glide--item.current` |
 |  buttons  | `.glide--next-btn` |
 |           |  `.glide--prev-btn`|
 |  dots     |  `.glide--dots`  |

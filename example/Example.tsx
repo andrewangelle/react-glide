@@ -3,20 +3,21 @@ import { Glide, GlideProps } from '../src'; // import { Glide, GlideProps } from
 import '../lib/reactGlide.css' // import 'react-glide/lib/reactGlide.css'
 import './style.css'
 
-const glideProps: GlideProps = {
-  height: 600,
-  width: 600,
-  autoPlay: true,
-  autoPlaySpeed: 2000,
-  onSlideChange: () => console.log('slide changed'),
-  infinite: true,
-  dots: true
-}
 
 class Example extends Component {
+
   render() {
+    const props: GlideProps = {
+      height: 600,
+      width: 600,
+      autoPlay: true,
+      autoPlaySpeed: 2000,
+      onSlideChange: () => console.log('slide changed'),
+      infinite: true,
+      dots: true
+    }
     return (
-      <Glide {...glideProps}>
+      <Glide {...props}>
         <img src="https://picsum.photos/600" />
         <img src="https://picsum.photos/600.2" />
         <img src="https://picsum.photos/600.1" />
