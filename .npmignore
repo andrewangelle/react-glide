@@ -9,3 +9,7 @@ tslint.json
 webpack.config.js
 circle.yml
 example
+webpack.config.js
+glide.png
+circle.yml
+node_modules

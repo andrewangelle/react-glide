@@ -40,7 +40,6 @@ module.exports = {
       },
       {
         test: /\.css/,
-        exclude: /node_modules/,
         use: [
           'style-loader',
           'css-loader',
@@ -71,7 +70,7 @@ module.exports = {
       filename: 'index.html'
     }),
     new MiniCssExtractPlugin({
-      entry: 'src/index.css',
+      entry: 'src/style.css',
       filename: libraryName + '.css',
       chunkFilename: libraryName + '.[id].css'
     }),

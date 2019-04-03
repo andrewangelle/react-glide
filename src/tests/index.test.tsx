@@ -1,10 +1,14 @@
 import React from 'react';
-import { Glide } from '..';
-import { shallow } from './setupTests'
+import { shallow, mount } from './setupTests'
+
+import { Glide, GlideState, GlideProps,  } from '../Glide';
+import { Preloader } from '../Preloader';
+import { PreloaderProps  } from '../types';
 
 jest.useFakeTimers();
 
 const props = {
+  height: 500,
   width: 500,
   autoPlay: false,
   infinite: true,
@@ -61,30 +65,28 @@ describe('Glide', () => {
     expect(element).toEqual('Slide One');
   });
 
-  it('has width prop', () => {
+  it('has width and height props', () => {
     const component = shallow(
       <Glide  {...props} {...state}>
-
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
-    const userProp = (component.instance().props as any).width
-
-    expect(userProp).toBeTruthy();
+    const widthProp = (component.instance().props as GlideProps).width
+    const heightProp = (component.instance().props as GlideProps).height
+    expect([widthProp, heightProp]).toBeTruthy();
   });
 
   it('sets container width according to prop', () => {
     const component = shallow(
       <Glide  {...props} {...state}>
-
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
-    const userProp = (component.instance().props as any).width
+    const userProp = (component.instance().props as GlideProps).width
 
     expect(userProp).toEqual(userProp);
   });
@@ -92,7 +94,6 @@ describe('Glide', () => {
   it('changes to next index when next button is clicked', () => {
     const component = shallow(
       <Glide {...props}>
-
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -100,21 +101,20 @@ describe('Glide', () => {
     );
 
     const nextButton = component.find('button').last();
-    expect((component.instance().state as any).currentIndex).toEqual(0);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
 
     nextButton.simulate('click');
 
-    expect((component.instance().state as any).currentIndex).toEqual(1);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(1);
 
     nextButton.simulate('click');
-    expect((component.instance().state as any).currentIndex).toEqual(2);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(2);
 
   });
 
   it('loops when next button is clicked', () => {
     const component = shallow(
       <Glide {...props}>
-
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -128,7 +128,7 @@ describe('Glide', () => {
       .last()
       .simulate('click');
 
-    expect((component.instance().state as any).currentIndex).toEqual(0);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
 
   });
 
@@ -142,13 +142,13 @@ describe('Glide', () => {
       </Glide>
     );
     const prevButton = component.find('button').first();
-    expect((component.instance().state as any).currentIndex).toEqual(0);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
 
     prevButton.simulate('click');
-    expect((component.instance().state as any).currentIndex).toEqual(2);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(2);
 
     prevButton.simulate('click')
-    expect((component.instance().state as any).currentIndex).toEqual(1)
+    expect((component.instance().state as GlideState).currentIndex).toEqual(1)
 
   });
 
@@ -175,12 +175,12 @@ describe('Glide', () => {
     expect(elementThree).toEqual('Slide Three');
 
     nextButton.simulate('click');
-    expect((component.instance().state as any).currentIndex).toEqual(0)
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0)
   });
 
   it('changes to previous slide when prev button is clicked', () => {
     const component = shallow(
-      <Glide {...props}{...state} >
+      <Glide {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -188,30 +188,33 @@ describe('Glide', () => {
     );
     const prevButton = component.find('button').first();
 
-    expect(component.find('h1').props().children).toEqual('Slide One');
+    expect((component.find('Preloader').props() as PreloaderProps).currentIndex).toEqual(0)
 
     prevButton.simulate('click');
-    expect(component.find('h1').props().children).toEqual('Slide Three');
+    expect((component.find('Preloader').props() as PreloaderProps).currentIndex).toEqual(2)
 
     prevButton.simulate('click');
-    expect(component.find('h1').props().children).toEqual('Slide Two');
+    expect((component.find('Preloader').props() as PreloaderProps).currentIndex).toEqual(1)
+
   });
 
 
   it('changes slides when autoPlay is on', () => {
-    const component = shallow(
-      <Glide {...props} autoPlay={true}>
+    const original = window.clearInterval;
+    window.clearInterval = jest.fn();
+
+    const component = mount(
+      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
 
-    expect((component.instance().state as any).currentIndex).toEqual(0);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
 
-    jest.runTimersToTime(10000);
-
-    expect((component.instance().state as any).currentIndex).toEqual(2)
+    jest.runTimersToTime(4000);
+    expect((component.instance().state as GlideState).currentIndex).toEqual(2)
   });
 
   it('fires callback when when pagination is clicked', () => {
@@ -260,6 +263,24 @@ describe('Glide', () => {
     component.setState({ currentIndex: 1 })
 
     expect(props.onSlideChange).not.toHaveBeenCalled();
-
   });
 });
+
+describe('Preloader', () => {
+  it('shows loader', () => {
+    const wrapper = mount(
+      <Preloader
+        startTimer={jest.fn()}
+        imagesLoaded={false}
+        loading={true}
+        currentIndex={0}
+        {...props}
+      >
+        <img src="https://picsum.photos/700" />
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Preloader>
+    )
+    expect(wrapper).toMatchSnapshot();
+  });
+})

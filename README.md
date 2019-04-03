@@ -4,6 +4,8 @@ A lightweight, multi-purpose carousel component for React.
 
 [![CircleCI](https://circleci.com/gh/andrewangelle/react-glide.svg?style=shield)](https://circleci.com/gh/andrewangelle/react-glide) [![Coverage Status](https://coveralls.io/repos/github/andrewangelle/react-glide/badge.svg?branch=master)](https://coveralls.io/github/andrewangelle/react-glide?branch=master)
 
+[demo](https://codesandbox.io/s/r7166733lm)
+
 <img src="glide.png" width="400px" />
 
 ## Installation
@@ -17,13 +19,13 @@ $ npm install react-glide
 Import the module at the top of your component page:
 
 ```javascript
-import Glide from 'react-glide';
+import { Glide } from 'react-glide';
 ```
 
-Glide functions as a wrapper and can be passed any type of element. See [example folder](https://github.com/andrewangelle/react-glide/tree/master/example) for more detailed usage:
+Glide functions as a wrapper and can be passed any type of element. See [example folder](https://github.com/andrewangelle/react-glide/tree/master/example):
 
 ```javascript
-<Glide width={500}>
+<Glide height={500} width={500}>
   <img src='http:/path/to/image/url' />
   <img src='http:/path/to/image/url2' />
   <img src='http:/path/to/image1/url3' />
@@ -32,9 +34,24 @@ Glide functions as a wrapper and can be passed any type of element. See [example
 
 ## Options
 
+### Types
+```typescript
+interface GlideProps {
+  autoPlay?: boolean;
+  autoPlaySpeed?: number;
+  dots?: boolean;
+  height?: number;
+  infinite?: boolean;
+  width: number;
+  onSlideChange?: () => void;
+}
+```
+
+### Props Description
 | option      | type      | description                           | default | required  |
 |------------ |-----------|---------------------------------------|---------|-----------|
 |`width`      |integer    | the width of the carousel container. |  none  |   Yes  |
+|`height`      |integer    | the height of the carousel container. |  none  |   No  |
 |`autoPlay`   |bool       | enables or disables autoPlay feature.| false    | No    |
 |`autoPlaySpeed` |integer    | the rate of change between slides, defined in ms.|  2000  | No    |
 |`infinite` |bool    | carousel will loop infinitely  |  true  | No    |
@@ -49,7 +66,7 @@ Glide functions as a wrapper and can be passed any type of element. See [example
 To use the default styles, import the CSS from react-glide at the top of your file:
 
 ```javascript
-import 'react-glide/lib/react-glide.css';
+import 'react-glide/lib/reactGlide.css';
 ```
 
 ### Overriding Default Styles
@@ -58,6 +75,9 @@ in order to fit the design of your project, you can override the default styles 
 
 | element     | class name |
 |------------ |-----------|
+|  containers  | `.glide--container` |
+|           |   `.glide--item`|
+|           | `.glide--item.current` |
 |  buttons  | `.glide--next-btn` |
 |           |  `.glide--prev-btn`|
 |  dots     |  `.glide--dots`  |
