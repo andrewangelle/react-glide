@@ -1,17 +1,8 @@
 import React, { Component, ReactElement } from 'react';
-import { GlideProps, GlideState } from './Glide';
+
 import { LoadingSpinner } from './LoadingSpinner';
+import { PreloaderProps, PreloaderState } from './types';
 
-export interface PreloaderProps extends GlideProps, GlideState {
-  currentIndex: number;
-  startTimer: () => void;
-}
-
-interface PreloaderState {
-  loading: boolean;
-  done: boolean;
-  loadCount: number;
-}
 
 class Preloader extends Component<PreloaderProps, PreloaderState> {
   urls: string[] = [];

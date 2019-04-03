@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow, mount } from './setupTests'
 
-import { Glide, GlideState, GlideProps } from '../Glide';
-import { PreloaderProps, Preloader } from '../Preloader';
+import { Glide, GlideState, GlideProps,  } from '../Glide';
+import { Preloader } from '../Preloader';
+import { PreloaderProps  } from '../types';
 
 jest.useFakeTimers();
 
@@ -266,9 +267,7 @@ describe('Glide', () => {
 });
 
 describe('Preloader', () => {
-
   it('shows loader', () => {
-
     const wrapper = mount(
       <Preloader
         startTimer={jest.fn()}
@@ -282,8 +281,6 @@ describe('Preloader', () => {
         <h1>Slide Three</h1>
       </Preloader>
     )
-    const spy = jest.spyOn(wrapper.instance() as Preloader, 'preloadImages')
-
     expect(wrapper).toMatchSnapshot();
   });
 })

@@ -1,6 +1,13 @@
 import React, { ReactChild } from 'react';
+
 import { Preloader } from './Preloader';
 import './reactGlide.css';
+
+export interface GlideState {
+  loading: true;
+  currentIndex: number;
+  imagesLoaded: boolean;
+}
 
 export interface GlideProps {
   autoPlay?: boolean;
@@ -10,12 +17,6 @@ export interface GlideProps {
   infinite?: boolean;
   width: number;
   onSlideChange?: () => void;
-}
-
-export interface GlideState {
-  loading: true;
-  currentIndex: number;
-  imagesLoaded: boolean;
 }
 
 class Glide extends React.Component<GlideProps, GlideState> {

@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
-import { Glide, GlideProps } from '../src'; // import { Glide, GlideProps } from 'react-glide';
-import '../lib/reactGlide.css' // import 'react-glide/lib/reactGlide.css'
+import { Glide, GlideProps } from '../src/Glide';
+import '../lib/reactGlide.css'
 import './style.css'
 
+/**
+ * use the following import statements in your actual project
+ *
+ * import { Glide, GlideProps } from 'react-glide';
+ * import 'react-glide/lib/reactGlide.css';
+ */
+
+const props: GlideProps = {
+  height: 600,
+  width: 600,
+  autoPlay: true,
+  autoPlaySpeed: 2000,
+  onSlideChange: () => console.log('slide changed'),
+  infinite: true,
+  dots: true
+}
 
 class Example extends Component {
-
   render() {
-    const props: GlideProps = {
-      height: 600,
-      width: 600,
-      autoPlay: true,
-      autoPlaySpeed: 2000,
-      onSlideChange: () => console.log('slide changed'),
-      infinite: true,
-      dots: true
-    }
     return (
       <Glide {...props}>
         <img src="https://picsum.photos/600" />

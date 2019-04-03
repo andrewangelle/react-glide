@@ -1,1 +1,1 @@
-export { Glide, GlideProps } from './Glide'
+export { Glide } from './Glide'

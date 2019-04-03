@@ -1,8 +1,5 @@
 import React from 'react';
-
-interface SpinnerProps {
-  width: number
-}
+import { SpinnerProps } from './types';
 
 function LoadingSpinner({ width }: SpinnerProps) {
   return (

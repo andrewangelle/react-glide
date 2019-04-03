@@ -5,11 +5,14 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const libraryName = '';
 
 module.exports = {
-  entry: path.join(__dirname, 'src'),
+  entry: {
+    index: path.join(__dirname, 'src/index.ts'),
+    Glide: path.join(__dirname, 'src/Glide.tsx')
+  },
   output: {
     path: path.join(__dirname, 'lib'),
     library: libraryName,
-    filename: 'index' + '.js',
+    filename: '[name].js',
     libraryTarget: "umd",
     umdNamedDefine: true,
     publicPath: '/'

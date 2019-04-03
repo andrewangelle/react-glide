@@ -2,7 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "rootDir": "src",
-    "outDir": "dist",
+    "outDir": "dist/types",
     "module": "es6",
     "target": "es2015",
     "lib": [
@@ -23,12 +23,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "src": [
-        "src/*"
-      ]
-    }
   },
   "exclude": [
     "dist",
@@ -37,6 +31,6 @@
   ],
   "include": [
     "example",
-    "src"
+    "src/Glide.tsx"
   ]
 }
