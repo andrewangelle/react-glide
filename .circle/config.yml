@@ -1,15 +1,33 @@
 version: 2.1
+
+_common:
+  node-docker: &node-docker
+    - image: circleci/node:10.13.0
+  restore-cache: &restore-cache
+    keys:
+      - bootstrap-v1-{{ .Branch }}-{{ .Revision }}
+  attach-workspace: &attach-workspace
+    at: .
 jobs:
   build:
-    docker:
-      - image: circleci/node:10
-    working_directory: ~/repo
+    docker: *node-docker
     steps:
+      - restore_cache: *restore-cache
       - checkout
       - add_ssh_keys:
           fingerprints:
             - $FINGERPRINT
       - run:
+          name: install deps
           command: npm install
+      - save_cache:
+          key: bootstrap-v1-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .
+  test_web:
+    docker: *node-docker
+    steps:
+      - restore_cache: *restore-cache
       - run:
+          name: Run client tests
           command: npm run test:once
