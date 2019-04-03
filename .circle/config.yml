@@ -8,8 +8,9 @@ _common:
       - bootstrap-v1-{{ .Branch }}-{{ .Revision }}
   attach-workspace: &attach-workspace
     at: .
+
 jobs:
-  build:
+  bootstrap:
     docker: *node-docker
     steps:
       - restore_cache: *restore-cache
@@ -20,14 +21,40 @@ jobs:
       - run:
           name: install deps
           command: npm install
+
       - save_cache:
           key: bootstrap-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - .
-  test_web:
+
+  build:
     docker: *node-docker
     steps:
       - restore_cache: *restore-cache
       - run:
-          name: Run client tests
+          name: Run build
+          command: npm run build
+
+
+  test:
+    docker: *node-docker
+    steps:
+      - restore_cache: *restore-cache
+      - run:
+          name: Run tests
           command: npm run test:once
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - bootstrap
+
+      - build:
+          requires:
+            - bootstrap
+
+      - test:
+          requires:
+            - bootstrap
+            - build
