@@ -13,9 +13,6 @@ exports[`Glide renders without crashing 1`] = `
   <Preloader
     autoPlay={false}
     currentIndex={0}
-    imagesLoaded={false}
-    loading={true}
-    onSlideChange={[MockFunction]}
     startTimer={[Function]}
     width={500}
   >
@@ -60,34 +57,32 @@ exports[`Glide renders without crashing 1`] = `
 </div>
 `;
 
+exports[`Preloader shows children 1`] = `
+<Fragment>
+  <img
+    className="glide--item current"
+    key=".0"
+    src="https://picsum.photos/700"
+  />
+  <h1
+    className="glide--item "
+    key=".1"
+  >
+    Slide Two
+  </h1>
+  <h1
+    className="glide--item "
+    key=".2"
+  >
+    Slide Three
+  </h1>
+</Fragment>
+`;
+
 exports[`Preloader shows loader 1`] = `
-<Preloader
-  autoPlay={false}
-  currentIndex={0}
-  dots={true}
-  height={500}
-  imagesLoaded={false}
-  infinite={true}
-  loading={true}
-  onSlideChange={[MockFunction]}
-  startTimer={[MockFunction]}
-  width={500}
->
+<Fragment>
   <LoadingSpinner
     width={500}
-  >
-    <div
-      style={
-        Object {
-          "height": "378.7878787878788px",
-          "width": "500px",
-        }
-      }
-    >
-      <div
-        className="loading-indicator"
-      />
-    </div>
-  </LoadingSpinner>
-</Preloader>
+  />
+</Fragment>
 `;

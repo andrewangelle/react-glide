@@ -134,8 +134,9 @@ class Glide extends Component<GlideProps, GlideState> {
       >
         <Preloader
           startTimer={this.startTimer}
-          {...this.props}
-          {...this.state}
+          currentIndex={currentIndex}
+          width={this.props.width}
+          autoPlay={this.props.autoPlay}
         >
           {children}
         </Preloader>

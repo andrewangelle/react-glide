@@ -1,12 +1,8 @@
 
-import { GlideProps, GlideState } from './Glide';
-
-export interface SpinnerProps {
-  width: number
-}
-
-export interface PreloaderProps extends GlideProps, GlideState {
+export interface PreloaderProps {
   currentIndex: number;
+  autoPlay?: boolean;
+  width: number;
   startTimer: () => void;
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow, mount } from './setupTests'
 
-import { Glide, GlideState, GlideProps,  } from '../Glide';
+import { Glide, GlideState, GlideProps } from '../Glide';
 import { Preloader } from '../Preloader';
 import { PreloaderProps  } from '../types';
 
@@ -112,7 +112,7 @@ describe('Glide', () => {
 
   });
 
-  it('loops when next button is clicked', () => {
+  it.only('loops when next button is clicked', () => {
     const component = shallow(
       <Glide {...props}>
         <h1>Slide One</h1>
@@ -121,6 +121,8 @@ describe('Glide', () => {
       </Glide>
     );
 
+    const spy = jest.spyOn(component.instance() as Glide, 'onNextButtonClick')
+
     component.setState({ currentIndex: 2 })
 
     component
@@ -128,8 +130,10 @@ describe('Glide', () => {
       .last()
       .simulate('click');
 
-    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
+    component.update()
 
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
+    expect(spy).toHaveBeenCalled()
   });
 
 
@@ -215,6 +219,8 @@ describe('Glide', () => {
 
     jest.runTimersToTime(4000);
     expect((component.instance().state as GlideState).currentIndex).toEqual(2)
+
+    window.clearInterval = original
   });
 
   it('fires callback when when pagination is clicked', () => {
@@ -267,20 +273,40 @@ describe('Glide', () => {
 });
 
 describe('Preloader', () => {
+  afterEach(() => jest.clearAllMocks())
   it('shows loader', () => {
-    const wrapper = mount(
+    const wrapper = shallow(
       <Preloader
-        startTimer={jest.fn()}
-        imagesLoaded={false}
-        loading={true}
         currentIndex={0}
-        {...props}
+        width={500}
+        autoPlay={false}
+        startTimer={jest.fn()}
       >
         <img src="https://picsum.photos/700" />
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Preloader>
     )
+
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('shows children', () => {
+    const wrapper = shallow(
+      <Preloader
+        currentIndex={0}
+        width={500}
+        autoPlay={false}
+        startTimer={jest.fn()}
+      >
+        <img src="https://picsum.photos/700" />
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Preloader>
+    )
+
+    wrapper.setState({loading: false, done: true});
+    wrapper.update()
     expect(wrapper).toMatchSnapshot();
   });
 })

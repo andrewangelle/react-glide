@@ -90,7 +90,10 @@ class Preloader extends Component<PreloaderProps, PreloaderState> {
           React.Children.map(children, (child: ReactElement, index) => {
             const className = currentIndex === index ? 'current' : ''
             return child && (
-              <child.type className={`glide--item ${className}`} {...child.props} />
+              <child.type
+                className={`glide--item ${className}`}
+                {...child.props}
+              />
 
             )
           })
