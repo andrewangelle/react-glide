@@ -13,3 +13,5 @@ webpack.config.js
 glide.png
 circle.yml
 node_modules
+.circle
+./dist/build
