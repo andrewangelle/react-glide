@@ -15,11 +15,6 @@ const props = {
   onSlideChange: jest.fn()
 }
 
-const state = {
-  currentIndex: 0,
-  imagesLoaded: false
-}
-
 describe('Glide', () => {
   afterEach(() => jest.clearAllMocks())
   it('renders without crashing', () => {
@@ -41,7 +36,7 @@ describe('Glide', () => {
 
   it('has children elements', () => {
     const component = shallow(
-      <Glide  {...props} {...state}>
+      <Glide  {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -52,8 +47,7 @@ describe('Glide', () => {
 
   it('renders first child element as first slide displayed', () => {
     const component = shallow(
-      <Glide  {...props} {...state}>
-
+      <Glide  {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -66,7 +60,7 @@ describe('Glide', () => {
 
   it('has width and height props', () => {
     const component = shallow(
-      <Glide  {...props} {...state}>
+      <Glide  {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -79,7 +73,7 @@ describe('Glide', () => {
 
   it('sets container width according to prop', () => {
     const component = shallow(
-      <Glide  {...props} {...state}>
+      <Glide  {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -158,7 +152,7 @@ describe('Glide', () => {
 
   it('changes to next slide when next button is clicked', () => {
     const component = shallow(
-      <Glide  {...props} {...state}>
+      <Glide  {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -251,28 +245,11 @@ describe('Glide', () => {
     window.clearInterval = original
   });
 
-  it('calls clearInterval on unmount', () => {
-    const original = window.clearInterval;
-    window.clearInterval = jest.fn();
-
-    const component = mount(
-      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
-        <h1>Slide One</h1>
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Glide>
-    );
-    component.unmount()
-    expect(window.clearInterval).toHaveBeenCalled()
-
-    window.clearInterval = original
-  });
-
   it('sets default autoPlay speed', () => {
     const original = window.setTimeout;
     window.setTimeout = jest.fn();
 
-    const component = mount(
+    mount(
       <Glide {...props} autoPlay={true} autoPlaySpeed={undefined}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
@@ -334,8 +311,4 @@ describe('Glide', () => {
 
     expect(props.onSlideChange).not.toHaveBeenCalled();
   });
-
-
-
-
 });
