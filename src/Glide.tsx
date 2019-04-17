@@ -27,7 +27,7 @@ class Glide extends Component<GlideProps, GlideState> {
   }
 
   componentWillUnmount() {
-    clearInterval(this.autoPlay)
+    clearTimeout(this.autoPlay)
   }
 
   componentDidUpdate(_prevProps: GlideProps, prevState: GlideState) {
@@ -49,7 +49,7 @@ class Glide extends Component<GlideProps, GlideState> {
     }
 
     if(cancelTimer){
-      clearInterval(this.autoPlay)
+      clearTimeout(this.autoPlay)
     }
   }
 

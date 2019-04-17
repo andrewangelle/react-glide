@@ -228,9 +228,9 @@ describe('Glide', () => {
     expect((component.instance().state as GlideState).cancelTimer).toBeTruthy();
   });
 
-  it('calls clearInterval on unmount', () => {
-    const original = window.clearInterval;
-    window.clearInterval = jest.fn();
+  it('calls clearTimeout on unmount', () => {
+    const original = window.clearTimeout;
+    window.clearTimeout = jest.fn();
 
     const component = mount(
       <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
@@ -240,9 +240,9 @@ describe('Glide', () => {
       </Glide>
     );
     component.unmount()
-    expect(window.clearInterval).toHaveBeenCalled()
+    expect(window.clearTimeout).toHaveBeenCalled()
 
-    window.clearInterval = original
+    window.clearTimeout = original
   });
 
   it('sets default autoPlay speed', () => {
