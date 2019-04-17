@@ -56,13 +56,11 @@ class Glide extends Component<GlideProps, GlideState> {
   startTimer = () =>
     this.setState({cancelTimer: false},
       () => {
-        if (this.props.autoPlay) {
-          const { autoPlaySpeed = 5000 } = this.props;
-          this.autoPlay = setTimeout(
-            () => this.goToNextSlide(),
-            autoPlaySpeed
-          );
-        }
+        const { autoPlaySpeed = 5000 } = this.props;
+        this.autoPlay = setTimeout(
+          () => this.goToNextSlide(),
+          autoPlaySpeed
+        );
       }
     )
   ;

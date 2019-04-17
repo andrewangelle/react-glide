@@ -54,6 +54,7 @@ describe('Preloader', () => {
         <h1>Slide Three</h1>
       </Preloader>
     )
+    expect(props.startTimer).not.toHaveBeenCalled();
 
     wrapper.setState({loading: false, done: true});
     wrapper.update()

@@ -201,11 +201,7 @@ describe('Glide', () => {
 
   });
 
-
   it('changes slides when autoPlay is on', () => {
-    const original = window.clearInterval;
-    window.clearInterval = jest.fn();
-
     const component = mount(
       <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
         <h1>Slide One</h1>
@@ -218,9 +214,77 @@ describe('Glide', () => {
 
     jest.runTimersToTime(4000);
     expect((component.instance().state as GlideState).currentIndex).toEqual(2)
+  });
+
+  it('cancels timer after button click', () => {
+    const component = mount(
+      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+
+    jest.runTimersToTime(4000);
+    expect((component.instance().state as GlideState).cancelTimer).toBeFalsy();
+    component
+      .find('button')
+      .last()
+      .simulate('click');
+    expect((component.instance().state as GlideState).cancelTimer).toBeTruthy();
+  });
+
+  it('calls clearInterval on unmount', () => {
+    const original = window.clearInterval;
+    window.clearInterval = jest.fn();
+
+    const component = mount(
+      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+    component.unmount()
+    expect(window.clearInterval).toHaveBeenCalled()
 
     window.clearInterval = original
   });
+
+  it('calls clearInterval on unmount', () => {
+    const original = window.clearInterval;
+    window.clearInterval = jest.fn();
+
+    const component = mount(
+      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+    component.unmount()
+    expect(window.clearInterval).toHaveBeenCalled()
+
+    window.clearInterval = original
+  });
+
+  it('sets default autoPlay speed', () => {
+    const original = window.setTimeout;
+    window.setTimeout = jest.fn();
+
+    const component = mount(
+      <Glide {...props} autoPlay={true} autoPlaySpeed={undefined}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+
+    expect(window.setTimeout).toHaveBeenCalledWith(expect.any(Function), 5000)
+
+    window.setTimeout = original
+  });
+
 
   it('fires callback when when pagination is clicked', () => {
     const component = shallow(
@@ -271,26 +335,7 @@ describe('Glide', () => {
     expect(props.onSlideChange).not.toHaveBeenCalled();
   });
 
-  it('cancels timer after button click', () => {
-    const original = window.clearInterval;
-    window.clearInterval = jest.fn();
 
-    const component = mount(
-      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
-        <h1>Slide One</h1>
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Glide>
-    );
 
-    jest.runTimersToTime(4000);
-    expect((component.instance().state as GlideState).cancelTimer).toBeFalsy();
-    component
-      .find('button')
-      .last()
-      .simulate('click');
-    expect((component.instance().state as GlideState).cancelTimer).toBeTruthy();
 
-    window.clearInterval = original
-  });
 });
