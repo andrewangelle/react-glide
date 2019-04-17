@@ -56,33 +56,3 @@ exports[`Glide renders without crashing 1`] = `
   </section>
 </div>
 `;
-
-exports[`Preloader shows children 1`] = `
-<Fragment>
-  <img
-    className="glide--item current"
-    key=".0"
-    src="https://picsum.photos/700"
-  />
-  <h1
-    className="glide--item "
-    key=".1"
-  >
-    Slide Two
-  </h1>
-  <h1
-    className="glide--item "
-    key=".2"
-  >
-    Slide Three
-  </h1>
-</Fragment>
-`;
-
-exports[`Preloader shows loader 1`] = `
-<Fragment>
-  <LoadingSpinner
-    width={500}
-  />
-</Fragment>
-`;

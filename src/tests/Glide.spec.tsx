@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow, mount } from './setupTests'
 
 import { Glide, GlideState, GlideProps } from '../Glide';
-import { Preloader } from '../Preloader';
 import { PreloaderProps  } from '../types';
 
 jest.useFakeTimers();
@@ -112,7 +111,7 @@ describe('Glide', () => {
 
   });
 
-  it.only('loops when next button is clicked', () => {
+  it('loops when next button is clicked', () => {
     const component = shallow(
       <Glide {...props}>
         <h1>Slide One</h1>
@@ -231,7 +230,7 @@ describe('Glide', () => {
         <h1>Slide Three</h1>
       </Glide>
     );
-
+    const spy = jest.spyOn(component.instance() as Glide, 'onDotClick')
     expect(props.onSlideChange).not.toHaveBeenCalled()
 
     component
@@ -240,6 +239,7 @@ describe('Glide', () => {
       .simulate('click')
 
     expect(props.onSlideChange).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalled()
   })
 
   it('does not fire callback if index does not change', () => {
@@ -270,43 +270,27 @@ describe('Glide', () => {
 
     expect(props.onSlideChange).not.toHaveBeenCalled();
   });
+
+  it('cancels timer after button click', () => {
+    const original = window.clearInterval;
+    window.clearInterval = jest.fn();
+
+    const component = mount(
+      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+
+    jest.runTimersToTime(4000);
+    expect((component.instance().state as GlideState).cancelTimer).toBeFalsy();
+    component
+      .find('button')
+      .last()
+      .simulate('click');
+    expect((component.instance().state as GlideState).cancelTimer).toBeTruthy();
+
+    window.clearInterval = original
+  });
 });
-
-describe('Preloader', () => {
-  afterEach(() => jest.clearAllMocks())
-  it('shows loader', () => {
-    const wrapper = shallow(
-      <Preloader
-        currentIndex={0}
-        width={500}
-        autoPlay={false}
-        startTimer={jest.fn()}
-      >
-        <img src="https://picsum.photos/700" />
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Preloader>
-    )
-
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('shows children', () => {
-    const wrapper = shallow(
-      <Preloader
-        currentIndex={0}
-        width={500}
-        autoPlay={false}
-        startTimer={jest.fn()}
-      >
-        <img src="https://picsum.photos/700" />
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Preloader>
-    )
-
-    wrapper.setState({loading: false, done: true});
-    wrapper.update()
-    expect(wrapper).toMatchSnapshot();
-  });
-})

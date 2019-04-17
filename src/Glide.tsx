@@ -63,7 +63,6 @@ class Glide extends Component<GlideProps, GlideState> {
             autoPlaySpeed
           );
         }
-
       }
     )
   ;
