@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow, mount } from './setupTests'
 
-import { Glide, GlideState, GlideProps,  } from '../Glide';
-import { Preloader } from '../Preloader';
+import { Glide, GlideState, GlideProps } from '../Glide';
 import { PreloaderProps  } from '../types';
 
 jest.useFakeTimers();
@@ -14,11 +13,6 @@ const props = {
   infinite: true,
   dots: true,
   onSlideChange: jest.fn()
-}
-
-const state = {
-  currentIndex: 0,
-  imagesLoaded: false
 }
 
 describe('Glide', () => {
@@ -42,7 +36,7 @@ describe('Glide', () => {
 
   it('has children elements', () => {
     const component = shallow(
-      <Glide  {...props} {...state}>
+      <Glide  {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -53,8 +47,7 @@ describe('Glide', () => {
 
   it('renders first child element as first slide displayed', () => {
     const component = shallow(
-      <Glide  {...props} {...state}>
-
+      <Glide  {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -67,7 +60,7 @@ describe('Glide', () => {
 
   it('has width and height props', () => {
     const component = shallow(
-      <Glide  {...props} {...state}>
+      <Glide  {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -80,7 +73,7 @@ describe('Glide', () => {
 
   it('sets container width according to prop', () => {
     const component = shallow(
-      <Glide  {...props} {...state}>
+      <Glide  {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -121,6 +114,8 @@ describe('Glide', () => {
       </Glide>
     );
 
+    const spy = jest.spyOn(component.instance() as Glide, 'onNextButtonClick')
+
     component.setState({ currentIndex: 2 })
 
     component
@@ -128,8 +123,10 @@ describe('Glide', () => {
       .last()
       .simulate('click');
 
-    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
+    component.update()
 
+    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
+    expect(spy).toHaveBeenCalled()
   });
 
 
@@ -155,7 +152,7 @@ describe('Glide', () => {
 
   it('changes to next slide when next button is clicked', () => {
     const component = shallow(
-      <Glide  {...props} {...state}>
+      <Glide  {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -198,11 +195,7 @@ describe('Glide', () => {
 
   });
 
-
   it('changes slides when autoPlay is on', () => {
-    const original = window.clearInterval;
-    window.clearInterval = jest.fn();
-
     const component = mount(
       <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
         <h1>Slide One</h1>
@@ -217,6 +210,59 @@ describe('Glide', () => {
     expect((component.instance().state as GlideState).currentIndex).toEqual(2)
   });
 
+  it('cancels timer after button click', () => {
+    const component = mount(
+      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+
+    jest.runTimersToTime(4000);
+    expect((component.instance().state as GlideState).cancelTimer).toBeFalsy();
+    component
+      .find('button')
+      .last()
+      .simulate('click');
+    expect((component.instance().state as GlideState).cancelTimer).toBeTruthy();
+  });
+
+  it('calls clearTimeout on unmount', () => {
+    const original = window.clearTimeout;
+    window.clearTimeout = jest.fn();
+
+    const component = mount(
+      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+    component.unmount()
+    expect(window.clearTimeout).toHaveBeenCalled()
+
+    window.clearTimeout = original
+  });
+
+  it('sets default autoPlay speed', () => {
+    const original = window.setTimeout;
+    window.setTimeout = jest.fn();
+
+    mount(
+      <Glide {...props} autoPlay={true} autoPlaySpeed={undefined}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>
+    );
+
+    expect(window.setTimeout).toHaveBeenCalledWith(expect.any(Function), 5000)
+
+    window.setTimeout = original
+  });
+
+
   it('fires callback when when pagination is clicked', () => {
     const component = shallow(
       <Glide {...props}>
@@ -225,7 +271,7 @@ describe('Glide', () => {
         <h1>Slide Three</h1>
       </Glide>
     );
-
+    const spy = jest.spyOn(component.instance() as Glide, 'onDotClick')
     expect(props.onSlideChange).not.toHaveBeenCalled()
 
     component
@@ -234,6 +280,7 @@ describe('Glide', () => {
       .simulate('click')
 
     expect(props.onSlideChange).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalled()
   })
 
   it('does not fire callback if index does not change', () => {
@@ -265,22 +312,3 @@ describe('Glide', () => {
     expect(props.onSlideChange).not.toHaveBeenCalled();
   });
 });
-
-describe('Preloader', () => {
-  it('shows loader', () => {
-    const wrapper = mount(
-      <Preloader
-        startTimer={jest.fn()}
-        imagesLoaded={false}
-        loading={true}
-        currentIndex={0}
-        {...props}
-      >
-        <img src="https://picsum.photos/700" />
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Preloader>
-    )
-    expect(wrapper).toMatchSnapshot();
-  });
-})

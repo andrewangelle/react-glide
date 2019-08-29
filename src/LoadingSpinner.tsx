@@ -1,7 +1,6 @@
 import React from 'react';
-import { SpinnerProps } from './types';
 
-function LoadingSpinner({ width }: SpinnerProps) {
+function LoadingSpinner({ width }: { width: number }) {
   return (
     <div
       style={{

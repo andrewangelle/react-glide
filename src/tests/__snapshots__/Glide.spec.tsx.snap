@@ -13,9 +13,6 @@ exports[`Glide renders without crashing 1`] = `
   <Preloader
     autoPlay={false}
     currentIndex={0}
-    imagesLoaded={false}
-    loading={true}
-    onSlideChange={[MockFunction]}
     startTimer={[Function]}
     width={500}
   >
@@ -58,36 +55,4 @@ exports[`Glide renders without crashing 1`] = `
     </span>
   </section>
 </div>
-`;
-
-exports[`Preloader shows loader 1`] = `
-<Preloader
-  autoPlay={false}
-  currentIndex={0}
-  dots={true}
-  height={500}
-  imagesLoaded={false}
-  infinite={true}
-  loading={true}
-  onSlideChange={[MockFunction]}
-  startTimer={[MockFunction]}
-  width={500}
->
-  <LoadingSpinner
-    width={500}
-  >
-    <div
-      style={
-        Object {
-          "height": "378.7878787878788px",
-          "width": "500px",
-        }
-      }
-    >
-      <div
-        className="loading-indicator"
-      />
-    </div>
-  </LoadingSpinner>
-</Preloader>
 `;

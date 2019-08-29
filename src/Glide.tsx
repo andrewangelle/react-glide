@@ -1,12 +1,11 @@
-import React, { ReactChild } from 'react';
+import React, { ReactChild, Component } from 'react';
 
 import { Preloader } from './Preloader';
 import './reactGlide.css';
 
 export interface GlideState {
-  loading: true;
   currentIndex: number;
-  imagesLoaded: boolean;
+  cancelTimer: boolean;
 }
 
 export interface GlideProps {
@@ -19,38 +18,52 @@ export interface GlideProps {
   onSlideChange?: () => void;
 }
 
-class Glide extends React.Component<GlideProps, GlideState> {
+class Glide extends Component<GlideProps, GlideState> {
   autoPlay: NodeJS.Timeout;
 
   state: GlideState = {
-    loading: true,
     currentIndex: 0,
-    imagesLoaded: false
+    cancelTimer: true
   }
 
-  componentWillUnMount() {
-    clearInterval(this.props.autoPlaySpeed)
+  componentWillUnmount() {
+    clearTimeout(this.autoPlay)
   }
 
   componentDidUpdate(_prevProps: GlideProps, prevState: GlideState) {
+    // destructure props and state values
     const { currentIndex: prevIndex } = prevState;
     const { currentIndex } = this.state;
-    const { onSlideChange } = this.props;
+    const { onSlideChange = () => null } = this.props;
 
-    if (currentIndex !== prevIndex && onSlideChange) {
+    // diff the changes
+    const indexUpdated = currentIndex !== prevIndex;
+    const cancelTimer = this.state.cancelTimer !== prevState.cancelTimer && this.state.cancelTimer
+
+    if (indexUpdated) {
       onSlideChange();
+
+      if (this.props.autoPlay && !this.state.cancelTimer) {
+        this.startTimer()
+      }
+    }
+
+    if(cancelTimer){
+      clearTimeout(this.autoPlay)
     }
   }
 
-  startTimer = () => {
-    if (this.props.autoPlay) {
-      const { autoPlaySpeed = 5000 } = this.props
-      this.autoPlay = setInterval(
-        () => this.goToNextSlide(),
-        autoPlaySpeed
-      );
-    }
-  }
+  startTimer = () =>
+    this.setState({cancelTimer: false},
+      () => {
+        const { autoPlaySpeed = 5000 } = this.props;
+        this.autoPlay = setTimeout(
+          () => this.goToNextSlide(),
+          autoPlaySpeed
+        );
+      }
+    )
+  ;
 
   goToSelectedDot = (index: number) => {
     this.setState({ currentIndex: index });
@@ -76,6 +89,27 @@ class Glide extends React.Component<GlideProps, GlideState> {
     this.setState({ currentIndex: nextIndex })
   }
 
+  onNextButtonClick = () => {
+    this.setState(
+      {cancelTimer: true},
+      () => this.goToNextSlide()
+    )
+  }
+
+  onPrevButtonClick = () => {
+    this.setState(
+      {cancelTimer: true},
+      () => this.goToPrevSlide()
+    )
+  }
+
+  onDotClick = (index: number) => {
+    this.setState(
+      {cancelTimer: true},
+      () => this.goToSelectedDot(index)
+    )
+  }
+
   render() {
     const { currentIndex } = this.state;
 
@@ -91,11 +125,15 @@ class Glide extends React.Component<GlideProps, GlideState> {
     }
 
     return (
-      <div className="glide--container" style={styleProps}>
+      <div
+        className="glide--container"
+        style={styleProps}
+      >
         <Preloader
-          startTimer={() => this.startTimer()}
-          {...this.props}
-          {...this.state}
+          startTimer={this.startTimer}
+          currentIndex={currentIndex}
+          width={this.props.width}
+          autoPlay={this.props.autoPlay}
         >
           {children}
         </Preloader>
@@ -104,10 +142,7 @@ class Glide extends React.Component<GlideProps, GlideState> {
         {(infinite || currentIndex !== 0) &&
           <button
             className="glide--prev-btn"
-            onClick={() => {
-              clearInterval(this.autoPlay)
-              this.goToPrevSlide()
-            }}
+            onClick={this.onPrevButtonClick}
           >
             &#10094;
           </button>
@@ -116,10 +151,7 @@ class Glide extends React.Component<GlideProps, GlideState> {
         {(infinite || currentIndex !== (children as ReactChild[]).length - 1) &&
           <button
             className="glide--next-btn"
-            onClick={() => {
-              clearInterval(this.autoPlay)
-              this.goToNextSlide();
-            }}
+            onClick={this.onNextButtonClick}
           >
             &#10095;
           </button>
@@ -131,10 +163,7 @@ class Glide extends React.Component<GlideProps, GlideState> {
               <span
                 key={index}
                 className={(currentIndex === index ? 'active-dot' : 'inactive-dot')}
-                onClick={() => {
-                  clearInterval(this.autoPlay)
-                  this.goToSelectedDot(index)
-                }}
+                onClick={() => this.onDotClick(index)}
               >
                 &middot;
               </span>
