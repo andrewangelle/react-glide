@@ -1,6 +1,6 @@
 import React from 'react';
 
-function LoadingSpinner({ width }: { width: number }) {
+export function LoadingSpinner({ width }: { width: number }) {
   return (
     <div
       style={{
@@ -12,7 +12,3 @@ function LoadingSpinner({ width }: { width: number }) {
     </div>
   )
 }
-
-export { LoadingSpinner }
-
-

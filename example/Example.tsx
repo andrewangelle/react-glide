@@ -20,13 +20,13 @@ const props: GlideProps = {
   dots: true
 }
 
-class Example extends Component {
+export class Example extends Component {
   render() {
     return (
       <Glide {...props}>
-        <img src="https://picsum.photos/600" />
-        <img src="https://picsum.photos/600.2" />
-        <img src="https://picsum.photos/600.1" />
+        <img src="https://picsum.photos/id/312/600/600" />
+        <img src="https://picsum.photos/id/313/600/600" />
+        <img src="https://picsum.photos/id/314/600/600" />
         <div>
           <iframe
             width="500"
@@ -59,5 +59,3 @@ class Example extends Component {
     );
   }
 }
-
-export { Example }
