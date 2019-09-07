@@ -17,6 +17,7 @@ const props = {
 
 describe('Glide', () => {
   afterEach(() => jest.clearAllMocks())
+  
   it('renders without crashing', () => {
     const baseProps = {
       width: 500,
@@ -114,7 +115,10 @@ describe('Glide', () => {
       </Glide>
     );
 
-    const spy = jest.spyOn(component.instance() as Glide, 'onNextButtonClick')
+    const spy = jest.spyOn(
+      component.instance() as Glide, 
+      'onNextButtonClick'
+    );
 
     component.setState({ currentIndex: 2 })
 
@@ -211,6 +215,9 @@ describe('Glide', () => {
   });
 
   it('cancels timer after button click', () => {
+    const original = window.clearTimeout;
+    window.clearTimeout = jest.fn();
+
     const component = mount(
       <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
         <h1>Slide One</h1>
@@ -219,13 +226,23 @@ describe('Glide', () => {
       </Glide>
     );
 
+    const spy = jest.spyOn(
+      component.instance() as Glide, 
+      'handleTimerOnClick'
+    );
+
     jest.runTimersToTime(4000);
-    expect((component.instance().state as GlideState).cancelTimer).toBeFalsy();
+    expect(window.clearTimeout).not.toHaveBeenCalled();
+    
     component
       .find('button')
       .last()
       .simulate('click');
-    expect((component.instance().state as GlideState).cancelTimer).toBeTruthy();
+    
+    expect(spy).toHaveBeenCalled()
+    expect(window.clearTimeout).toHaveBeenCalled();
+
+    window.clearTimeout = original
   });
 
   it('calls clearTimeout on unmount', () => {
@@ -247,7 +264,7 @@ describe('Glide', () => {
 
   it('sets default autoPlay speed', () => {
     const original = window.setTimeout;
-    window.setTimeout = jest.fn();
+    (window.setTimeout as any) = jest.fn();
 
     mount(
       <Glide {...props} autoPlay={true} autoPlaySpeed={undefined}>

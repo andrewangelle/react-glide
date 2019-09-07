@@ -1,11 +1,11 @@
 import React, { ReactChild, Component } from 'react';
 
 import { Preloader } from './Preloader';
+
 import './reactGlide.css';
 
 export interface GlideState {
   currentIndex: number;
-  cancelTimer: boolean;
 }
 
 export interface GlideProps {
@@ -22,8 +22,7 @@ class Glide extends Component<GlideProps, GlideState> {
   autoPlay: NodeJS.Timeout;
 
   state: GlideState = {
-    currentIndex: 0,
-    cancelTimer: true
+    currentIndex: 0
   }
 
   componentWillUnmount() {
@@ -31,39 +30,30 @@ class Glide extends Component<GlideProps, GlideState> {
   }
 
   componentDidUpdate(_prevProps: GlideProps, prevState: GlideState) {
-    // destructure props and state values
     const { currentIndex: prevIndex } = prevState;
     const { currentIndex } = this.state;
-    const { onSlideChange = () => null } = this.props;
+    const { onSlideChange, autoPlay } = this.props;
 
-    // diff the changes
-    const indexUpdated = currentIndex !== prevIndex;
-    const cancelTimer = this.state.cancelTimer !== prevState.cancelTimer && this.state.cancelTimer
+    if(currentIndex !== prevIndex) {
 
-    if (indexUpdated) {
-      onSlideChange();
+      // check if user has defined these props
+      if(onSlideChange){
+        onSlideChange();
+      }
 
-      if (this.props.autoPlay && !this.state.cancelTimer) {
+      if(autoPlay) {
         this.startTimer()
       }
     }
-
-    if(cancelTimer){
-      clearTimeout(this.autoPlay)
-    }
   }
 
-  startTimer = () =>
-    this.setState({cancelTimer: false},
-      () => {
-        const { autoPlaySpeed = 5000 } = this.props;
-        this.autoPlay = setTimeout(
-          () => this.goToNextSlide(),
-          autoPlaySpeed
-        );
-      }
-    )
-  ;
+  startTimer = () => {
+    const { autoPlaySpeed = 5000 } = this.props;
+    this.autoPlay = setTimeout(
+      () => this.goToNextSlide(),
+      autoPlaySpeed
+    );
+  };
 
   goToSelectedDot = (index: number) => {
     this.setState({ currentIndex: index });
@@ -89,25 +79,25 @@ class Glide extends Component<GlideProps, GlideState> {
     this.setState({ currentIndex: nextIndex })
   }
 
+  onDotClick = (index: number) => {
+    this.goToSelectedDot(index);
+    this.handleTimerOnClick()
+  }
+
   onNextButtonClick = () => {
-    this.setState(
-      {cancelTimer: true},
-      () => this.goToNextSlide()
-    )
+    this.goToNextSlide();
+    this.handleTimerOnClick()
   }
 
   onPrevButtonClick = () => {
-    this.setState(
-      {cancelTimer: true},
-      () => this.goToPrevSlide()
-    )
+    this.goToPrevSlide();
+    this.handleTimerOnClick()
   }
 
-  onDotClick = (index: number) => {
-    this.setState(
-      {cancelTimer: true},
-      () => this.goToSelectedDot(index)
-    )
+  handleTimerOnClick = () => {
+    if(this.props.autoPlay){
+      clearTimeout(this.autoPlay);
+    }
   }
 
   render() {
@@ -129,6 +119,7 @@ class Glide extends Component<GlideProps, GlideState> {
         className="glide--container"
         style={styleProps}
       >
+
         <Preloader
           startTimer={this.startTimer}
           currentIndex={currentIndex}
@@ -137,7 +128,6 @@ class Glide extends Component<GlideProps, GlideState> {
         >
           {children}
         </Preloader>
-
 
         {(infinite || currentIndex !== 0) &&
           <button
