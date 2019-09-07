@@ -1,24 +1,11 @@
 import React, { ReactChild, Component } from 'react';
 
 import { Preloader } from './Preloader';
+import { GlideProps, GlideState } from './types';
 
 import './reactGlide.css';
 
-export interface GlideState {
-  currentIndex: number;
-}
-
-export interface GlideProps {
-  autoPlay?: boolean;
-  autoPlaySpeed?: number;
-  dots?: boolean;
-  height?: number;
-  infinite?: boolean;
-  width: number;
-  onSlideChange?: () => void;
-}
-
-export class Glide extends Component<GlideProps, GlideState> {
+class Glide extends Component<GlideProps, GlideState> {
   autoPlay: NodeJS.Timeout;
 
   state: GlideState = {
@@ -164,3 +151,5 @@ export class Glide extends Component<GlideProps, GlideState> {
     );
   }
 }
+
+export default Glide

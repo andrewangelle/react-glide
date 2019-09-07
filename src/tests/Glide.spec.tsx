@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow, mount } from './setupTests'
 
-import { Glide, GlideState, GlideProps } from '../Glide';
+import { Glide } from '..';
+import { GlideState, GlideProps  } from '../types'
 import { PreloaderProps  } from '../types';
 
 jest.useFakeTimers();

@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "rootDir": "src",
-    "outDir": "dist/types",
+    "rootDir": ".",
+    "outDir": "lib/types",
     "module": "es6",
     "target": "es2015",
     "lib": [
@@ -24,13 +24,11 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
   },
-  "exclude": [
-    "dist",
-    "example",
-    "src/tests/*"
-  ],
   "include": [
     "example",
-    "src/Glide.tsx"
+    "src"
+  ],
+  "exclude": [
+    "src/tests"
   ]
 }
