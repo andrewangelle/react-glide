@@ -18,7 +18,7 @@ export interface GlideProps {
   onSlideChange?: () => void;
 }
 
-class Glide extends Component<GlideProps, GlideState> {
+export class Glide extends Component<GlideProps, GlideState> {
   autoPlay: NodeJS.Timeout;
 
   state: GlideState = {
@@ -164,5 +164,3 @@ class Glide extends Component<GlideProps, GlideState> {
     );
   }
 }
-
-export { Glide }

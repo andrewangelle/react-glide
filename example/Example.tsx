@@ -20,7 +20,7 @@ const props: GlideProps = {
   dots: true
 }
 
-class Example extends Component {
+export class Example extends Component {
   render() {
     return (
       <Glide {...props}>
@@ -59,5 +59,3 @@ class Example extends Component {
     );
   }
 }
-
-export { Example }

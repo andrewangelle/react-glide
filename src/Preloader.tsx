@@ -4,7 +4,7 @@ import { LoadingSpinner } from './LoadingSpinner';
 import { PreloaderProps, PreloaderState } from './types';
 
 
-class Preloader extends Component<PreloaderProps, PreloaderState> {
+export class Preloader extends Component<PreloaderProps, PreloaderState> {
   urls: string[] = [];
 
   state: PreloaderState = {
@@ -102,5 +102,3 @@ class Preloader extends Component<PreloaderProps, PreloaderState> {
     )
   }
 }
-
-export { Preloader }
