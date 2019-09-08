@@ -1,13 +1,16 @@
 {
   "name": "react-glide",
-  "version": "3.2.0",
+  "version": null,
   "description": "A multi purpose carousel module built in React.",
   "author": "andrewangelle",
   "repository": "http://github.com/andrewangelle/react-glide.git",
   "license": "MIT",
   "main": "lib/index.min.js",
   "types": "lib/types/index.d.ts",
-  "files": ["lib", "lib/types"],
+  "files": [
+    "lib",
+    "lib/types"
+  ],
   "scripts": {
     "build": "rm -rf lib && npm run build:types && npm run build:bundle",
     "build:types": "tsc --emitDeclarationOnly",
@@ -21,7 +24,7 @@
     "release": "standard-version"
   },
   "config": {
-    "commitizen": { 
+    "commitizen": {
       "path": "cz-conventional-changelog"
     }
   },
@@ -38,7 +41,7 @@
   },
   "keywords": [
     "react",
-    "component" 
+    "component"
   ],
   "peerDependencies": {
     "react": "^0.14.6 || 15.x.x || 16.x.x",
