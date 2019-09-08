@@ -41,17 +41,17 @@ jobs:
           name: Run tests
           command: npm run test:once
 
-  release:
-    docker: *node-docker
-    steps:
-      - restore_cache: *restore-cache
-      - run:
-          name: Generate release
-          command: npm run release
+  # release:
+  #   docker: *node-docker
+  #   steps:
+  #     - restore_cache: *restore-cache
+  #     - run:
+  #         name: Generate release
+  #         command: npm run release
 
-      - run:
-          name: Publish
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ./npmrc && npm publish --tag latest
+  #     - run:
+  #         name: Publish
+  #         command: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ./npmrc && npm publish --tag latest
 
 
 workflows:
@@ -64,10 +64,10 @@ workflows:
           requires:
             - bootstrap
 
-      - release:
-          requires:
-            - bootstrap
-            - test
-          filters:
-            branches:
-              only: master
+      # - release:
+      #     requires:
+      #       - bootstrap
+      #       - test
+      #     filters:
+      #       branches:
+      #         only: master

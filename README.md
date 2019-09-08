@@ -2,7 +2,8 @@
 
 A lightweight, multi-purpose carousel component for React.
 
-[![CircleCI](https://circleci.com/gh/andrewangelle/react-glide.svg?style=shield)](https://circleci.com/gh/andrewangelle/react-glide) [![Coverage Status](https://coveralls.io/repos/github/andrewangelle/react-glide/badge.svg?branch=master)](https://coveralls.io/github/andrewangelle/react-glide?branch=master)
+[![npm version](https://badge.fury.io/js/react-glide.svg)](https://badge.fury.io/js/react-glide)
+[![CircleCI](https://circleci.com/gh/andrewangelle/react-paypal-button.svg?style=svg)](https://circleci.com/gh/andrewangelle/react-glide)
 
 [demo](https://codesandbox.io/s/r7166733lm)
 
