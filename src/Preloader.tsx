@@ -2,7 +2,7 @@ import React, { Component, ReactElement } from 'react';
 
 import { LoadingSpinner } from './LoadingSpinner';
 import { PreloaderProps, PreloaderState } from './types';
-
+import './reactGlide.css'
 
 export class Preloader extends Component<PreloaderProps, PreloaderState> {
   urls: string[] = [];

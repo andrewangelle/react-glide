@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Glide, GlideProps } from '../src/Glide';
-import '../lib/reactGlide.css'
+import { Glide, GlideProps } from '../src'; 
 import './style.css'
 
 /**

@@ -15,26 +15,23 @@ jobs:
     steps:
       - restore_cache: *restore-cache
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
       - add_ssh_keys:
           fingerprints:
             - $FINGERPRINT
       - run:
-          name: install deps
+          name: Install deps
           command: npm install
 
+      - run:
+          name: Generate build
+          command: npm run build
+          
       - save_cache:
           key: bootstrap-v1-{{ .Branch }}-{{ .Revision }}
           paths:
             - .
-
-  build:
-    docker: *node-docker
-    steps:
-      - restore_cache: *restore-cache
-      - run:
-          name: Run build
-          command: npm run build
-
 
   test:
     docker: *node-docker
@@ -44,17 +41,33 @@ jobs:
           name: Run tests
           command: npm run test:once
 
+  release:
+    docker: *node-docker
+    steps:
+      - restore_cache: *restore-cache
+      - run:
+          name: Generate release
+          command: npm run release
+
+      - run:
+          name: Publish
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" > ./npmrc && npm publish --tag latest
+
+
 workflows:
   version: 2
   build-and-test:
     jobs:
       - bootstrap
 
-      - build:
-          requires:
-            - bootstrap
-
       - test:
           requires:
             - bootstrap
-            - build
+
+      - release:
+          requires:
+            - bootstrap
+            - test
+          filters:
+            branches:
+              only: master

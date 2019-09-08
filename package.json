@@ -5,22 +5,40 @@
   "author": "andrewangelle",
   "repository": "http://github.com/andrewangelle/react-glide.git",
   "license": "MIT",
-  "main": "lib/index.js",
-  "types": "dist/types/Glide.d.ts",
+  "main": "lib/index.min.js",
+  "types": "lib/types/index.d.ts",
+  "files": ["lib", "lib/types"],
   "scripts": {
-    "build": "npm run build:types && npm run build:js && npm run build:bundle",
-    "build:types": "rm -rf dist && tsc --emitDeclarationOnly",
-    "build:js": "babel src --out-dir dist/build --extensions \".tsx\" --ignore \"**/*.test.tsx\" --source-maps inline",
-    "build:bundle": "rm -rf lib && webpack-cli --config ./webpack.config.js --mode production",
+    "build": "rm -rf lib && npm run build:types && npm run build:bundle",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir lib --extensions \".tsx\" --ignore \"**/*.test.tsx\" --source-maps inline",
+    "build:bundle": "webpack --config webpack.config.js --mode production",
     "start": "webpack-dev-server --config ./example/webpack.config.js --mode development --open --hot",
     "test": "jest --watchAll",
     "test:once": "jest",
     "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "preversion": "npm run build && git add -A lib"
+    "preversion": "npm run build && git add -A lib",
+    "release": "standard-version"
+  },
+  "config": {
+    "commitizen": { 
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "standard-version": {
+    "scripts": {
+      "prebump": "tsc --emitDeclarationOnly && webpack --config webpack.config.js --mode production",
+      "postbump": "git push --follow-tags origin master"
+    }
   },
   "keywords": [
     "react",
-    "component"
+    "component" 
   ],
   "peerDependencies": {
     "react": "^0.14.6 || 15.x.x || 16.x.x",
@@ -34,6 +52,8 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
     "@types/enzyme": "^3.1.18",
     "@types/jest": "^23.3.14",
     "@types/node": "^11.9.3",
@@ -52,6 +72,7 @@
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.5",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.0.5",
     "jest": "^25.0.0",
     "jest-css-modules": "^2.1.0",
     "mini-css-extract-plugin": "^0.5.0",
@@ -62,6 +83,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "source-map-loader": "^0.2.4",
+    "standard-version": "^7.0.0",
     "style-loader": "^0.23.1",
     "ts-jest": "^23.10.5",
     "ts-loader": "^5.3.3",
