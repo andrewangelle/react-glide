@@ -20,6 +20,7 @@ Import the module at the top of your component page:
 
 ```javascript
 import { Glide } from 'react-glide';
+import 'react-glide/lib/reactGlide.css'
 ```
 
 Glide functions as a wrapper and can be passed any type of element. See [example folder](https://github.com/andrewangelle/react-glide/tree/master/example):
@@ -99,10 +100,16 @@ Run the example app at http://localhost:3000:
 $ npm start
 ```
 
-Run tests:
+Run tests in watch mode:
 
 ```sh
-$ npm test
+$ npm run test
+```
+
+Execute a single run of tests:
+
+```sh
+$ npm run test:once
 ```
 
 ## License
