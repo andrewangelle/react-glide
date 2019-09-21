@@ -1,5 +1,5 @@
 import React from 'react';
-import './reactGlide.css'
+import './reactGlide.css';
 
 export function LoadingSpinner({ width }: { width: number }) {
   return (
@@ -11,5 +11,5 @@ export function LoadingSpinner({ width }: { width: number }) {
     >
       <div className="loading-indicator" />
     </div>
-  )
+  );
 }
