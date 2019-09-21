@@ -30,6 +30,7 @@
   },
   "husky": {
     "hooks": {
+      "post-commit": "prettier --write `git show --name-only --pretty=\"\" HEAD` && git add `git show --name-only --pretty=\"\" HEAD` && git commit --amend --no-edit'",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
@@ -83,6 +84,7 @@
     "path": "^0.12.7",
     "postcss-loader": "^3.0.0",
     "postcss-modules-extract-imports": "^2.0.0",
+    "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "source-map-loader": "^0.2.4",
