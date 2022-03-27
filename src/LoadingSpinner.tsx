@@ -1,7 +1,6 @@
 import React from 'react';
 import './reactGlide.css';
 
-// arbitrary change
 export function LoadingSpinner({ width }: { width: number }) {
   return (
     <div
