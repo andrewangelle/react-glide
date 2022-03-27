@@ -29,7 +29,7 @@ body {
   opacity: 1;
 }
 
-button {
+.glide--next-btn, .glide--prev-btn {
   position: absolute;
   z-index: 10;
   color: hsl(190, 95%, 80%);
