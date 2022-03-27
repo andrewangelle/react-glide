@@ -1,8 +1,6 @@
 export interface PreloaderProps {
   currentIndex: number;
-  autoPlay?: boolean;
   width: number;
-  startTimer: () => void;
 }
 
 export interface PreloaderState {
@@ -21,6 +19,6 @@ export interface GlideProps {
   dots?: boolean;
   height?: number;
   infinite?: boolean;
-  width: number;
+  width: number | string;
   onSlideChange?: () => void;
 }

@@ -15,7 +15,7 @@ const props: GlideProps = {
   autoPlay: true,
   autoPlaySpeed: 5000,
   onSlideChange: () => console.log('slide changed'),
-  infinite: false,
+  infinite: true,
   dots: true
 }
 
