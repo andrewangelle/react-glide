@@ -1,6 +1,6 @@
 {
   "name": "react-glide",
-  "version": null,
+  "version": "3.2.1",
   "description": "A multi purpose carousel module built in React.",
   "author": "andrewangelle",
   "repository": "http://github.com/andrewangelle/react-glide.git",
