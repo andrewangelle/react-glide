@@ -6,6 +6,7 @@ on:
 
 jobs:
   test:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
@@ -14,4 +15,17 @@ jobs:
       run: npm install
 
     - name: Run unit tests
-      run: npm run test
+      run: npm run test:once
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+
+    - name: Install deps
+      run: npm install
+
+    - name: Run unit tests
+      run: npm run build
+ 
