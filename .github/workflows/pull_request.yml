@@ -5,6 +5,7 @@ on:
     branches: [master]
 
 jobs:
+  runs-on: ubuntu-latest
   test:
     steps:
     - uses: actions/checkout@v2
