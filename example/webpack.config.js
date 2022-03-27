@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -57,14 +56,11 @@ module.exports = {
     extensions: ['.js', '.tsx', '.css', '.ts', '.jsx'],
   },
   devServer: {
-    contentBase: 'dist',
     port: 3000,
     open: true,
     host: 'localhost',
-    hot: true
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: 'example/index.html',
       filename: 'index.html'
