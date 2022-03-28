@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/andrewangelle/react-glide/compare/v3.2.1...v4.0.0) (2022-03-28)
+
+
+### Features
+
+* rewrite to functional components ([#53](https://github.com/andrewangelle/react-glide/issues/53)) ([5303419](https://github.com/andrewangelle/react-glide/commit/5303419))
+
 ### [3.2.1](https://github.com/andrewangelle/react-glide/compare/v3.2.0...v3.2.1) (2022-03-27)
 
 
