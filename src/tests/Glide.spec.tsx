@@ -1,9 +1,9 @@
 import React from 'react';
-import { shallow, mount } from './setupTests';
+import {render, screen, within} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 
 import { Glide } from '..';
-import { GlideState, GlideProps } from '../types';
-import { PreloaderProps } from '../types';
 
 jest.useFakeTimers();
 
@@ -21,11 +21,11 @@ describe('Glide', () => {
 
   it('renders without crashing', () => {
     const baseProps = {
-      width: 500,
+      width: 500 as number,
       autoPlay: false,
       onSlideChange: jest.fn()
     };
-    const component = shallow(
+    render(
       <Glide {...baseProps}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
@@ -33,61 +33,53 @@ describe('Glide', () => {
       </Glide>
     );
 
-    expect(component.getElement()).toMatchSnapshot();
+    screen.getByTestId('glideContainer')
   });
 
   it('has children elements', () => {
-    const component = shallow(
+    render(
       <Glide {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
-    expect(component.props().children.length).toBeGreaterThan(0);
+    screen.getByText(/Slide One/);
+    screen.getByText(/Slide Two/);
+    screen.getByText(/Slide Three/);
   });
 
-  it('renders first child element as first slide displayed', () => {
-    const component = shallow(
+  it('renders first child element as first slide displayed', async () => {
+    render(
       <Glide {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
-    const element = component.instance().props.children![0].props.children;
-
-    expect(element).toEqual('Slide One');
+    const element =  await screen.findByTestId('glideCurrentItem')
+    
+    await within(element).findByText(/Slide One/)
   });
 
-  it('has width and height props', () => {
-    const component = shallow(
+  it('applies width and height props', () => {
+    render(
       <Glide {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
-    const widthProp = (component.instance().props as GlideProps).width;
-    const heightProp = (component.instance().props as GlideProps).height;
-    expect([widthProp, heightProp]).toBeTruthy();
+    const container = screen.getByTestId('glideContainer');
+    
+    const styles = getComputedStyle(container);
+    expect(styles.height).toBe(`${props.height}px`)
+    expect(styles.width).toBe(`${props.width}px`)
+
   });
 
-  it('sets container width according to prop', () => {
-    const component = shallow(
-      <Glide {...props}>
-        <h1>Slide One</h1>
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Glide>
-    );
-    const userProp = (component.instance().props as GlideProps).width;
-
-    expect(userProp).toEqual(userProp);
-  });
-
-  it('changes to next index when next button is clicked', () => {
-    const component = shallow(
+  it('changes to next slide when next button is clicked', async () => {
+    render(
       <Glide {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
@@ -95,19 +87,17 @@ describe('Glide', () => {
       </Glide>
     );
 
-    const nextButton = component.find('button').last();
-    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
+    const element1 =  await screen.findByTestId('glideCurrentItem')
+    await within(element1).findByText(/Slide One/);
 
-    nextButton.simulate('click');
+    userEvent.click(screen.getByTestId('goToNextSlide'));
 
-    expect((component.instance().state as GlideState).currentIndex).toEqual(1);
-
-    nextButton.simulate('click');
-    expect((component.instance().state as GlideState).currentIndex).toEqual(2);
+    const element2 =  await screen.findByTestId('glideCurrentItem')
+    await within(element2).findByText(/Slide Two/);
   });
 
-  it('loops when next button is clicked', () => {
-    const component = shallow(
+  it('loops when next button is clicked', async () => {
+    render(
       <Glide {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
@@ -115,91 +105,44 @@ describe('Glide', () => {
       </Glide>
     );
 
-    const spy = jest.spyOn(component.instance() as Glide, 'onNextButtonClick');
+    const element1 =  await screen.findByTestId('glideCurrentItem')
+    await within(element1).findByText(/Slide One/);
 
-    component.setState({ currentIndex: 2 });
+    userEvent.click(screen.getByTestId('goToNextSlide'));
 
-    component
-      .find('button')
-      .last()
-      .simulate('click');
+    const element2 =  await screen.findByTestId('glideCurrentItem')
+    await within(element2).findByText(/Slide Two/);
 
-    component.update();
+    userEvent.click(screen.getByTestId('goToNextSlide'));
 
-    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
-    expect(spy).toHaveBeenCalled();
+    const element3 =  await screen.findByTestId('glideCurrentItem')
+    await within(element3).findByText(/Slide Three/);
+
+    userEvent.click(screen.getByTestId('goToNextSlide'));
+
+    const elementFinal =  await screen.findByTestId('glideCurrentItem')
+    await within(elementFinal).findByText(/Slide One/);
   });
 
-  it('changes to previous index when prev button is clicked', () => {
-    const component = shallow(
+  it('changes to previous slide when prev button is clicked', async () => {
+    render(
       <Glide {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
-    const prevButton = component.find('button').first();
-    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
+    const element1 =  await screen.findByTestId('glideCurrentItem')
+    await within(element1).findByText(/Slide One/);
 
-    prevButton.simulate('click');
-    expect((component.instance().state as GlideState).currentIndex).toEqual(2);
+    userEvent.click(screen.getByTestId('goToPrevSlide'));
 
-    prevButton.simulate('click');
-    expect((component.instance().state as GlideState).currentIndex).toEqual(1);
+    const element2 =  await screen.findByTestId('glideCurrentItem')
+    await within(element2).findByText(/Slide Three/);
   });
 
-  it('changes to next slide when next button is clicked', () => {
-    const component = shallow(
-      <Glide {...props}>
-        <h1>Slide One</h1>
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Glide>
-    );
-    const nextButton = component.find('button').last();
-    const elementOne = component.instance().props.children![0].props.children;
-    const elementTwo = component.instance().props.children![1].props.children;
-    const elementThree = component.instance().props.children![2].props.children;
-
-    expect(elementOne).toEqual('Slide One');
-
-    nextButton.simulate('click');
-    expect(elementTwo).toEqual('Slide Two');
-
-    nextButton.simulate('click');
-    expect(elementThree).toEqual('Slide Three');
-
-    nextButton.simulate('click');
-    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
-  });
-
-  it('changes to previous slide when prev button is clicked', () => {
-    const component = shallow(
-      <Glide {...props}>
-        <h1>Slide One</h1>
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Glide>
-    );
-    const prevButton = component.find('button').first();
-
-    expect(
-      (component.find('Preloader').props() as PreloaderProps).currentIndex
-    ).toEqual(0);
-
-    prevButton.simulate('click');
-    expect(
-      (component.find('Preloader').props() as PreloaderProps).currentIndex
-    ).toEqual(2);
-
-    prevButton.simulate('click');
-    expect(
-      (component.find('Preloader').props() as PreloaderProps).currentIndex
-    ).toEqual(1);
-  });
-
-  it('changes slides when autoPlay is on', () => {
-    const component = mount(
+  it('changes slides when autoPlay is on', async () => {
+    render(
       <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
@@ -207,62 +150,44 @@ describe('Glide', () => {
       </Glide>
     );
 
-    expect((component.instance().state as GlideState).currentIndex).toEqual(0);
-
+    const element1 =  await screen.findByTestId('glideCurrentItem')
+    await within(element1).findByText(/Slide One/);
+    
     jest.runTimersToTime(4000);
-    expect((component.instance().state as GlideState).currentIndex).toEqual(2);
+
+    const element2 =  await screen.findByTestId('glideCurrentItem')
+    await within(element2).findByText(/Slide Two/);
   });
 
-  it('cancels timer after button click', () => {
-    const original = window.clearTimeout;
-    window.clearTimeout = jest.fn();
-
-    const component = mount(
-      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
+  it('cancels timer after button click', async () => {
+    render(
+      <Glide {...props} autoPlay={true}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
 
-    const spy = jest.spyOn(component.instance() as Glide, 'handleTimerOnClick');
+    const element1 =  await screen.findByTestId('glideCurrentItem')
+    await within(element1).findByText(/Slide One/);
+    
+    jest.runTimersToTime(3000);
 
-    jest.runTimersToTime(4000);
-    expect(window.clearTimeout).not.toHaveBeenCalled();
+    userEvent.click(screen.getByTestId('goToNextSlide'));
 
-    component
-      .find('button')
-      .last()
-      .simulate('click');
+    const element2 =  await screen.findByTestId('glideCurrentItem')
+    await within(element2).findByText(/Slide Two/);
 
-    expect(spy).toHaveBeenCalled();
-    expect(window.clearTimeout).toHaveBeenCalled();
+    jest.runTimersToTime(3000);
 
-    window.clearTimeout = original;
+    const elementFinal =  await screen.findByTestId('glideCurrentItem')
+    await within(elementFinal).findByText(/Slide Two/);
+
   });
 
-  it('calls clearTimeout on unmount', () => {
-    const original = window.clearTimeout;
-    window.clearTimeout = jest.fn();
 
-    const component = mount(
-      <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
-        <h1>Slide One</h1>
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Glide>
-    );
-    component.unmount();
-    expect(window.clearTimeout).toHaveBeenCalled();
-
-    window.clearTimeout = original;
-  });
-
-  it('sets default autoPlay speed', () => {
-    const original = window.setTimeout;
-    (window.setTimeout as any) = jest.fn();
-
-    mount(
+  it('sets default autoPlay speed', async () => {
+    render(
       <Glide {...props} autoPlay={true} autoPlaySpeed={undefined}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
@@ -270,56 +195,29 @@ describe('Glide', () => {
       </Glide>
     );
 
-    expect(window.setTimeout).toHaveBeenCalledWith(expect.any(Function), 5000);
+    const element1 =  await screen.findByTestId('glideCurrentItem')
+    await within(element1).findByText(/Slide One/);
+    
+    jest.runTimersToTime(6000);
 
-    window.setTimeout = original;
+    const element2 =  await screen.findByTestId('glideCurrentItem')
+    await within(element2).findByText(/Slide Two/);
   });
 
-  it('fires callback when when pagination is clicked', () => {
-    const component = shallow(
+  it('changes slide when pagination is clicked', async () => {
+    render(
       <Glide {...props}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
       </Glide>
     );
-    const spy = jest.spyOn(component.instance() as Glide, 'onDotClick');
-    expect(props.onSlideChange).not.toHaveBeenCalled();
+    const element1 =  await screen.findByTestId('glideCurrentItem')
+    await within(element1).findByText(/Slide One/);
 
-    component
-      .find('.inactive-dot')
-      .first()
-      .simulate('click');
+    userEvent.click(screen.getByTestId('glideDot-2'));
 
-    expect(props.onSlideChange).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('does not fire callback if index does not change', () => {
-    const component = shallow(
-      <Glide {...props}>
-        <h1>Slide One</h1>
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Glide>
-    );
-
-    component.setState({ currentIndex: 0 });
-
-    expect(props.onSlideChange).not.toHaveBeenCalled();
-  });
-
-  it('does not fire callback if not provided', () => {
-    const component = shallow(
-      <Glide {...props} onSlideChange={undefined}>
-        <h1>Slide One</h1>
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Glide>
-    );
-
-    component.setState({ currentIndex: 1 });
-
-    expect(props.onSlideChange).not.toHaveBeenCalled();
+    const element2 =  await screen.findByTestId('glideCurrentItem')
+    await within(element2).findByText(/Slide Three/);
   });
 });
