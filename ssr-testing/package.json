@@ -1,0 +1,22 @@
+{
+  "name": "ssr-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "next"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-glide": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/next": "^9.0.0",
+    "@types/react": "^18.0.21",
+    "@zeit/next-typescript": "^1.1.1"
+  }
+}
