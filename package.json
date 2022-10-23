@@ -21,7 +21,7 @@
     "test": "vitest watch",
     "test:once": "vitest run",
     "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "preversion": "npm run build && git add -A lib",
+    "preversion": "npm run build && git add -A -f lib",
     "release": "standard-version"
   },
   "config": {
