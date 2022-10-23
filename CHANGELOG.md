@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0-alpha.1](https://github.com/andrewangelle/react-glide/compare/v4.0.0...v4.1.0-alpha.1) (2022-10-23)
+
+
+### Features
+
+* SSR example, refactor build pipeline to vite, refactor useCountdownTimer, replace tslint with eslint ([#56](https://github.com/andrewangelle/react-glide/issues/56)) ([c34c3d4](https://github.com/andrewangelle/react-glide/commit/c34c3d4))
+
 ## [4.1.0-alpha.1](https://github.com/andrewangelle/react-glide/compare/v4.1.0-alpha.0...v4.1.0-alpha.1) (2022-10-23)
 
 ## [4.0.0](https://github.com/andrewangelle/react-glide/compare/v3.2.1...v4.0.0) (2022-03-28)
