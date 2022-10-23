@@ -1,13 +1,8 @@
-import React, { Component } from 'react';
-import { Glide, GlideProps } from '../src'; 
-import './style.css'
+import React from 'react';
+import { ComponentMeta } from '@storybook/react';
 
-/**
- * use the following import statements in your actual project
- *
- * import { Glide, GlideProps } from 'react-glide';
- * import 'react-glide/lib/reactGlide.css';
- */
+import { Glide, GlideProps } from '../'; 
+import './style.css'
 
 const props: GlideProps = {
   height: 600,
@@ -19,10 +14,9 @@ const props: GlideProps = {
   dots: true
 }
 
-export class Example extends Component {
-  render() {
+ export function Basic(args: GlideProps) {
     return (
-      <Glide {...props}>
+      <Glide {...args}>
         <img src="https://picsum.photos/id/312/600/600" />
         <img src="https://picsum.photos/id/313/600/600" />
         <img src="https://picsum.photos/id/314/600/600" />
@@ -57,4 +51,15 @@ export class Example extends Component {
       </Glide>
     );
   }
-}
+
+
+
+export default {
+  title: 'Glide',
+  component: Basic,
+  args: props,
+  parameters: {
+    layout: 'fullscreen',
+  },
+} as ComponentMeta<typeof Basic>;
+

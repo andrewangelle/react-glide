@@ -24,7 +24,7 @@ import { Glide } from 'react-glide';
 import 'react-glide/lib/reactGlide.css'
 ```
 
-Glide functions as a wrapper and can be passed any type of element. See [example folder](https://github.com/andrewangelle/react-glide/tree/master/example):
+Glide functions as a wrapper and can be passed any type of element. See [example folder](https://github.com/andrewangelle/react-glide/tree/master/ssr-testing/components/GlideExample.tsx):
 
 ```javascript
 <Glide height={500} width={500}>
@@ -95,10 +95,16 @@ Install dependencies:
 $ npm install
 ```
 
-Run the example app at http://localhost:3000:
+Run storybook at http://localhost:6006:
 
 ```sh
 $ npm start
+```
+
+Run ssr test app at http://localhost:3000:
+
+```sh
+$ cd ./ssr-testing && npm i && npm start
 ```
 
 Run tests in watch mode:
@@ -112,6 +118,19 @@ Execute a single run of tests:
 ```sh
 $ npm run test:once
 ```
+
+Run linter check:
+
+```sh
+$ npm run lint:check
+```
+
+Run linter auto fix:
+
+```sh
+npm run lint:fix
+```
+
 
 ## License
 MIT

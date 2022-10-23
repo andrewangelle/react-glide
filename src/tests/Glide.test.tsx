@@ -1,29 +1,31 @@
+import 'regenerator-runtime/runtime'
+import '@testing-library/jest-dom'
 import React from 'react';
-import {render, screen, within} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, within, fireEvent, act } from '@testing-library/react';
+import { describe, it, vi } from 'vitest';
 
+import { Glide, GlideProps } from '..';
 
-import { Glide } from '..';
-
-jest.useFakeTimers();
-
-const props = {
+const props: GlideProps = {
   height: 500,
   width: 500,
   autoPlay: false,
   infinite: true,
   dots: true,
-  onSlideChange: jest.fn()
+  onSlideChange: vi.fn()
 };
 
 describe('Glide', () => {
-  afterEach(() => jest.clearAllMocks());
+
+  beforeEach(() => {
+    vi.useFakeTimers({toFake: ['setInterval', 'clearInterval']})
+  })
 
   it('renders without crashing', () => {
     const baseProps = {
       width: 500 as number,
       autoPlay: false,
-      onSlideChange: jest.fn()
+      onSlideChange: vi.fn()
     };
     render(
       <Glide {...baseProps}>
@@ -90,7 +92,7 @@ describe('Glide', () => {
     const element1 =  await screen.findByTestId('glideCurrentItem')
     await within(element1).findByText(/Slide One/);
 
-    userEvent.click(screen.getByTestId('goToNextSlide'));
+    fireEvent.click(screen.getByTestId('goToNextSlide'));
 
     const element2 =  await screen.findByTestId('glideCurrentItem')
     await within(element2).findByText(/Slide Two/);
@@ -108,17 +110,17 @@ describe('Glide', () => {
     const element1 =  await screen.findByTestId('glideCurrentItem')
     await within(element1).findByText(/Slide One/);
 
-    userEvent.click(screen.getByTestId('goToNextSlide'));
+    fireEvent.click(screen.getByTestId('goToNextSlide'));
 
     const element2 =  await screen.findByTestId('glideCurrentItem')
     await within(element2).findByText(/Slide Two/);
 
-    userEvent.click(screen.getByTestId('goToNextSlide'));
+    fireEvent.click(screen.getByTestId('goToNextSlide'));
 
     const element3 =  await screen.findByTestId('glideCurrentItem')
     await within(element3).findByText(/Slide Three/);
 
-    userEvent.click(screen.getByTestId('goToNextSlide'));
+    fireEvent.click(screen.getByTestId('goToNextSlide'));
 
     const elementFinal =  await screen.findByTestId('glideCurrentItem')
     await within(elementFinal).findByText(/Slide One/);
@@ -135,14 +137,14 @@ describe('Glide', () => {
     const element1 =  await screen.findByTestId('glideCurrentItem')
     await within(element1).findByText(/Slide One/);
 
-    userEvent.click(screen.getByTestId('goToPrevSlide'));
+    fireEvent.click(screen.getByTestId('goToPrevSlide'));
 
     const element2 =  await screen.findByTestId('glideCurrentItem')
     await within(element2).findByText(/Slide Three/);
   });
 
   it('changes slides when autoPlay is on', async () => {
-    render(
+    render(      
       <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
@@ -152,8 +154,10 @@ describe('Glide', () => {
 
     const element1 =  await screen.findByTestId('glideCurrentItem')
     await within(element1).findByText(/Slide One/);
-    
-    jest.runTimersToTime(4000);
+
+    act(() => {
+      vi.advanceTimersByTime(3000)
+    })
 
     const element2 =  await screen.findByTestId('glideCurrentItem')
     await within(element2).findByText(/Slide Two/);
@@ -171,24 +175,34 @@ describe('Glide', () => {
     const element1 =  await screen.findByTestId('glideCurrentItem')
     await within(element1).findByText(/Slide One/);
     
-    jest.runTimersToTime(3000);
+    act(() => {
+      vi.advanceTimersByTime(3000)
+    })
 
-    userEvent.click(screen.getByTestId('goToNextSlide'));
+    fireEvent.click(screen.getByTestId('goToNextSlide'));
 
-    const element2 =  await screen.findByTestId('glideCurrentItem')
-    await within(element2).findByText(/Slide Two/);
+    const elementAfterClick =  await screen.findByTestId('glideCurrentItem')
+    await within(elementAfterClick).findByText(/Slide Two/);
 
-    jest.runTimersToTime(3000);
+    act(() => {
+      vi.advanceTimersByTime(3000)
+    })
 
-    const elementFinal =  await screen.findByTestId('glideCurrentItem')
-    await within(elementFinal).findByText(/Slide Two/);
+    const elementHalfwayThroughTimer =  await screen.findByTestId('glideCurrentItem')
+    await within(elementHalfwayThroughTimer).findByText(/Slide Two/);
 
+    act(() => {
+      vi.advanceTimersByTime(3000)
+    })
+
+    const elementAfterRestOfTimer =  await screen.findByTestId('glideCurrentItem')
+    await within(elementAfterRestOfTimer).findByText(/Slide Three/);
   });
 
 
   it('sets default autoPlay speed', async () => {
     render(
-      <Glide {...props} autoPlay={true} autoPlaySpeed={undefined}>
+      <Glide {...props} autoPlay={true}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
@@ -197,8 +211,10 @@ describe('Glide', () => {
 
     const element1 =  await screen.findByTestId('glideCurrentItem')
     await within(element1).findByText(/Slide One/);
-    
-    jest.runTimersToTime(6000);
+
+    act(() => {
+      vi.advanceTimersByTime(6000)
+    })
 
     const element2 =  await screen.findByTestId('glideCurrentItem')
     await within(element2).findByText(/Slide Two/);
@@ -215,7 +231,7 @@ describe('Glide', () => {
     const element1 =  await screen.findByTestId('glideCurrentItem')
     await within(element1).findByText(/Slide One/);
 
-    userEvent.click(screen.getByTestId('glideDot-2'));
+    fireEvent.click(screen.getByTestId('glideDot-2'));
 
     const element2 =  await screen.findByTestId('glideCurrentItem')
     await within(element2).findByText(/Slide Three/);
