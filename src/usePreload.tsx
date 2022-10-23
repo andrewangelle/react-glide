@@ -1,21 +1,18 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-
-import './reactGlide.css';
-
+import { Children, ReactElement, useEffect, useState } from 'react';
 
 export function usePreload(
   children: ReactElement[]
-){
+): {done: boolean; loading: boolean;}{
   const [loading, setLoading] = useState(true);
   const [done, setDone] = useState(false);
   const [loadCount, setLoadCount] = useState(0);
   const [urls, setUrls] = useState<string[]>([]);
 
-  function preloadImages(){
+  function preloadImages(): void{
     const urls = getImageUrls();
 
     if (urls.length > 0) {
-      urls.map(src => {
+      urls.forEach(src => {
         const newImage = new Image();
         newImage.src = src;
         newImage.onload = updateLoadCount;
@@ -28,10 +25,10 @@ export function usePreload(
     }
   };
 
-  function getImageUrls(){
+  function getImageUrls(): string[] {
     let urlResults: string[] = [];
 
-    React.Children.map(children, (child: ReactElement, index) => {
+    Children.map(children, (child: ReactElement, index) => {
       const res = traverseElementTree(child);
       urlResults = [...urlResults, ...res];
     });
@@ -45,13 +42,13 @@ export function usePreload(
     if (element.type === 'img') {
       results.push(element.props.src);
     }
-    if (element.props && element.props.children) {
+    if (element.props?.children) {
       return traverseElementTree(element.props.children);
     }
     return results;
   };
 
-  function updateLoadCount(){
+  function updateLoadCount(): void {
     setLoadCount(prevState => prevState + 1)
   }
 

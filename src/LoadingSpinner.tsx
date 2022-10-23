@@ -1,7 +1,7 @@
 import React from 'react';
 import './reactGlide.css';
 
-export function LoadingSpinner({ width }: { width: number | string }) {
+export function LoadingSpinner({ width }: { width: number | string }): JSX.Element {
   return (
     <div
       style={{
