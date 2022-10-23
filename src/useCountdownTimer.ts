@@ -1,146 +1,70 @@
-import { useCallback, useEffect, useReducer } from 'react'
+import { useState, useRef, useEffect } from 'react';
 
-type Actions =
-  | { type: 'START' }
-  | { type: 'RESET'; payload: number }
-  | { type: 'PAUSE' }
-  | { type: 'RUNNING' }
-  | { type: 'TICK'; payload: number }
-
-type State = {
-  canStart: boolean
-  countdown: number
-  isRunning: boolean
+export type CountdownTimerOptions = {
+  interval?: number,
+  skip?: boolean,
+  resetOnExpire?: boolean;
+  onExpire: () => void,
 }
 
-function reducer(state: State, action: Actions) {
-  switch (action.type) {
-    case 'START':
-      return {
-        ...state,
-        canStart: state.countdown !== 0,
-      }
-    case 'RESET':
-      return {
-        ...state,
-        countdown: action.payload,
-        canStart: false,
-        isRunning: false,
-      }
-    case 'PAUSE':
-      return {
-        ...state,
-        canStart: false,
-        isRunning: false,
-      }
-    case 'RUNNING':
-      return {
-        ...state,
-        isRunning: true,
-      }
-    case 'TICK':
-      return {
-        ...state,
-        countdown: state.countdown - action.payload,
-      }
-    default:
-      return state
-  }
-}
-
-export type UseCountdownTimerProps = {
-  timer: number
-  interval?: number
-  autostart?: boolean
-  expireImmediate?: boolean
-  resetOnExpire?: boolean
-  onExpire?: () => void
-  onReset?: () => void
-}
-
-export type CountdownTimerResults = {
-  countdown: number
-  isRunning: boolean
-  start: () => void
-  reset: () => void
-  pause: () => void
+type UseCountdownTimer = {
+  reset: () => void;
 }
 
 export function useCountdownTimer({
-  timer,
-  interval = 1000,
-  autostart = false,
-  expireImmediate = false,
+  interval = 2000,
+  skip = false,
   resetOnExpire = true,
   onExpire,
-  onReset,
-}: UseCountdownTimerProps): CountdownTimerResults {
-  const [state, dispatch] = useReducer(reducer, {
-    canStart: autostart,
-    countdown: timer,
-    isRunning: false,
-  })
+}: CountdownTimerOptions): UseCountdownTimer {
+  const initialCount = interval / 1000;
 
-  function start() {
-    dispatch({ type: 'START' })
+  const [count, setCount] = useState(initialCount);
+  const onExpireRef = useRef(onExpire);
+
+  function reset(): void{
+    setCount(initialCount) 
   }
-
-  function pause() {
-    dispatch({ type: 'PAUSE' })
-  }
-
-  function initStopped(time: number) {
-    dispatch({ type: 'RESET', payload: time })
-  }
-
-  const reset = useCallback(() => {
-    initStopped(timer)
-    if (onReset && typeof onReset === 'function') {
-      onReset()
-    }
-  }, [timer, onReset])
-
-  const expire = useCallback(() => {
-    initStopped(resetOnExpire ? timer : 0)
-    if (onExpire && typeof onExpire === 'function') {
-      onExpire()
-    }
-  }, [timer, onExpire, resetOnExpire])
 
   useEffect(() => {
-    function tick() {
-      if (
-        state.countdown / 1000 <= 0 ||
-        (expireImmediate && (state.countdown - interval) / 1000 <= 0)
-      ) {
-        expire()
-      } else {
-        dispatch({ type: 'TICK', payload: interval })
+    onExpireRef.current = onExpire;
+  })
+
+  useEffect(() => {
+    let id: NodeJS.Timeout;
+
+    if(!skip){
+      id = setInterval(() => {
+        setCount(prev => prev - 1)
+      }, 1000)
+
+
+      if(count <= 0){
+        onExpireRef.current();
+        resetOnExpire && setCount(initialCount)
       }
     }
 
-    let id: NodeJS.Timeout
-    if (state.canStart) {
-      id = setInterval(tick, interval)
-      if (!state.isRunning) {
-        dispatch({ type: 'RUNNING' })
-      }
+    if(skip){
+      // @ts-expect-error
+      clearInterval(id)
     }
-    return () => clearInterval(id)
+
+    return () => {
+      clearInterval(id)
+    }
+
   }, [
-    expire,
-    expireImmediate,
+    skip, 
+    count, 
     interval,
-    state.canStart,
-    state.countdown,
-    state.isRunning,
+    initialCount, 
+    resetOnExpire, 
+    setCount, 
+    onExpireRef
   ])
 
   return {
-    countdown: state.countdown,
-    isRunning: state.isRunning,
-    start,
-    reset,
-    pause,
+    reset
   }
 }

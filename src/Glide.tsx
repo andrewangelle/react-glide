@@ -1,9 +1,9 @@
-import React, { ReactChild, useState, useEffect, PropsWithChildren, ReactElement, Children } from 'react';
+import React, { useState, useEffect, PropsWithChildren, ReactElement, Children } from 'react';
 
 import { LoadingSpinner } from './LoadingSpinner';
 
 import { GlideProps } from './types';
-import { useCountdownTimer } from './useCountdownTimer';
+import { useCountdownTimer, CountdownTimerOptions } from './useCountdownTimer';
 import { usePreload } from './usePreload';
 
 import './reactGlide.css';
@@ -17,48 +17,44 @@ export function Glide({
   width,
   onSlideChange = () => null,
   children
-}: PropsWithChildren<GlideProps>){
+}: PropsWithChildren<GlideProps>): JSX.Element {
   const childrenArray = Children.toArray(children) as ReactElement[];
-  const countdownTimerOptions = {
-    autostart: autoPlay,
-    timer: autoPlaySpeed,
-    resetOnExpire: true,
+
+  const countdownTimerOptions: CountdownTimerOptions = {
+    skip: !autoPlay,
+    interval: autoPlaySpeed,
     onExpire: goToNextSlide,
   };
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const { loading, done } = usePreload(childrenArray)
   const {
-    start: startTimer,
     reset: resetTimer
   } = useCountdownTimer(countdownTimerOptions);
 
-  function goToNextSlide(){
-    const lastSlide = React.Children.toArray(children).length - 1;
+  function goToNextSlide(): void {
+    const lastSlide = childrenArray.length - 1;
     
     if(currentIndex === lastSlide && !infinite){
       return
     }
 
     const nextIndex = currentIndex === lastSlide ? 0 : currentIndex + 1;
+
     setCurrentIndex(prevState => nextIndex);
     resetTimer()
-    startTimer()
   }
 
-  function goToPrevSlide(){
-    const lastSlide = React.Children.toArray(children).length - 1;
+  function goToPrevSlide(): void {
+    const lastSlide = childrenArray.length - 1;
     const nextIndex = currentIndex === 0 ? lastSlide : currentIndex - 1;
     setCurrentIndex(prevState => nextIndex);
     resetTimer()
-    startTimer()
-
   }
 
-  function goToSelectedDot(index: number){
+  function goToSelectedDot(index: number): void {
     setCurrentIndex(prevState => index);
     resetTimer()
-    startTimer()
   }
 
   useEffect(() => {
@@ -81,13 +77,14 @@ export function Glide({
     >
       {loading && <LoadingSpinner width={width} />}
 
-      {done && React.Children.map(children, (child: ReactElement, index) => {
+      {done && Children.map(children, (child: ReactElement, index) => {
         const className = currentIndex === index ? 'current' : '';
         return (
           child && (
             <child.type
+              key={index}
               className={`glide--item ${className}`}
-              {...currentIndex === index ? {'data-testid': "glideCurrentItem"} : {}}
+              {...currentIndex === index ? {'data-testid': 'glideCurrentItem'} : {}}
               {...child.props}
             />
           )
@@ -104,7 +101,7 @@ export function Glide({
       )}
 
       {(infinite ||
-        currentIndex !== (children as ReactChild[]).length - 1) && (
+        currentIndex !== childrenArray.length - 1) && (
         <button 
           className="glide--next-btn"
           data-testid={`goToNextSlide`}
@@ -116,14 +113,23 @@ export function Glide({
 
       {dots && (
         <section className="glide--dots">
-          {React.Children.map(children, (child, index) => (
+          {Children.map(children, (_child, index) => (
             <span
               key={index}
+              role='button'
               data-testid={`glideDot-${index}`}
               className={
                 currentIndex === index ? 'active-dot' : 'inactive-dot'
               }
+              tabIndex={0}
               onClick={() => goToSelectedDot(index)}
+              onKeyDown={event => {
+                switch(event.key){
+                  case ' ':
+                  case 'Enter':
+                    goToSelectedDot(index)
+                }
+              }}
             >
               &middot;
             </span>
