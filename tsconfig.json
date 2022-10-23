@@ -2,7 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "rootDir": ".",
-    "outDir": "lib/types",
+    "outDir": "lib",
     "module": "es6",
     "target": "es2015",
     "lib": [
@@ -10,7 +10,7 @@
       "dom",
       "esnext.asynciterable"
     ],
-    "sourceMap": true,
+    "sourceMap": false,
     "allowJs": false,
     "jsx": "react",
     "moduleResolution": "node",
@@ -25,10 +25,10 @@
     "skipLibCheck": true,
   },
   "include": [
-    "example",
     "src"
   ],
   "exclude": [
-    "src/tests"
+    "src/tests",
+    "ssr-testing"
   ]
 }
