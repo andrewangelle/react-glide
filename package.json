@@ -13,8 +13,6 @@
   "module": "./lib/index.es.js",
   "types": "./lib/src/index.d.ts",
   "scripts": {
-    "lint:check": "eslint .",
-    "lint:fix": "eslint --fix .",
     "build": "rm -rf lib && vite build",
     "build:storybook": "build-storybook",
     "start": "start-storybook -p 6006",
@@ -22,17 +20,16 @@
     "test:once": "vitest run",
     "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "preversion": "npm run build && git add -A -f lib",
-    "release": "standard-version"
+    "release": "standard-version",
+    "lint:fix": "npx biome check . --write",
+    "lint:check": "npx biome check .",
+    "format": "npx biome format . --write",
+    "pre-commit": "lint-staged",
+    "prepare": "husky"
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "post-commit": "prettier --write `git show --name-only --pretty=\"\" HEAD` && git add `git show --name-only --pretty=\"\" HEAD` && git commit --amend --no-edit'",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "standard-version": {
@@ -40,6 +37,17 @@
       "prebump": "npm run build",
       "postbump": "git push --follow-tags origin master"
     }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "npm run lint:fix",
+      "npm run format"
+    ]
   },
   "keywords": [
     "react",
@@ -50,6 +58,7 @@
     "react-dom": "16.8.x || 17.x.x || 18.x.x"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@rollup/plugin-typescript": "^8.5.0",
@@ -67,27 +76,18 @@
     "@types/node": "^11.9.3",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
-    "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@vitejs/plugin-react": "^2.1.0",
     "cross-env": "^5.2.0",
     "eslint": "^8.25.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard-with-typescript": "^23.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.3.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.0.1",
-    "eslint-plugin-react": "^7.31.8",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "husky": "^3.0.5",
+    "husky": "^9.1.7",
     "jsdom": "^20.0.1",
+    "lint-staged": "^15.2.11",
     "path": "^0.12.7",
-    "prettier": "^1.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "source-map-loader": "^0.2.4",
     "standard-version": "^7.0.0",
-    "typescript": "^4.8.4",
+    "typescript": "^5.7.2",
     "vite": "^3.1.6",
     "vitest": "^0.24.0"
   }

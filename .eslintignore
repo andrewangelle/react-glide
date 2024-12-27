@@ -1,7 +1,0 @@
-vite.config.ts
-src/**/*.stories.tsx
-lib
-ssr-testing
-commitlint.config.js
-src/tests/**/*
-vitest.config.ts
