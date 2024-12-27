@@ -5,3 +5,4 @@ lib
 coverage
 .next
 ./ssr-testing/package-lock.json
+build-storybook.log
