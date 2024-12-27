@@ -1,5 +1,6 @@
 import path from 'path';
 import typescript from '@rollup/plugin-typescript';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 const typescriptPlugin = typescript({
@@ -16,6 +17,7 @@ const typescriptPlugin = typescript({
 });
 
 export default defineConfig({
+  plugins: [react()],
   build: {
     outDir: 'lib',
     lib: {

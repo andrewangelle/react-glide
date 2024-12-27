@@ -1,8 +1,9 @@
-import type { ComponentMeta } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import React from 'react';
 
-import { Glide, type GlideProps } from '../';
 import './style.css';
+import { Glide } from '../Glide';
+import type { GlideProps } from '../types';
 
 const props: GlideProps = {
   height: 600,
@@ -12,6 +13,15 @@ const props: GlideProps = {
   onSlideChange: () => console.log('slide changed'),
   infinite: true,
   dots: true,
+};
+
+const GlideMeta: Meta<GlideProps> = {
+  title: 'Glide',
+  render: Basic,
+  args: props,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 export function Basic(args: GlideProps) {
@@ -54,11 +64,4 @@ export function Basic(args: GlideProps) {
   );
 }
 
-export default {
-  title: 'Glide',
-  component: Basic,
-  args: props,
-  parameters: {
-    layout: 'fullscreen',
-  },
-} as ComponentMeta<typeof Basic>;
+export default GlideMeta;
