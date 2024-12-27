@@ -4,3 +4,4 @@ bin
 lib
 coverage
 .next
+./ssr-testing/package-lock.json
