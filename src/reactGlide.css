@@ -62,6 +62,8 @@ body {
   margin-top: 100%;
   z-index: 100;
   cursor: pointer;
+  border: none;
+  background: transparent;
 }
 
 .glide--dots .active-dot {

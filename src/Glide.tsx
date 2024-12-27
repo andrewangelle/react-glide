@@ -126,10 +126,11 @@ export function Glide({
       {dots && (
         <section className="glide--dots">
           {Children.map(children, (_child, index) => (
-            <button
+            <span
+              // biome-ignore lint/a11y/useSemanticElements: <explanation>
+              role="button"
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
-              type="button"
               data-testid={`glideDot-${index}`}
               className={currentIndex === index ? 'active-dot' : 'inactive-dot'}
               tabIndex={0}
@@ -143,7 +144,7 @@ export function Glide({
               }}
             >
               &middot;
-            </button>
+            </span>
           ))}
         </section>
       )}
