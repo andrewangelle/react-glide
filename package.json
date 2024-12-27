@@ -41,7 +41,7 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": ["npm run lint:fix", "npm run format"]
+    "*.{ts,tsx,js,jsx,json}": ["npm run lint:fix", "npm run format"]
   },
   "keywords": ["react", "component"],
   "peerDependencies": {
