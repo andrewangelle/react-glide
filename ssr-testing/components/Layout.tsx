@@ -1,16 +1,16 @@
-import React, { PropsWithChildren } from 'react'
-import Head from 'next/head'
+import Head from 'next/head';
+import React, { type PropsWithChildren } from 'react';
 
 type LayoutProps = {
-  title?: string
-}
+  title?: string;
+};
 const layoutStyle = {
   margin: 20,
   padding: 20,
-  border: '1px solid #DDD'
-}
+  border: '1px solid #DDD',
+};
 
-export function Layout ({ children, title }: PropsWithChildren<LayoutProps> ) {
+export function Layout({ children, title }: PropsWithChildren<LayoutProps>) {
   return (
     <div style={layoutStyle}>
       <Head>
@@ -20,5 +20,5 @@ export function Layout ({ children, title }: PropsWithChildren<LayoutProps> ) {
       </Head>
       {children}
     </div>
-  )
+  );
 }

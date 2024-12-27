@@ -1,10 +1,6 @@
-import 'regenerator-runtime/runtime'
-import '@testing-library/jest-dom'
-import React from 'react';
-import { render, screen, within, fireEvent, act } from '@testing-library/react';
-import { describe, it, vi } from 'vitest';
-
-import { Glide, GlideProps } from '..';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import { Glide } from '../Glide';
+import type { GlideProps } from '../types';
 
 const props: GlideProps = {
   height: 500,
@@ -12,30 +8,29 @@ const props: GlideProps = {
   autoPlay: false,
   infinite: true,
   dots: true,
-  onSlideChange: vi.fn()
+  onSlideChange: vi.fn(),
 };
 
 describe('Glide', () => {
-
   beforeEach(() => {
-    vi.useFakeTimers({toFake: ['setInterval', 'clearInterval']})
-  })
+    vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] });
+  });
 
   it('renders without crashing', () => {
     const baseProps = {
       width: 500 as number,
       autoPlay: false,
-      onSlideChange: vi.fn()
+      onSlideChange: vi.fn(),
     };
     render(
       <Glide {...baseProps}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
 
-    screen.getByTestId('glideContainer')
+    screen.getByTestId('glideContainer');
   });
 
   it('has children elements', () => {
@@ -44,7 +39,7 @@ describe('Glide', () => {
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
     screen.getByText(/Slide One/);
     screen.getByText(/Slide Two/);
@@ -57,11 +52,11 @@ describe('Glide', () => {
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
-    const element =  await screen.findByTestId('glideCurrentItem')
-    
-    await within(element).findByText(/Slide One/)
+    const element = await screen.findByTestId('glideCurrentItem');
+
+    await within(element).findByText(/Slide One/);
   });
 
   it('applies width and height props', () => {
@@ -70,14 +65,13 @@ describe('Glide', () => {
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
     const container = screen.getByTestId('glideContainer');
-    
-    const styles = getComputedStyle(container);
-    expect(styles.height).toBe(`${props.height}px`)
-    expect(styles.width).toBe(`${props.width}px`)
 
+    const styles = getComputedStyle(container);
+    expect(styles.height).toBe(`${props.height}px`);
+    expect(styles.width).toBe(`${props.width}px`);
   });
 
   it('changes to next slide when next button is clicked', async () => {
@@ -86,15 +80,15 @@ describe('Glide', () => {
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
 
-    const element1 =  await screen.findByTestId('glideCurrentItem')
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
     fireEvent.click(screen.getByTestId('goToNextSlide'));
 
-    const element2 =  await screen.findByTestId('glideCurrentItem')
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
   });
 
@@ -104,25 +98,25 @@ describe('Glide', () => {
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
 
-    const element1 =  await screen.findByTestId('glideCurrentItem')
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
     fireEvent.click(screen.getByTestId('goToNextSlide'));
 
-    const element2 =  await screen.findByTestId('glideCurrentItem')
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
 
     fireEvent.click(screen.getByTestId('goToNextSlide'));
 
-    const element3 =  await screen.findByTestId('glideCurrentItem')
+    const element3 = await screen.findByTestId('glideCurrentItem');
     await within(element3).findByText(/Slide Three/);
 
     fireEvent.click(screen.getByTestId('goToNextSlide'));
 
-    const elementFinal =  await screen.findByTestId('glideCurrentItem')
+    const elementFinal = await screen.findByTestId('glideCurrentItem');
     await within(elementFinal).findByText(/Slide One/);
   });
 
@@ -132,34 +126,34 @@ describe('Glide', () => {
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
-    const element1 =  await screen.findByTestId('glideCurrentItem')
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
     fireEvent.click(screen.getByTestId('goToPrevSlide'));
 
-    const element2 =  await screen.findByTestId('glideCurrentItem')
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Three/);
   });
 
   it('changes slides when autoPlay is on', async () => {
-    render(      
+    render(
       <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
 
-    const element1 =  await screen.findByTestId('glideCurrentItem')
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
     act(() => {
-      vi.advanceTimersByTime(3000)
-    })
+      vi.advanceTimersByTime(3000);
+    });
 
-    const element2 =  await screen.findByTestId('glideCurrentItem')
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
   });
 
@@ -169,36 +163,37 @@ describe('Glide', () => {
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
 
-    const element1 =  await screen.findByTestId('glideCurrentItem')
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
-    
+
     act(() => {
-      vi.advanceTimersByTime(3000)
-    })
+      vi.advanceTimersByTime(3000);
+    });
 
     fireEvent.click(screen.getByTestId('goToNextSlide'));
 
-    const elementAfterClick =  await screen.findByTestId('glideCurrentItem')
+    const elementAfterClick = await screen.findByTestId('glideCurrentItem');
     await within(elementAfterClick).findByText(/Slide Two/);
 
     act(() => {
-      vi.advanceTimersByTime(3000)
-    })
+      vi.advanceTimersByTime(3000);
+    });
 
-    const elementHalfwayThroughTimer =  await screen.findByTestId('glideCurrentItem')
+    const elementHalfwayThroughTimer =
+      await screen.findByTestId('glideCurrentItem');
     await within(elementHalfwayThroughTimer).findByText(/Slide Two/);
 
     act(() => {
-      vi.advanceTimersByTime(3000)
-    })
+      vi.advanceTimersByTime(3000);
+    });
 
-    const elementAfterRestOfTimer =  await screen.findByTestId('glideCurrentItem')
+    const elementAfterRestOfTimer =
+      await screen.findByTestId('glideCurrentItem');
     await within(elementAfterRestOfTimer).findByText(/Slide Three/);
   });
-
 
   it('sets default autoPlay speed', async () => {
     render(
@@ -206,17 +201,17 @@ describe('Glide', () => {
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
 
-    const element1 =  await screen.findByTestId('glideCurrentItem')
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
     act(() => {
-      vi.advanceTimersByTime(6000)
-    })
+      vi.advanceTimersByTime(6000);
+    });
 
-    const element2 =  await screen.findByTestId('glideCurrentItem')
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
   });
 
@@ -226,14 +221,14 @@ describe('Glide', () => {
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
-      </Glide>
+      </Glide>,
     );
-    const element1 =  await screen.findByTestId('glideCurrentItem')
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
     fireEvent.click(screen.getByTestId('glideDot-2'));
 
-    const element2 =  await screen.findByTestId('glideCurrentItem')
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Three/);
   });
 });
