@@ -5,7 +5,10 @@ A lightweight, multi-purpose carousel component for React.
 [![npm version](https://badge.fury.io/js/react-glide.svg)](https://badge.fury.io/js/react-glide)
 [![CircleCI](https://circleci.com/gh/andrewangelle/react-paypal-button.svg?style=svg)](https://circleci.com/gh/andrewangelle/react-glide)
 
-[demo](https://codesandbox.io/s/r7166733lm)
+## Try it out
+
+[Storybook Playground](https://master--676ed9a7f91611407c7878ce.chromatic.com/?path=/story/glide--basic)
+[Codesandbox Demo](https://codesandbox.io/s/r7166733lm)
 
 <img src="glide.png" width="400px" />
 
