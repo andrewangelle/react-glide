@@ -1,5 +1,5 @@
-import React from 'react'
-import { Glide, GlideProps } from 'react-glide'
+import React from 'react';
+import { Glide, type GlideProps } from 'react-glide';
 import 'react-glide/lib/reactGlide.css';
 
 const props: GlideProps = {
@@ -9,17 +9,18 @@ const props: GlideProps = {
   autoPlaySpeed: 5000,
   onSlideChange: () => console.log('slide changed'),
   infinite: true,
-  dots: true
-}
+  dots: true,
+};
 
-export function GlideExample(){
+export function GlideExample() {
   return (
     <Glide {...props}>
-      <img src="https://picsum.photos/id/312/600/600" />
-      <img src="https://picsum.photos/id/313/600/600" />
-      <img src="https://picsum.photos/id/314/600/600" />
+      <img alt="photo1" src="https://picsum.photos/id/312/600/600" />
+      <img alt="photo2" src="https://picsum.photos/id/313/600/600" />
+      <img alt="photo1" src="https://picsum.photos/id/314/600/600" />
       <div>
         <iframe
+          title="testframe"
           width="500"
           height="450"
           src="https://www.youtube.com/embed/6emElQDVqF4"
@@ -35,6 +36,7 @@ export function GlideExample(){
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
         >
+          <title>test</title>
           <rect
             x="10"
             y="10"
@@ -47,5 +49,5 @@ export function GlideExample(){
         </svg>
       </div>
     </Glide>
-  )
+  );
 }

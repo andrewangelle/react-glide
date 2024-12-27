@@ -5,10 +5,7 @@
   "author": "andrewangelle",
   "repository": "http://github.com/andrewangelle/react-glide.git",
   "license": "MIT",
-  "files": [
-    "lib",
-    "lib/*.css"
-  ],
+  "files": ["lib", "lib/*.css"],
   "main": "./lib/index.umd.js",
   "module": "./lib/index.es.js",
   "types": "./lib/src/index.d.ts",
@@ -44,15 +41,9 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "npm run lint:fix",
-      "npm run format"
-    ]
+    "*.{ts,tsx,js,jsx}": ["npm run lint:fix", "npm run format"]
   },
-  "keywords": [
-    "react",
-    "component"
-  ],
+  "keywords": ["react", "component"],
   "peerDependencies": {
     "react": "16.8.x || 17.x.x || 18.x.x",
     "react-dom": "16.8.x || 17.x.x || 18.x.x"

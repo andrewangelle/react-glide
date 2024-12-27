@@ -5,11 +5,7 @@
     "outDir": "lib",
     "module": "es6",
     "target": "es2015",
-    "lib": [
-      "es6",
-      "dom",
-      "esnext.asynciterable"
-    ],
+    "lib": ["es6", "dom", "esnext.asynciterable"],
     "sourceMap": false,
     "allowJs": false,
     "jsx": "react",
@@ -21,13 +17,8 @@
     "noImplicitAny": false,
     "strictNullChecks": true,
     "noUnusedLocals": true,
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "src/tests",
-    "ssr-testing"
-  ]
+  "include": ["src"],
+  "exclude": ["src/tests", "ssr-testing"]
 }

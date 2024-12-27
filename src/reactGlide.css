@@ -29,7 +29,8 @@ body {
   opacity: 1;
 }
 
-.glide--next-btn, .glide--prev-btn {
+.glide--next-btn,
+.glide--prev-btn {
   position: absolute;
   z-index: 10;
   color: hsl(190, 95%, 80%);
@@ -69,7 +70,7 @@ body {
 
 /** Loading spinner */
 .loading-indicator {
-  content: '';
+  content: "";
   box-sizing: border-box;
   position: absolute;
   top: 44%;

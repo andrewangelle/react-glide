@@ -1,15 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export type CountdownTimerOptions = {
-  interval?: number,
-  skip?: boolean,
+  interval?: number;
+  skip?: boolean;
   resetOnExpire?: boolean;
-  onExpire: () => void,
-}
+  onExpire: () => void;
+};
 
 type UseCountdownTimer = {
   reset: () => void;
-}
+};
 
 export function useCountdownTimer({
   interval = 2000,
@@ -22,49 +22,39 @@ export function useCountdownTimer({
   const [count, setCount] = useState(initialCount);
   const onExpireRef = useRef(onExpire);
 
-  function reset(): void{
-    setCount(initialCount) 
+  function reset(): void {
+    setCount(initialCount);
   }
 
   useEffect(() => {
     onExpireRef.current = onExpire;
-  })
+  });
 
   useEffect(() => {
     let id: NodeJS.Timeout;
 
-    if(!skip){
+    if (!skip) {
       id = setInterval(() => {
-        setCount(prev => prev - 1)
-      }, 1000)
+        setCount((prev) => prev - 1);
+      }, 1000);
 
-
-      if(count <= 0){
+      if (count <= 0) {
         onExpireRef.current();
-        resetOnExpire && setCount(initialCount)
+        resetOnExpire && setCount(initialCount);
       }
     }
 
-    if(skip){
+    if (skip) {
       // @ts-expect-error
-      clearInterval(id)
+      clearInterval(id);
     }
 
     return () => {
-      clearInterval(id)
-    }
-
-  }, [
-    skip, 
-    count, 
-    interval,
-    initialCount, 
-    resetOnExpire, 
-    setCount, 
-    onExpireRef
-  ])
+      clearInterval(id);
+    };
+  }, [skip, count, initialCount, resetOnExpire]);
 
   return {
-    reset
-  }
+    reset,
+  };
 }

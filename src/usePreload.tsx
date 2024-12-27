@@ -1,29 +1,30 @@
-import { Children, ReactElement, useEffect, useState } from 'react';
+import { Children, type ReactElement, useEffect, useState } from 'react';
 
-export function usePreload(
-  children: ReactElement[]
-): {done: boolean; loading: boolean;}{
+export function usePreload(children: ReactElement[]): {
+  done: boolean;
+  loading: boolean;
+} {
   const [loading, setLoading] = useState(true);
   const [done, setDone] = useState(false);
   const [loadCount, setLoadCount] = useState(0);
   const [urls, setUrls] = useState<string[]>([]);
 
-  function preloadImages(): void{
+  function preloadImages(): void {
     const urls = getImageUrls();
 
     if (urls.length > 0) {
-      urls.forEach(src => {
+      for (const src of urls) {
         const newImage = new Image();
         newImage.src = src;
         newImage.onload = updateLoadCount;
-      });
+      }
     }
 
     if (urls.length === 0) {
-      setDone(true)
-      setLoading(false)
+      setDone(true);
+      setLoading(false);
     }
-  };
+  }
 
   function getImageUrls(): string[] {
     let urlResults: string[] = [];
@@ -33,9 +34,9 @@ export function usePreload(
       urlResults = [...urlResults, ...res];
     });
 
-    setUrls([...urlResults])
+    setUrls([...urlResults]);
     return urlResults;
-  };
+  }
 
   function traverseElementTree(element: ReactElement): string[] {
     const results: string[] = [];
@@ -46,25 +47,26 @@ export function usePreload(
       return traverseElementTree(element.props.children);
     }
     return results;
-  };
-
-  function updateLoadCount(): void {
-    setLoadCount(prevState => prevState + 1)
   }
 
+  function updateLoadCount(): void {
+    setLoadCount((prevState) => prevState + 1);
+  }
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    preloadImages()
+    preloadImages();
   }, []);
 
   useEffect(() => {
-    if(loadCount === urls.length){
-      setDone(true)
-      setLoading(false)
+    if (loadCount === urls.length) {
+      setDone(true);
+      setLoading(false);
     }
-  }, [urls, loadCount, setDone, setLoadCount])
+  }, [urls, loadCount]);
 
   return {
     done,
-    loading
-  }
+    loading,
+  };
 }
