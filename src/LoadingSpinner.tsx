@@ -1,9 +1,6 @@
-import React from 'react';
 import './reactGlide.css';
 
-export function LoadingSpinner({
-  width,
-}: { width: number | string }): JSX.Element {
+export function LoadingSpinner({ width }: { width: number | string }) {
   const baseWidth =
     typeof width === 'string' ? Number.parseInt(width, 10) : width;
   return (

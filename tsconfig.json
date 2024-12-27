@@ -8,7 +8,7 @@
     "lib": ["es6", "dom", "esnext.asynciterable"],
     "sourceMap": false,
     "allowJs": false,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -17,8 +17,9 @@
     "noImplicitAny": false,
     "strictNullChecks": true,
     "noUnusedLocals": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
   "include": ["src"],
-  "exclude": ["src/tests", "ssr-testing"]
+  "exclude": ["ssr-testing"]
 }

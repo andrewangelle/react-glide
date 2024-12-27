@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { GlideExample } from '../components/GlideExample';
 import { Layout } from '../components/Layout';
 

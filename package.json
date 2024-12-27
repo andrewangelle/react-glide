@@ -5,7 +5,10 @@
   "author": "andrewangelle",
   "repository": "http://github.com/andrewangelle/react-glide.git",
   "license": "MIT",
-  "files": ["lib", "lib/*.css"],
+  "files": [
+    "lib",
+    "lib/*.css"
+  ],
   "main": "./lib/index.umd.js",
   "module": "./lib/index.es.js",
   "types": "./lib/src/index.d.ts",
@@ -41,12 +44,18 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": ["npm run lint:fix", "npm run format"]
+    "*.{ts,tsx,js,jsx}": [
+      "npm run lint:fix",
+      "npm run format"
+    ]
   },
-  "keywords": ["react", "component"],
+  "keywords": [
+    "react",
+    "component"
+  ],
   "peerDependencies": {
-    "react": "16.8.x || 17.x.x || 18.x.x",
-    "react-dom": "16.8.x || 17.x.x || 18.x.x"
+    "react": "16.8.x || 17.x.x || 18.x.x || 19.x.x",
+    "react-dom": "16.8.x || 17.x.x || 18.x.x || 19.x.x"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
@@ -66,8 +75,8 @@
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/node": "^11.9.3",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
     "@vitejs/plugin-react": "^4.3.4",
     "acorn": "^8.14.0",
     "cross-env": "^5.2.0",
@@ -76,8 +85,8 @@
     "jsdom": "^20.0.1",
     "lint-staged": "^15.2.11",
     "path": "^0.12.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "source-map-loader": "^0.2.4",
     "standard-version": "^7.0.0",
     "storybook": "^8.4.7",

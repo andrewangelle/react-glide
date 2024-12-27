@@ -29,16 +29,23 @@ export function usePreload(children: ReactElement[]): {
   function getImageUrls(): string[] {
     let urlResults: string[] = [];
 
-    Children.map(children, (child: ReactElement, index) => {
-      const res = traverseElementTree(child);
-      urlResults = [...urlResults, ...res];
-    });
+    Children.map(
+      children,
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      (child: ReactElement<{ src: string; children: any }>, index) => {
+        const res = traverseElementTree(child);
+        urlResults = [...urlResults, ...res];
+      },
+    );
 
     setUrls([...urlResults]);
     return urlResults;
   }
 
-  function traverseElementTree(element: ReactElement): string[] {
+  function traverseElementTree(
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    element: ReactElement<{ src: string; children: any }>,
+  ): string[] {
     const results: string[] = [];
     if (element.type === 'img') {
       results.push(element.props.src);

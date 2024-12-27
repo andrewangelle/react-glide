@@ -1,24 +1,20 @@
 import type { Meta } from '@storybook/react';
-import React from 'react';
 
 import './style.css';
 import { Glide } from '../Glide';
 import type { GlideProps } from '../types';
 
-const props: GlideProps = {
-  height: 600,
-  width: 600,
-  autoPlay: true,
-  autoPlaySpeed: 5000,
-  onSlideChange: () => console.log('slide changed'),
-  infinite: true,
-  dots: true,
-};
-
 const GlideMeta: Meta<GlideProps> = {
   title: 'Glide',
   render: Basic,
-  args: props,
+  args: {
+    height: 600,
+    width: 600,
+    autoPlay: true,
+    autoPlaySpeed: 5000,
+    infinite: true,
+    dots: true,
+  },
   parameters: {
     layout: 'fullscreen',
   },

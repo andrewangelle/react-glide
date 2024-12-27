@@ -1,9 +1,9 @@
-import React, {
-  useState,
-  useEffect,
+import {
+  Children,
   type PropsWithChildren,
   type ReactElement,
-  Children,
+  useEffect,
+  useState,
 } from 'react';
 
 import { LoadingSpinner } from './LoadingSpinner';
@@ -26,7 +26,7 @@ export function Glide({
   width,
   onSlideChange = () => null,
   children,
-}: PropsWithChildren<GlideProps>): JSX.Element {
+}: PropsWithChildren<GlideProps>) {
   const childrenArray = Children.toArray(children) as ReactElement[];
 
   const countdownTimerOptions: CountdownTimerOptions = {
@@ -95,7 +95,7 @@ export function Glide({
                 {...(currentIndex === index
                   ? { 'data-testid': 'glideCurrentItem' }
                   : {})}
-                {...child.props}
+                {...(typeof child.props === 'object' ? child.props : {})}
               />
             )
           );

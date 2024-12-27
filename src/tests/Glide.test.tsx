@@ -1,10 +1,6 @@
-import 'regenerator-runtime/runtime';
-import '@testing-library/jest-dom';
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import React from 'react';
-import { describe, it, vi } from 'vitest';
-
-import { Glide, type GlideProps } from '..';
+import { Glide } from '../Glide';
+import type { GlideProps } from '../types';
 
 const props: GlideProps = {
   height: 500,

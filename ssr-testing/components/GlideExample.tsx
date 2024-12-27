@@ -1,4 +1,3 @@
-import React from 'react';
 import { Glide, type GlideProps } from 'react-glide';
 import 'react-glide/lib/reactGlide.css';
 
