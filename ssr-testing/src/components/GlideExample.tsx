@@ -1,5 +1,6 @@
+'use client';
 import { Glide, type GlideProps } from 'react-glide';
-import 'react-glide/lib/reactGlide.css';
+import 'react-glide/lib/react-glide.css';
 
 const props: GlideProps = {
   height: 600,
