@@ -8,9 +8,9 @@
   "files": {
     "ignoreUnknown": false,
     "ignore": [
-      "ssr-testing/.next",
+      "ssr-testing/*/.next",
       "lib",
-      "ssr-testing/node_modules",
+      "ssr-testing/*/node_modules",
       "coverage"
     ]
   },
