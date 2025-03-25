@@ -1,0 +1,53 @@
+name: Changesets Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".changeset/**"
+      - ".github/workflows/release.yml"
+  workflow_dispatch:
+
+env:
+  CI: true
+  HUSKY: 0
+
+jobs:
+  release:
+    name: changesets_release
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    outputs:
+      published: ${{ steps.output_published.outputs.PUBLISHED }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create Release Pull Request or Publish to NPM
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: npm run ci:publish
+          version: npm run ci:version
+          commit: "release: changesets versioning & publication"
+          title: "Changesets: Versioning & Publication"
+          createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Output Published Var
+        id: output_published
+        run: |
+          echo "PUBLISHED=${{ steps.changesets.outputs.published }}" >> $GITHUB_OUTPUT
+
