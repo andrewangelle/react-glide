@@ -15,24 +15,17 @@
     "start": "storybook dev -p 6006",
     "test": "vitest watch",
     "test:once": "vitest run",
-    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "preversion": "npm run build && git add -A -f lib",
-    "release": "standard-version",
     "lint:fix": "npx biome check . --write",
     "lint:check": "npx biome check .",
     "format": "npx biome format . --write",
     "pre-commit": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky",
+    "ci:publish": "npm run build && npx changeset publish",
+    "ci:version": "npx changeset version"
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
-    }
-  },
-  "standard-version": {
-    "scripts": {
-      "prebump": "npm run build",
-      "postbump": "git push --follow-tags origin master"
     }
   },
   "husky": {
@@ -45,11 +38,12 @@
   },
   "keywords": ["react", "component"],
   "peerDependencies": {
-    "react": "16.8.x || 17.x.x || 18.x.x || 19.x.x",
-    "react-dom": "16.8.x || 17.x.x || 18.x.x || 19.x.x"
+    "react": ">=16.8.x || 17.x.x || 18.x.x || 19.x.x",
+    "react-dom": ">=16.8.x || 17.x.x || 18.x.x || 19.x.x"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.28.1",
     "@chromatic-com/storybook": "^3.2.3",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
@@ -72,7 +66,6 @@
     "acorn": "^8.14.0",
     "chromatic": "^11.20.2",
     "cross-env": "^5.2.0",
-    "eslint": "^8.25.0",
     "husky": "^9.1.7",
     "jsdom": "^20.0.1",
     "lint-staged": "^15.2.11",
@@ -80,7 +73,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "source-map-loader": "^0.2.4",
-    "standard-version": "^7.0.0",
     "storybook": "^8.4.7",
     "typescript": "^5.7.2",
     "vite": "^6.0.6",
