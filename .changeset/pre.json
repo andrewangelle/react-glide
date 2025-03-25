@@ -1,0 +1,8 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "react-glide": "4.1.0"
+  },
+  "changesets": ["green-lemons-try"]
+}
