@@ -4,5 +4,5 @@
   "initialVersions": {
     "react-glide": "4.1.0"
   },
-  "changesets": ["green-lemons-try"]
+  "changesets": ["green-lemons-try", "nasty-breads-matter"]
 }
