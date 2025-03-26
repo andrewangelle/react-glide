@@ -24,7 +24,7 @@ Import the module at the top of your component page:
 
 ```javascript
 import { Glide } from 'react-glide';
-import 'react-glide/lib/react-glide.css'
+import 'react-glide/lib/reactGlide.css'
 ```
 
 Glide functions as a wrapper and can be passed any type of element. See [example folder](https://github.com/andrewangelle/react-glide/tree/master/ssr-testing/components/GlideExample.tsx):

@@ -1,6 +1,6 @@
 'use client';
 import { Glide, type GlideProps } from 'react-glide';
-import 'react-glide/lib/react-glide.css';
+import 'react-glide/lib/reactGlide.css';
 
 const props: GlideProps = {
   height: 600,
@@ -24,7 +24,6 @@ export function GlideExample() {
           width="500"
           height="450"
           src="https://www.youtube.com/embed/6emElQDVqF4"
-          frameBorder="0"
           allowFullScreen
         />
       </div>

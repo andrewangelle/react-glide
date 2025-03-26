@@ -38,8 +38,7 @@
   },
   "keywords": ["react", "component"],
   "peerDependencies": {
-    "react": ">=16.8.x || 17.x.x || 18.x.x || 19.x.x",
-    "react-dom": ">=16.8.x || 17.x.x || 18.x.x || 19.x.x"
+    "react": ">=16.8.x || 17.x.x || 18.x.x || 19.x.x"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

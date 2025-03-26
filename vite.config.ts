@@ -28,12 +28,16 @@ export default defineConfig({
     rollupOptions: {
       external: ['react'],
       output: {
-        globals: {
-          react: 'react',
-        },
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'reactGlide.css';
-          return assetInfo.name || '';
+          console.log(assetInfo);
+          const oldName = 'react-glide.css';
+          const newName = 'reactGlide.css';
+
+          if (assetInfo.names.includes(oldName)) {
+            return newName;
+          }
+
+          return assetInfo.names[0];
         },
       },
       plugins: [typescriptPlugin],
