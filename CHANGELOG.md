@@ -1,5 +1,11 @@
 # react-glide
 
+## 5.0.0-next.3
+
+### Patch Changes
+
+- Fix types export
+
 ## 5.0.0-next.2
 
 ### Major Changes
