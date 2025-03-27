@@ -20,7 +20,7 @@
     "@tanstack/react-start": "^1.114.27",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-glide": "file:./test.27.tgz",
+    "react-glide": "^5.0.0-next.2",
     "vinxi": "^0.5.3"
   },
   "devDependencies": {
