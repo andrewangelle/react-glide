@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "declaration": true,
+    "noEmit": true,
     "rootDir": ".",
     "outDir": "lib",
-    "module": "es6",
-    "target": "es2015",
-    "lib": ["es6", "dom", "esnext.asynciterable"],
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["ESNext", "dom", "esnext.asynciterable"],
     "sourceMap": false,
     "allowJs": false,
     "jsx": "react-jsx",

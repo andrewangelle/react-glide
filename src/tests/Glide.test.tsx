@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import { Glide } from '../Glide';
+import { Glide } from '../index';
 import type { GlideProps } from '../types';
 
 const props: GlideProps = {

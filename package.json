@@ -6,11 +6,21 @@
   "repository": "http://github.com/andrewangelle/react-glide.git",
   "license": "MIT",
   "files": ["lib", "lib/*.css"],
-  "main": "./lib/index.umd.js",
-  "module": "./lib/index.es.js",
-  "types": "./lib/src/index.d.ts",
+  "type": "module",
+  "module": "./lib/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./lib/index.mjs",
+      "types": "./lib/index.d.ts"
+    },
+    "./lib/reactGlide.css": {
+      "import": "./lib/reactGlide.css",
+      "require": "./lib/reactGlide.css"
+    }
+  },
   "scripts": {
-    "build": "rm -rf lib && vite build",
+    "build": "rm -rf lib && vite build && npm run build:types",
+    "build:types": "npx tsup src/index.tsx --dts-only --out-dir lib --format esm",
     "build:storybook": "storybook build",
     "start": "storybook dev -p 6006",
     "test": "vitest watch",
@@ -46,7 +56,6 @@
     "@chromatic-com/storybook": "^3.2.3",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
-    "@rollup/plugin-typescript": "^8.5.0",
     "@storybook/addon-actions": "^8.4.7",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
@@ -73,6 +82,7 @@
     "react-dom": "^19.0.0",
     "source-map-loader": "^0.2.4",
     "storybook": "^8.4.7",
+    "tsup": "^8.4.0",
     "typescript": "^5.7.2",
     "vite": "^6.0.6",
     "vitest": "^2.1.8"

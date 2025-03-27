@@ -151,3 +151,5 @@ export function Glide({
     </div>
   );
 }
+
+export default Glide;

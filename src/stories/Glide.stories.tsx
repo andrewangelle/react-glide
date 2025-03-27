@@ -1,7 +1,7 @@
 import type { Meta } from '@storybook/react';
 
 import './style.css';
-import { Glide } from '../Glide';
+import { Glide } from '..';
 import type { GlideProps } from '../types';
 
 const GlideMeta: Meta<GlideProps> = {

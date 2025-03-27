@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": [".next", "lib", "coverage", "node_modules"]
+    "ignore": [".next", "lib", "coverage", "node_modules", "routeTree.gen.ts"]
   },
   "formatter": {
     "enabled": true,
