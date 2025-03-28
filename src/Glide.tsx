@@ -8,8 +8,8 @@ import { usePreload } from '~/usePreload';
 
 import './reactGlide.css';
 
-function isChild(child: object): child is ReactElement {
-  return '$$typeof' in child;
+function isReactChild(child?: object): child is ReactElement {
+  return Boolean(child && '$$typeof' in child);
 }
 
 function isCSSUnit(unit?: object): unit is { value: number } {
@@ -28,7 +28,9 @@ export function Glide({
   onSlideChange = () => null,
 }: GlideProps) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const childrenArray = Array.isArray(children) ? children.filter(isChild) : [];
+  const childrenArray = Array.isArray(children)
+    ? children.filter(isReactChild)
+    : [];
 
   const countdownTimerOptions: CountdownTimerOptions = {
     skip: !autoPlay,
