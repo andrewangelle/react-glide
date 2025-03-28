@@ -1,4 +1,5 @@
-import { Children, type ReactElement, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { ReactElement } from 'react';
 
 export function usePreload(children: ReactElement[]): {
   done: boolean;
@@ -29,14 +30,14 @@ export function usePreload(children: ReactElement[]): {
   function getImageUrls(): string[] {
     let urlResults: string[] = [];
 
-    Children.map(
-      children,
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      (child: ReactElement<{ src: string; children: any }>, index) => {
-        const res = traverseElementTree(child);
-        urlResults = [...urlResults, ...res];
-      },
-    );
+    for (const childElement of children) {
+      const child = childElement as ReactElement<{
+        src: string;
+        children: unknown;
+      }>;
+      const res = traverseElementTree(child);
+      urlResults = [...urlResults, ...res];
+    }
 
     setUrls([...urlResults]);
     return urlResults;

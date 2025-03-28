@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 export interface PreloaderProps {
   currentIndex: number;
   width: number;
@@ -19,6 +20,8 @@ export interface GlideProps {
   dots?: boolean;
   height?: number;
   infinite?: boolean;
-  width: number | string;
+  width?: number | string;
+  className?: string;
+  children: string | JSX.Element | JSX.Element[];
   onSlideChange?: () => void;
 }

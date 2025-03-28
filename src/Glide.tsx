@@ -1,21 +1,20 @@
-import {
-  Children,
-  type PropsWithChildren,
-  type ReactElement,
-  useEffect,
-  useState,
-} from 'react';
-
-import { LoadingSpinner } from './LoadingSpinner';
-
-import type { GlideProps } from './types';
-import {
-  type CountdownTimerOptions,
-  useCountdownTimer,
-} from './useCountdownTimer';
-import { usePreload } from './usePreload';
+import { useEffect, useRef, useState } from 'react';
+import type { CSSProperties, ReactElement } from 'react';
+import { LoadingSpinner } from '~/LoadingSpinner';
+import type { GlideProps } from '~/types';
+import { useCountdownTimer } from '~/useCountdownTimer';
+import type { CountdownTimerOptions } from '~/useCountdownTimer';
+import { usePreload } from '~/usePreload';
 
 import './reactGlide.css';
+
+function isChild(child: object): child is ReactElement {
+  return '$$typeof' in child;
+}
+
+function isCSSUnit(unit?: object): unit is { value: number } {
+  return Boolean(unit && 'value' in unit);
+}
 
 export function Glide({
   autoPlay,
@@ -24,10 +23,12 @@ export function Glide({
   dots = true,
   height,
   width,
-  onSlideChange = () => null,
+  className = '',
   children,
-}: PropsWithChildren<GlideProps>) {
-  const childrenArray = Children.toArray(children) as ReactElement[];
+  onSlideChange = () => null,
+}: GlideProps) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const childrenArray = Array.isArray(children) ? children.filter(isChild) : [];
 
   const countdownTimerOptions: CountdownTimerOptions = {
     skip: !autoPlay,
@@ -39,6 +40,9 @@ export function Glide({
   const { loading, done } = usePreload(childrenArray);
   const { reset: resetTimer } = useCountdownTimer(countdownTimerOptions);
 
+  const maybeWidth = ref.current?.computedStyleMap?.().get('width');
+  const containerWidth = isCSSUnit(maybeWidth) ? maybeWidth.value : 0;
+
   function goToNextSlide(): void {
     const lastSlide = childrenArray.length - 1;
 
@@ -48,20 +52,29 @@ export function Glide({
 
     const nextIndex = currentIndex === lastSlide ? 0 : currentIndex + 1;
 
-    setCurrentIndex((prevState) => nextIndex);
+    setCurrentIndex((_prevState) => nextIndex);
     resetTimer();
   }
 
   function goToPrevSlide(): void {
     const lastSlide = childrenArray.length - 1;
     const nextIndex = currentIndex === 0 ? lastSlide : currentIndex - 1;
-    setCurrentIndex((prevState) => nextIndex);
+    setCurrentIndex((_prevState) => nextIndex);
     resetTimer();
   }
 
   function goToSelectedDot(index: number): void {
-    setCurrentIndex((prevState) => index);
+    setCurrentIndex((_prevState) => index);
     resetTimer();
+  }
+
+  function getStyleProps() {
+    const dimensions: CSSProperties = {};
+
+    if (height) dimensions.height = height;
+    if (width) dimensions.width = width;
+
+    return dimensions;
   }
 
   useEffect(() => {
@@ -70,28 +83,25 @@ export function Glide({
     }
   }, [currentIndex, onSlideChange]);
 
-  const styleProps = {
-    height,
-    width,
-  };
-
   return (
     <div
-      className="glide--container"
-      style={styleProps}
+      ref={ref}
+      className={`${className} glide--container`}
+      style={getStyleProps()}
       data-testid="glideContainer"
     >
-      {loading && <LoadingSpinner width={width} />}
+      {loading && <LoadingSpinner width={containerWidth} />}
 
       {done &&
-        Children.map(children, (child: ReactElement, index) => {
-          const className = currentIndex === index ? 'current' : '';
+        childrenArray.map((child: ReactElement, index) => {
+          const classNameId = currentIndex === index ? 'current' : '';
+          const className = `glide--item ${classNameId}`;
+          const key = `${className}--${index}`;
           return (
             child && (
               <child.type
-                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                key={index}
-                className={`glide--item ${className}`}
+                key={key}
+                className={className}
                 {...(currentIndex === index
                   ? { 'data-testid': 'glideCurrentItem' }
                   : {})}
@@ -125,27 +135,31 @@ export function Glide({
 
       {dots && (
         <section className="glide--dots">
-          {Children.map(children, (_child, index) => (
-            <span
-              // biome-ignore lint/a11y/useSemanticElements: <explanation>
-              role="button"
-              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-              key={index}
-              data-testid={`glideDot-${index}`}
-              className={currentIndex === index ? 'active-dot' : 'inactive-dot'}
-              tabIndex={0}
-              onClick={() => goToSelectedDot(index)}
-              onKeyDown={(event) => {
-                switch (event.key) {
-                  case ' ':
-                  case 'Enter':
-                    goToSelectedDot(index);
-                }
-              }}
-            >
-              &middot;
-            </span>
-          ))}
+          {childrenArray.map((_child, index) => {
+            const className =
+              currentIndex === index ? 'active-dot' : 'inactive-dot';
+            const key = `${className}--${index}`;
+            return (
+              <span
+                // biome-ignore lint/a11y/useSemanticElements: breaks the styles to make this a button el
+                role="button"
+                key={key}
+                data-testid={`glideDot-${index}`}
+                className={className}
+                tabIndex={0}
+                onClick={() => goToSelectedDot(index)}
+                onKeyDown={(event) => {
+                  switch (event.key) {
+                    case ' ':
+                    case 'Enter':
+                      goToSelectedDot(index);
+                  }
+                }}
+              >
+                &middot;
+              </span>
+            );
+          })}
         </section>
       )}
     </div>
