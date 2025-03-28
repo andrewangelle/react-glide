@@ -1,5 +1,11 @@
 # react-glide
 
+## 5.0.0-next.4
+
+### Patch Changes
+
+- Make width prop optional. Remove use of react's Children api. Use absolute paths
+
 ## 5.0.0-next.3
 
 ### Patch Changes
