@@ -1,13 +1,9 @@
-import './reactGlide.css';
-
-export function LoadingSpinner({ width }: { width: number | string }) {
-  const baseWidth =
-    typeof width === 'string' ? Number.parseInt(width, 10) : width;
+export function LoadingSpinner({ width }: { width: number }) {
   return (
     <div
       style={{
-        width: `${baseWidth}px`,
-        height: `${(baseWidth / 66) * 50}px`,
+        width: `${width}px`,
+        height: `${(width / 66) * 50}px`,
       }}
     >
       <div className="loading-indicator" />

@@ -4,6 +4,14 @@ body {
   font-family: sans-serif;
 }
 
-.glide--item > iframe {
-  padding: 3rem;
+.story-styles {
+  &.glide--container {
+    width: 600px;
+    height: 600px;
+  }
+
+  .glide--item > iframe {
+    padding: 3rem;
+  }
 }
+

@@ -1,10 +1,8 @@
 import { act, fireEvent, render, screen, within } from '@testing-library/react';
-import { Glide } from '../Glide';
-import type { GlideProps } from '../types';
+import { Glide } from '~/Glide';
+import type { GlideProps } from '~/types';
 
 const props: GlideProps = {
-  height: 500,
-  width: 500,
   autoPlay: false,
   infinite: true,
   dots: true,
@@ -57,21 +55,6 @@ describe('Glide', () => {
     const element = await screen.findByTestId('glideCurrentItem');
 
     await within(element).findByText(/Slide One/);
-  });
-
-  it('applies width and height props', () => {
-    render(
-      <Glide {...props}>
-        <h1>Slide One</h1>
-        <h1>Slide Two</h1>
-        <h1>Slide Three</h1>
-      </Glide>,
-    );
-    const container = screen.getByTestId('glideContainer');
-
-    const styles = getComputedStyle(container);
-    expect(styles.height).toBe(`${props.height}px`);
-    expect(styles.width).toBe(`${props.width}px`);
   });
 
   it('changes to next slide when next button is clicked', async () => {
@@ -230,5 +213,13 @@ describe('Glide', () => {
 
     const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Three/);
+  });
+
+  it('elgantly handles unexpected children', async () => {
+    render(<Glide {...props}></Glide>);
+
+    screen.getByTestId('glideContainer');
+    screen.getByTestId('goToPrevSlide');
+    screen.getByTestId('goToNextSlide');
   });
 });

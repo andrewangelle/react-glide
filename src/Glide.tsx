@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties, ReactElement } from 'react';
+import type { ReactElement } from 'react';
 import { LoadingSpinner } from '~/LoadingSpinner';
 import type { GlideProps } from '~/types';
 import { useCountdownTimer } from '~/useCountdownTimer';
 import type { CountdownTimerOptions } from '~/useCountdownTimer';
 import { usePreload } from '~/usePreload';
 
-import './reactGlide.css';
+import '~/reactGlide.css';
 
 function isReactChild(child?: object): child is ReactElement {
   return Boolean(child && '$$typeof' in child);
@@ -21,8 +21,6 @@ export function Glide({
   autoPlaySpeed = 5000,
   infinite = false,
   dots = true,
-  height,
-  width,
   className = '',
   children,
   onSlideChange = () => null,
@@ -43,7 +41,7 @@ export function Glide({
   const { reset: resetTimer } = useCountdownTimer(countdownTimerOptions);
 
   const maybeWidth = ref.current?.computedStyleMap?.().get('width');
-  const containerWidth = isCSSUnit(maybeWidth) ? maybeWidth.value : 0;
+  const computedWidth = isCSSUnit(maybeWidth) ? maybeWidth.value : 0;
 
   function goToNextSlide(): void {
     const lastSlide = childrenArray.length - 1;
@@ -70,15 +68,6 @@ export function Glide({
     resetTimer();
   }
 
-  function getStyleProps() {
-    const dimensions: CSSProperties = {};
-
-    if (height) dimensions.height = height;
-    if (width) dimensions.width = width;
-
-    return dimensions;
-  }
-
   useEffect(() => {
     if (currentIndex) {
       onSlideChange();
@@ -89,27 +78,36 @@ export function Glide({
     <div
       ref={ref}
       className={`${className} glide--container`}
-      style={getStyleProps()}
       data-testid="glideContainer"
     >
-      {loading && <LoadingSpinner width={containerWidth} />}
+      {loading && <LoadingSpinner width={computedWidth} />}
 
       {done &&
         childrenArray.map((child: ReactElement, index) => {
           const classNameId = currentIndex === index ? 'current' : '';
           const className = `glide--item ${classNameId}`;
           const key = `${className}--${index}`;
+
+          function getSlideItemProps() {
+            let props = {};
+
+            if (currentIndex === index) {
+              props['data-testid'] = 'glideCurrentItem';
+            }
+
+            if (typeof child.props === 'object') {
+              props = { ...props, ...child.props };
+            }
+
+            return props;
+          }
+
           return (
-            child && (
-              <child.type
-                key={key}
-                className={className}
-                {...(currentIndex === index
-                  ? { 'data-testid': 'glideCurrentItem' }
-                  : {})}
-                {...(typeof child.props === 'object' ? child.props : {})}
-              />
-            )
+            <child.type
+              key={key}
+              className={className}
+              {...getSlideItemProps()}
+            />
           );
         })}
 

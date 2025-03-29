@@ -18,10 +18,8 @@ export interface GlideProps {
   autoPlay?: boolean;
   autoPlaySpeed?: number;
   dots?: boolean;
-  height?: number;
   infinite?: boolean;
-  width?: number | string;
   className?: string;
-  children: string | JSX.Element | JSX.Element[];
+  children?: string | JSX.Element | JSX.Element[];
   onSlideChange?: () => void;
 }

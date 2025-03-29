@@ -8,10 +8,13 @@ body {
 .glide--container {
   position: relative;
   height: 100%;
+  display: flex;
+  width: 100%;
 }
 
 .glide--item {
   position: absolute;
+  /* display: none; */
   left: -999px;
   -webkit-transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;
@@ -22,6 +25,7 @@ body {
 
 .glide--item.current {
   position: absolute;
+  /* display: block; */
   left: 0;
   -webkit-transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;
