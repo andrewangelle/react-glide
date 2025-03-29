@@ -18,6 +18,7 @@ export default defineConfig({
         '**/*.stories.tsx',
         '**/index.tsx',
         '**/types.ts',
+        '**/utils.ts',
       ],
       include: ['src/**/*.{ts,tsx}'],
     },

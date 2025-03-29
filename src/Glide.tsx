@@ -3,18 +3,9 @@ import type { ReactElement } from 'react';
 import { LoadingSpinner } from '~/LoadingSpinner';
 import type { GlideProps } from '~/types';
 import { useCountdownTimer } from '~/useCountdownTimer';
-import type { CountdownTimerOptions } from '~/useCountdownTimer';
 import { usePreload } from '~/usePreload';
-
+import { isCSSUnit, isReactChild } from '~/utils';
 import '~/reactGlide.css';
-
-function isReactChild(child?: object): child is ReactElement {
-  return Boolean(child && '$$typeof' in child);
-}
-
-function isCSSUnit(unit?: object): unit is { value: number } {
-  return Boolean(unit && 'value' in unit);
-}
 
 export function Glide({
   autoPlay,
@@ -30,26 +21,27 @@ export function Glide({
     ? children.filter(isReactChild)
     : [];
 
-  const countdownTimerOptions: CountdownTimerOptions = {
-    skip: !autoPlay,
-    interval: autoPlaySpeed,
-    onExpire: goToNextSlide,
-  };
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const { loading, done } = usePreload(childrenArray);
-  const { reset: resetTimer } = useCountdownTimer(countdownTimerOptions);
+  const { reset: resetTimer } = useCountdownTimer({
+    skip: !autoPlay,
+    interval: autoPlaySpeed,
+    onExpire() {
+      const lastSlide = childrenArray.length - 1;
+
+      if (currentIndex === lastSlide && !infinite) {
+        return;
+      }
+
+      goToNextSlide();
+    },
+  });
 
   const maybeWidth = ref.current?.computedStyleMap?.().get('width');
   const computedWidth = isCSSUnit(maybeWidth) ? maybeWidth.value : 0;
 
   function goToNextSlide(): void {
     const lastSlide = childrenArray.length - 1;
-
-    if (currentIndex === lastSlide && !infinite) {
-      return;
-    }
-
     const nextIndex = currentIndex === lastSlide ? 0 : currentIndex + 1;
 
     setCurrentIndex((_prevState) => nextIndex);

@@ -1,6 +1,9 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Glide } from '~/Glide';
 import type { GlideProps } from '~/types';
+
+const user = userEvent.setup();
 
 const props: GlideProps = {
   autoPlay: false,
@@ -69,7 +72,7 @@ describe('Glide', () => {
     const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
-    fireEvent.click(screen.getByTestId('goToNextSlide'));
+    await user.click(screen.getByTestId('goToNextSlide'));
 
     const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
@@ -87,17 +90,17 @@ describe('Glide', () => {
     const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
-    fireEvent.click(screen.getByTestId('goToNextSlide'));
+    await user.click(screen.getByTestId('goToNextSlide'));
 
     const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
 
-    fireEvent.click(screen.getByTestId('goToNextSlide'));
+    await user.click(screen.getByTestId('goToNextSlide'));
 
     const element3 = await screen.findByTestId('glideCurrentItem');
     await within(element3).findByText(/Slide Three/);
 
-    fireEvent.click(screen.getByTestId('goToNextSlide'));
+    await user.click(screen.getByTestId('goToNextSlide'));
 
     const elementFinal = await screen.findByTestId('glideCurrentItem');
     await within(elementFinal).findByText(/Slide One/);
@@ -114,7 +117,7 @@ describe('Glide', () => {
     const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
-    fireEvent.click(screen.getByTestId('goToPrevSlide'));
+    await user.click(screen.getByTestId('goToPrevSlide'));
 
     const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Three/);
@@ -140,6 +143,41 @@ describe('Glide', () => {
     await within(element2).findByText(/Slide Two/);
   });
 
+  it('does not loop when autoplay is on and infinite is off', async () => {
+    render(
+      <Glide {...props} autoPlay={true} autoPlaySpeed={2000} infinite={false}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>,
+    );
+
+    // first item
+    const element1 = await screen.findByTestId('glideCurrentItem');
+    await within(element1).findByText(/Slide One/);
+
+    // advance timer and expect next item to be visible
+    act(() => {
+      vi.advanceTimersByTime(3000);
+    });
+    const element2 = await screen.findByTestId('glideCurrentItem');
+    await within(element2).findByText(/Slide Two/);
+
+    // advance timer and expect last item to be visible
+    act(() => {
+      vi.advanceTimersByTime(3000);
+    });
+    const element3 = await screen.findByTestId('glideCurrentItem');
+    await within(element3).findByText(/Slide Three/);
+
+    // advance timer and expect last item to still be visible
+    act(() => {
+      vi.advanceTimersByTime(3000);
+    });
+    const element3Again = await screen.findByTestId('glideCurrentItem');
+    await within(element3Again).findByText(/Slide Three/);
+  });
+
   it('cancels timer after button click', async () => {
     render(
       <Glide {...props} autoPlay={true}>
@@ -156,7 +194,7 @@ describe('Glide', () => {
       vi.advanceTimersByTime(3000);
     });
 
-    fireEvent.click(screen.getByTestId('goToNextSlide'));
+    await user.click(screen.getByTestId('goToNextSlide'));
 
     const elementAfterClick = await screen.findByTestId('glideCurrentItem');
     await within(elementAfterClick).findByText(/Slide Two/);
@@ -209,17 +247,85 @@ describe('Glide', () => {
     const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
-    fireEvent.click(screen.getByTestId('glideDot-2'));
+    await user.click(screen.getByTestId('glideDot-2'));
 
     const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Three/);
   });
 
   it('elgantly handles unexpected children', async () => {
-    render(<Glide {...props}></Glide>);
+    render(<Glide {...props}>{undefined}</Glide>);
 
     screen.getByTestId('glideContainer');
     screen.getByTestId('goToPrevSlide');
     screen.getByTestId('goToNextSlide');
+  });
+
+  it('works with keyboard interaction', async () => {
+    render(
+      <Glide {...props} infinite={false} autoPlay={false}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>,
+    );
+
+    // helpers
+    function getFocusedElement() {
+      return document.activeElement;
+    }
+
+    async function getActiveItem() {
+      const result = await screen.findByTestId('glideCurrentItem');
+      return result;
+    }
+
+    async function tabToSecondDot() {
+      // tab three times to get to the first dot
+      const count = Array(3).fill(null);
+      for (const _ in count) {
+        await user.tab();
+      }
+    }
+
+    async function tabToLastDot() {
+      // tab five times to get to the first dot
+      const count = Array(5).fill(null);
+      for (const _ in count) {
+        await user.tab();
+      }
+    }
+
+    // expect the first slide to be active
+    await within(await getActiveItem()).findByText(/Slide One/);
+
+    await tabToSecondDot();
+
+    const focusedEl = getFocusedElement();
+
+    if (focusedEl) {
+      // expect the focused el to be the dot
+      expect(focusedEl).toHaveAttribute('data-testid', 'glideDot-1');
+
+      // type enter
+      await user.keyboard('{Enter}');
+
+      // expect the second slide to be active
+      await within(await getActiveItem()).findByText(/Slide Two/);
+    }
+
+    await tabToLastDot();
+
+    const nextFocusedEl = getFocusedElement();
+    if (nextFocusedEl) {
+      // expect the focused el to be the dot
+      expect(nextFocusedEl).toHaveAttribute('data-testid', 'glideDot-2');
+
+      // type space
+      await user.keyboard("' '");
+
+      // expect the second slide to be active
+      await within(await getActiveItem()).findByText(/Slide Three/);
+    }
   });
 });
