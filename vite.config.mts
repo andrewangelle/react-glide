@@ -15,6 +15,7 @@ export default defineConfig({
   ],
   build: {
     outDir: 'lib',
+    minify: true,
     lib: {
       entry: './src/index.tsx',
       name: 'react-glide',
