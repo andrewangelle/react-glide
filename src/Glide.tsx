@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ReactElement } from 'react';
-import { LoadingSpinner } from '~/LoadingSpinner';
 import type { GlideProps } from '~/types';
 import { useCountdownTimer } from '~/useCountdownTimer';
 import { usePreload } from '~/usePreload';
-import { isCSSUnit, isReactChild } from '~/utils';
+import { isReactChild } from '~/utils';
 import '~/reactGlide.css';
 
 export function Glide({
@@ -36,9 +35,6 @@ export function Glide({
       goToNextSlide();
     },
   });
-
-  const maybeWidth = ref.current?.computedStyleMap?.().get('width');
-  const computedWidth = isCSSUnit(maybeWidth) ? maybeWidth.value : 0;
 
   function goToNextSlide(): void {
     const lastSlide = childrenArray.length - 1;
@@ -72,7 +68,7 @@ export function Glide({
       className={`${className} glide--container`}
       data-testid="glideContainer"
     >
-      {loading && <LoadingSpinner width={computedWidth} />}
+      {loading && <div className="loading-indicator" />}
 
       {done &&
         childrenArray.map((child: ReactElement, index) => {
