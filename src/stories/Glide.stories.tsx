@@ -8,11 +8,15 @@ const GlideMeta: Meta<GlideProps> = {
   title: 'Glide',
   render: Basic,
   args: {
+    className: 'glide-storybook',
+    containerStyles: {
+      height: 600,
+      width: 600,
+    },
     autoPlay: true,
     autoPlaySpeed: 5000,
     infinite: true,
     dots: true,
-    className: 'story-styles',
   },
   parameters: {
     layout: 'fullscreen',

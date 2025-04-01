@@ -1,16 +1,14 @@
+@import '../reactGlide.css';
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
 }
 
-.story-styles {
-  &.glide--container {
-    width: 600px;
-    height: 600px;
-  }
-
+.glide-storybook {  
   .glide--item > iframe {
+    border: none;
     padding: 3rem;
   }
 }

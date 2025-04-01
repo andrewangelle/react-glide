@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 
-export function usePreload(children: ReactElement[]): {
+export function usePreloadImages(
+  children: ReactElement[],
+  skip = false,
+): {
   done: boolean;
-  loading: boolean;
+  isPreloading: boolean;
 } {
   const [loading, setLoading] = useState(true);
   const [done, setDone] = useState(false);
   const [loadCount, setLoadCount] = useState(0);
   const [urls, setUrls] = useState<string[]>([]);
 
-  function preloadImages(): void {
+  const preloadImages = useCallback(function preloadImages(): void {
     const urls = getImageUrls();
 
     if (urls.length > 0) {
@@ -25,7 +28,7 @@ export function usePreload(children: ReactElement[]): {
       setDone(true);
       setLoading(false);
     }
-  }
+  }, []);
 
   function getImageUrls(): string[] {
     let urlResults: string[] = [];
@@ -61,10 +64,14 @@ export function usePreload(children: ReactElement[]): {
     setLoadCount((prevState) => prevState + 1);
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    preloadImages();
-  }, []);
+    if (skip) {
+      setLoading(false);
+      setDone(true);
+    } else {
+      preloadImages();
+    }
+  }, [preloadImages, skip]);
 
   useEffect(() => {
     if (loadCount === urls.length) {
@@ -75,6 +82,6 @@ export function usePreload(children: ReactElement[]): {
 
   return {
     done,
-    loading,
+    isPreloading: loading,
   };
 }

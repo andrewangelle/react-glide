@@ -1,25 +1,27 @@
-import type { JSX } from 'react';
-export interface PreloaderProps {
+import type { CSSProperties, JSX } from 'react';
+export type PreloaderProps = {
   currentIndex: number;
   width: number;
-}
+};
 
-export interface PreloaderState {
+export type PreloaderState = {
   loading: boolean;
   done: boolean;
   loadCount: number;
-}
+};
 
-export interface GlideState {
+export type GlideState = {
   currentIndex: number;
-}
+};
 
-export interface GlideProps {
+export type GlideProps = {
   autoPlay?: boolean;
   autoPlaySpeed?: number;
   dots?: boolean;
   infinite?: boolean;
   className?: string;
   children?: string | JSX.Element | JSX.Element[];
+  containerStyles?: CSSProperties;
+  loading?: boolean;
   onSlideChange?: () => void;
-}
+};

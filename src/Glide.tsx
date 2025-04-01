@@ -1,10 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import type { GlideProps } from '~/types';
 import { useCountdownTimer } from '~/useCountdownTimer';
-import { usePreload } from '~/usePreload';
 import { isReactChild } from '~/utils';
-import '~/reactGlide.css';
 
 export function Glide({
   autoPlay,
@@ -12,16 +10,16 @@ export function Glide({
   infinite = false,
   dots = true,
   className = '',
+  containerStyles = {},
+  loading = false,
   children,
   onSlideChange = () => null,
 }: GlideProps) {
-  const ref = useRef<HTMLDivElement | null>(null);
   const childrenArray = Array.isArray(children)
     ? children.filter(isReactChild)
     : [];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { loading, done } = usePreload(childrenArray);
   const { reset: resetTimer } = useCountdownTimer({
     skip: !autoPlay,
     interval: autoPlaySpeed,
@@ -64,16 +62,16 @@ export function Glide({
 
   return (
     <div
-      ref={ref}
       className={`${className} glide--container`}
+      style={containerStyles}
       data-testid="glideContainer"
     >
-      {loading && <div className="loading-indicator" />}
+      {loading && <div className="glide--loading" />}
 
-      {done &&
+      {!loading &&
         childrenArray.map((child: ReactElement, index) => {
-          const classNameId = currentIndex === index ? 'current' : '';
-          const className = `glide--item ${classNameId}`;
+          const current = currentIndex === index ? 'current' : '';
+          const className = `glide--item ${current}`;
           const key = `${className}--${index}`;
 
           function getSlideItemProps() {
@@ -122,19 +120,16 @@ export function Glide({
       )}
 
       {dots && (
-        <section className="glide--dots">
+        <section className="glide--dots-container">
           {childrenArray.map((_child, index) => {
-            const className =
-              currentIndex === index ? 'active-dot' : 'inactive-dot';
+            const className = currentIndex === index ? 'active' : '';
             const key = `${className}--${index}`;
             return (
-              <span
-                // biome-ignore lint/a11y/useSemanticElements: breaks the styles to make this a button el
-                role="button"
+              <button
+                type="button"
                 key={key}
                 data-testid={`glideDot-${index}`}
-                className={className}
-                tabIndex={0}
+                className={`glide--dot ${className}`}
                 onClick={() => goToSelectedDot(index)}
                 onKeyDown={(event) => {
                   switch (event.key) {
@@ -143,9 +138,7 @@ export function Glide({
                       goToSelectedDot(index);
                   }
                 }}
-              >
-                &middot;
-              </span>
+              />
             );
           })}
         </section>
