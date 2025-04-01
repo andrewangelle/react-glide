@@ -6,7 +6,7 @@
   --glide-dot-bottom-margin: 10px;
   --glide-spinner-border: 2px solid #ccc;
   --glide-spinner-color: #333;
-  --glide-animate-in: fade 1s ease-in; 
+  --glide-animate-in: fade 1s ease-in;
 }
 
 .glide--container {
