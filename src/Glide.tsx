@@ -20,6 +20,7 @@ export function Glide({
     : [];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const { reset: resetTimer } = useCountdownTimer({
     skip: !autoPlay,
     interval: autoPlaySpeed,
@@ -66,7 +67,7 @@ export function Glide({
       style={containerStyles}
       data-testid="glideContainer"
     >
-      {loading && <div className="glide--loading" />}
+      {loading && <div className="glide--loading" data-testid="loader" />}
 
       {!loading &&
         childrenArray.map((child: ReactElement, index) => {
@@ -131,13 +132,6 @@ export function Glide({
                 data-testid={`glideDot-${index}`}
                 className={`glide--dot ${className}`}
                 onClick={() => goToSelectedDot(index)}
-                onKeyDown={(event) => {
-                  switch (event.key) {
-                    case ' ':
-                    case 'Enter':
-                      goToSelectedDot(index);
-                  }
-                }}
               />
             );
           })}

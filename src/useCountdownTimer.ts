@@ -31,22 +31,17 @@ export function useCountdownTimer({
   });
 
   useEffect(() => {
-    let id: NodeJS.Timeout;
-
-    if (!skip) {
-      id = setInterval(() => {
-        setCount((prev) => prev - 1);
-      }, 1000);
-
-      if (count <= 0) {
-        onExpireRef.current();
-        resetOnExpire && setCount(initialCount);
-      }
+    if (skip) {
+      return;
     }
 
-    if (skip) {
-      // @ts-expect-error
-      clearInterval(id);
+    const id = setInterval(() => {
+      setCount((prev) => prev - 1);
+    }, 1000);
+
+    if (count <= 0) {
+      onExpireRef.current();
+      resetOnExpire && setCount(initialCount);
     }
 
     return () => {

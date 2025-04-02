@@ -104,6 +104,8 @@ describe('Glide', () => {
 
     const elementFinal = await screen.findByTestId('glideCurrentItem');
     await within(elementFinal).findByText(/Slide One/);
+
+    expect(props.onSlideChange).toHaveBeenCalledTimes(3);
   });
 
   it('changes to previous slide when prev button is clicked', async () => {
@@ -121,6 +123,11 @@ describe('Glide', () => {
 
     const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Three/);
+
+    await user.click(screen.getByTestId('goToPrevSlide'));
+
+    const element3 = await screen.findByTestId('glideCurrentItem');
+    await within(element3).findByText(/Slide Two/);
   });
 
   it('changes slides when autoPlay is on', async () => {
@@ -316,10 +323,10 @@ describe('Glide', () => {
 
     await tabToLastDot();
 
-    const nextFocusedEl = getFocusedElement();
-    if (nextFocusedEl) {
+    const focusedEl2 = getFocusedElement();
+    if (focusedEl2) {
       // expect the focused el to be the dot
-      expect(nextFocusedEl).toHaveAttribute('data-testid', 'glideDot-2');
+      expect(focusedEl2).toHaveAttribute('data-testid', 'glideDot-2');
 
       // type space
       await user.keyboard("' '");
@@ -327,5 +334,47 @@ describe('Glide', () => {
       // expect the second slide to be active
       await within(await getActiveItem()).findByText(/Slide Three/);
     }
+
+    await user.tab();
+
+    const focusedEl3 = getFocusedElement();
+
+    if (focusedEl3) {
+      // expect the focused el to be the prevButton
+      expect(focusedEl3).toHaveAttribute('data-testid', 'goToPrevSlide');
+
+      // type enter
+      await user.keyboard('{Enter}');
+
+      // expect the second slide to be active
+      await within(await getActiveItem()).findByText(/Slide Two/);
+    }
+
+    await user.tab();
+
+    const focusedEl4 = getFocusedElement();
+
+    if (focusedEl4) {
+      // expect the focused el to be the prevButton
+      expect(focusedEl4).toHaveAttribute('data-testid', 'goToNextSlide');
+
+      // type space
+      await user.keyboard(' ');
+
+      // expect the second slide to be active
+      await within(await getActiveItem()).findByText(/Slide Three/);
+    }
+  });
+
+  it('renders loading spinner', async () => {
+    render(
+      <Glide {...props} loading={true}>
+        <h1>Slide One</h1>
+        <h1>Slide Two</h1>
+        <h1>Slide Three</h1>
+      </Glide>,
+    );
+
+    screen.getByTestId('loader');
   });
 });
