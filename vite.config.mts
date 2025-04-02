@@ -4,11 +4,7 @@ import tsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [
-    react({
-      babel: {
-        plugins: ['babel-plugin-react-compiler', {}],
-      },
-    }),
+    react(),
     tsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
