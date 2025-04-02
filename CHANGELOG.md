@@ -1,5 +1,11 @@
 # react-glide
 
+## 5.0.0-next.6
+
+### Patch Changes
+
+- 15cd663: Remove react compiler plugin. Add styles to export
+
 ## 5.0.0-next.5
 
 ### Patch Changes

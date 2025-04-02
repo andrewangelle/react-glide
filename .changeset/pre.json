@@ -5,6 +5,7 @@
     "react-glide": "4.1.0"
   },
   "changesets": [
+    "clear-islands-kick",
     "green-lemons-try",
     "honest-jeans-hug",
     "nasty-breads-matter",
