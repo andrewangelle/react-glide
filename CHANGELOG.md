@@ -1,5 +1,11 @@
 # react-glide
 
+## 5.0.0-next.5
+
+### Patch Changes
+
+- remove unneccessary preload update css vars
+
 ## 5.0.0-next.4
 
 ### Patch Changes
