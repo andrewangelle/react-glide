@@ -5,8 +5,8 @@ import {
   createRootRoute,
 } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
-import glideStyles from 'react-glide/lib/reactGlide.css?url';
 import { DevTools } from '~/components/DevTools';
+import appStyles from '~/styles.css?url';
 
 export const Route = createRootRoute({
   head: () => ({
@@ -29,7 +29,7 @@ export const Route = createRootRoute({
     links: [
       {
         rel: 'stylesheet',
-        href: glideStyles,
+        href: appStyles,
       },
     ],
   }),

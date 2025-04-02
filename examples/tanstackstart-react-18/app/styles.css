@@ -1,0 +1,6 @@
+@import "react-glide/lib/reactGlide.css";
+
+.glide--container {
+  height: 600px;
+  width: 600px;
+}

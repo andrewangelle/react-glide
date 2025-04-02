@@ -3,8 +3,6 @@ import { Glide, type GlideProps } from 'react-glide';
 import 'react-glide/lib/reactGlide.css';
 
 const props: GlideProps = {
-  height: 600,
-  width: 600,
   autoPlay: true,
   autoPlaySpeed: 5000,
   onSlideChange: () => console.log('slide changed'),
