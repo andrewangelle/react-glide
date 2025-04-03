@@ -17,6 +17,15 @@ const GlideMeta: Meta<GlideProps> = {
     autoPlaySpeed: 5000,
     infinite: true,
     dots: true,
+    loading: false,
+    animate: true,
+    animationType: 'fade',
+  },
+  argTypes: {
+    animationType: {
+      control: 'select',
+      options: ['slide', 'fade'],
+    },
   },
   parameters: {
     layout: 'fullscreen',
