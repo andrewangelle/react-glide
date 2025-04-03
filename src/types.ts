@@ -1,4 +1,4 @@
-import type { CSSProperties, JSX, RefObject } from 'react';
+import type { CSSProperties, JSX, Ref } from 'react';
 export type PreloaderProps = {
   currentIndex: number;
   width: number;
@@ -24,7 +24,7 @@ export type GlideProps = {
   containerStyles?: CSSProperties;
   loading?: boolean;
   animate?: boolean;
-  animationType?: 'slide' | 'fade';
-  ref?: RefObject<HTMLDivElement | null> | null;
+  scrollBehavior?: ScrollBehavior;
+  ref?: Ref<HTMLDivElement | null> | null;
   onSlideChange?: () => void;
 };

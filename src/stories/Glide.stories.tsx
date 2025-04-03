@@ -1,7 +1,7 @@
 import type { Meta } from '@storybook/react';
 
 import '~/stories/style.css';
-import { Glide } from '~/Glide';
+import { Glide } from '~/components/Glide';
 import type { GlideProps } from '~/types';
 
 const GlideMeta: Meta<GlideProps> = {
@@ -13,22 +13,22 @@ const GlideMeta: Meta<GlideProps> = {
       height: 600,
       width: 600,
     },
-    autoPlay: true,
+    autoPlay: false,
     autoPlaySpeed: 5000,
-    infinite: true,
+    infinite: false,
     dots: true,
     loading: false,
-    animate: true,
-    animationType: 'fade',
-  },
-  argTypes: {
-    animationType: {
-      control: 'select',
-      options: ['slide', 'fade'],
-    },
+    animate: false,
+    scrollBehavior: 'smooth',
   },
   parameters: {
     layout: 'fullscreen',
+  },
+  argTypes: {
+    scrollBehavior: {
+      control: 'select',
+      options: ['auto', 'instant', 'smooth'],
+    },
   },
 };
 
@@ -48,10 +48,10 @@ export function Basic(args: GlideProps) {
         />
       </div>
 
-      <div>
+      <div style={{ width: '100%', height: '100%' }}>
         <svg
-          width="200"
-          height="250"
+          width="600px"
+          height="600px"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
         >

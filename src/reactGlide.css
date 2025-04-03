@@ -1,47 +1,54 @@
 :root {
-  --react-glide-button-background: hsl(190, 10%, 10%);
-  --react-glide-button-color: hsl(190, 95%, 80%);
-  --react-glide-dot-color: black;
-  --react-glide-dot-selected-color: hsl(190, 95%, 80%);
-  --react-glide-dots-container-margin: 10px;
-  --react-glide-dot-gap: 8px;
   --react-glide-spinner-border: 2px solid #ccc;
   --react-glide-spinner-color: #333;
-  --react-glide-fade-animation: fade 1s ease-in;
-  --react-glide-slide-animation: slide 0.325s forwards;
+  --react-glide-button-background: hsl(190, 10%, 10%);
+  --react-glide-button-color: hsl(190, 95%, 80%);
+  --react-glide-dots-container-margin: 10px;
+  --react-glide-dot-color: black;
+  --react-glide-dot-selected-color: hsl(190, 95%, 80%);
+  --react-glide-dot-gap: 8px;
+  --react-glide-animation: fade 1s ease-in;
 }
 
 .glide--container {
   position: relative;
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &.swipeable > ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    list-style-type: none;
+  }
 }
 
 .glide--item {
   position: absolute;
-}
+  height: 100%;
+  width: 100%;
 
-.glide--item.not-animated {
-  visibility: hidden;
-
-  &.current {
-    visibility: visible;
+  &.swipeable {
+    display: list-item;
+    position: relative;
+    scroll-snap-align: start;
+    list-style-type: none;
   }
-}
 
-.glide--item.animate.slide {
-  left: -999px;
-  opacity: 1;
+  &.animated {
+    visibility: hidden;
 
-  &.current {
-    animation: var(--react-glide-slide-animation);
-  }
-}
-
-.glide--item.animate.fade {
-  visibility: hidden;
-  
-  &.current {
-    visibility: visible;
-    animation: var(--react-glide-fade-animation);
+    &.current {
+      visibility: visible;
+      animation: var(--react-glide-animation);
+    }
   }
 }
 
@@ -134,14 +141,5 @@
   }
   100% {
     opacity: 1;
-  }
-}
-
-@keyframes slide {
-  0% { 
-    left: -9999px; 
-  }
-  100% { 
-    left: 0; 
   }
 }

@@ -1,4 +1,4 @@
-import { Glide } from '~/Glide';
+import { Glide } from '~/components/Glide';
 
 export { Glide };
 export { Glide as default };

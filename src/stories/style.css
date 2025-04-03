@@ -7,7 +7,7 @@ body {
 }
 
 .glide-storybook {
-  .glide--item > iframe {
+  iframe {
     border: none;
     padding: 3rem;
   }

@@ -1,36 +1,44 @@
 import { useEffect, useRef, useState } from 'react';
-import type { ReactElement } from 'react';
+import { GlideItem } from '~/components/GlideItem';
 import type { GlideProps } from '~/types';
 import { classnames } from '~/utils/classnames';
 import { isReactChild } from '~/utils/isReactChild';
+import { useComposedRefs } from '~/utils/useComposedRefs';
 import { useCountdownTimer } from '~/utils/useCountdownTimer';
-import { useComposedRefs } from './utils/useComposedHooks';
+import { usePreloadImages } from '~/utils/usePreload';
 
 export function Glide({
-  autoPlay,
+  autoPlay = false,
   autoPlaySpeed = 5000,
   infinite = false,
   dots = true,
   className = '',
   containerStyles = {},
-  loading = false,
-  animate = true,
-  animationType = 'slide',
+  loading = true,
+  animate = false,
+  scrollBehavior = 'smooth',
   ref: usersRef,
-  children,
   onSlideChange = () => null,
+  ...props
 }: GlideProps) {
-  const innerRef = useRef<HTMLDivElement>(null);
-  const mergedRefs = useComposedRefs<HTMLDivElement>(usersRef, innerRef);
-  const childrenArray = Array.isArray(children)
-    ? children.filter(isReactChild)
+  const children = Array.isArray(props.children)
+    ? props.children.filter(isReactChild)
     : [];
+
+  const { isPreloading, done } = usePreloadImages(props.children);
+  const isLoading = isPreloading || loading;
+
+  const innerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useComposedRefs<HTMLDivElement | null>(
+    usersRef,
+    innerRef,
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const { reset: resetTimer } = useCountdownTimer({
-    skip: !autoPlay || loading,
+    skip: !autoPlay || isLoading,
     interval: autoPlaySpeed,
     onExpire() {
-      const lastSlide = childrenArray.length - 1;
+      const lastSlide = children.length - 1;
 
       if (currentIndex === lastSlide && !infinite) {
         return;
@@ -41,7 +49,7 @@ export function Glide({
   });
 
   function goToNextSlide(): void {
-    const lastSlide = childrenArray.length - 1;
+    const lastSlide = children.length - 1;
     const nextIndex = currentIndex === lastSlide ? 0 : currentIndex + 1;
 
     setCurrentIndex((_prevState) => nextIndex);
@@ -49,14 +57,14 @@ export function Glide({
   }
 
   function goToPrevSlide(): void {
-    const lastSlide = childrenArray.length - 1;
+    const lastSlide = children.length - 1;
     const nextIndex = currentIndex === 0 ? lastSlide : currentIndex - 1;
     setCurrentIndex((_prevState) => nextIndex);
     resetTimer();
   }
 
-  function goToSelectedDot(index: number): void {
-    setCurrentIndex((_prevState) => index);
+  function goToSelectedDot(index: number) {
+    setCurrentIndex(index);
     resetTimer();
   }
 
@@ -68,45 +76,40 @@ export function Glide({
 
   return (
     <div
-      ref={mergedRefs}
-      className={`${className} glide--container`}
-      style={containerStyles}
       data-testid="glideContainer"
+      ref={containerRef}
+      className={classnames(
+        className,
+        'glide--container',
+        !animate && 'swipeable',
+      )}
+      style={containerStyles}
     >
-      {loading && <div className="glide--loading" data-testid="loader" />}
+      {(isLoading || !done) && (
+        <div className="glide--loading" data-testid="loader" />
+      )}
 
-      {!loading &&
-        childrenArray.map((child: ReactElement, index) => {
-          const key = `${className}--${index}`;
-
-          function getSlideItemProps() {
-            let props = {};
-
-            if (currentIndex === index) {
-              props['data-testid'] = 'glideCurrentItem';
-            }
-
-            if (typeof child.props === 'object') {
-              props = { ...props, ...child.props };
-            }
-
-            return props;
-          }
-
-          return (
-            <child.type
-              key={key}
-              className={classnames(
-                'glide--item',
-                animate && 'animate',
-                animate && animationType,
-                currentIndex - 1 === index && 'previous',
-                currentIndex === index && 'current',
-              )}
-              {...getSlideItemProps()}
-            />
-          );
-        })}
+      {!isLoading && done && (
+        <ul>
+          {children.map((child, index) => {
+            const key = `glideItem-${index}`;
+            return (
+              <GlideItem
+                key={key}
+                loading={isLoading || !done}
+                containerRef={containerRef}
+                count={children.length}
+                scrollBehavior={scrollBehavior}
+                animate={animate}
+                isActive={currentIndex === index}
+                goToSelectedDot={() => goToSelectedDot(index)}
+              >
+                {child}
+              </GlideItem>
+            );
+          })}
+        </ul>
+      )}
 
       {(infinite || currentIndex !== 0) && (
         <button
@@ -120,7 +123,7 @@ export function Glide({
         </button>
       )}
 
-      {(infinite || currentIndex !== childrenArray.length - 1) && (
+      {(infinite || currentIndex !== children.length - 1) && (
         <button
           type="button"
           className="glide--button next"
@@ -134,7 +137,7 @@ export function Glide({
 
       {dots && (
         <section className="glide--dots">
-          {childrenArray.map((_child, index) => {
+          {children.map((_child, index) => {
             const className = currentIndex === index ? 'active' : '';
             const key = `${className}--${index}`;
             return (

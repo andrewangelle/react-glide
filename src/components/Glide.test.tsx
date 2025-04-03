@@ -1,6 +1,6 @@
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Glide } from '~/Glide';
+import { Glide } from '~/components/Glide';
 import type { GlideProps } from '~/types';
 
 const user = userEvent.setup();

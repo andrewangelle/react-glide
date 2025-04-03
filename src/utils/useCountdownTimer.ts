@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type CountdownTimerOptions = {
   interval?: number;
@@ -22,9 +22,9 @@ export function useCountdownTimer({
   const [count, setCount] = useState(initialCount);
   const onExpireRef = useRef(onExpire);
 
-  function reset(): void {
+  const reset = useCallback(() => {
     setCount(initialCount);
-  }
+  }, [initialCount]);
 
   useEffect(() => {
     onExpireRef.current = onExpire;

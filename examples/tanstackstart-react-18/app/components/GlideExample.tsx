@@ -1,7 +1,8 @@
 import { Glide, type GlideProps } from 'react-glide';
 
 const props: GlideProps = {
-  autoPlay: true,
+  swipeable: true,
+  autoPlay: false,
   autoPlaySpeed: 5000,
   onSlideChange: () => console.log('slide changed'),
   infinite: true,
@@ -24,10 +25,10 @@ export function GlideExample() {
         />
       </div>
 
-      <div>
+      <div className="svg-slide">
         <svg
-          width="200"
-          height="250"
+          width="600"
+          height="600"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
         >

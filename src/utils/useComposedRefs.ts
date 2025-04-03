@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import type { Ref } from 'react';
+
 export type PossibleRef<T> = Ref<T> | undefined;
 
 function setRef<T>(ref: PossibleRef<T>, value: T): void {
@@ -20,8 +21,6 @@ export function composeRefs<T>(
   };
 }
 
-export function useComposedRefs<T>(
-  ...refs: Array<PossibleRef<T>>
-): (node: T) => void {
+export function useComposedRefs<T>(...refs: Array<PossibleRef<T>>): Ref<T> {
   return useCallback(composeRefs(...refs), refs);
 }
