@@ -1,5 +1,11 @@
 # react-glide
 
+## 5.0.0-next.8
+
+### Patch Changes
+
+- Updating examples
+
 ## 5.0.0-next.7
 
 ### Minor Changes
