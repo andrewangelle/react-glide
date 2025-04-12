@@ -8,6 +8,8 @@ const props: GlideProps = {
   onSlideChange: () => console.log('slide changed'),
   infinite: true,
   dots: true,
+  animate: false,
+  loading: false,
 };
 
 export function GlideExample() {
