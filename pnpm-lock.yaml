@@ -132,8 +132,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       react-glide:
-        specifier: file:../../next.112.tgz
-        version: file:next.112.tgz(react@19.1.0)
+        specifier: workspace:5.0.0-next.9
+        version: link:../..
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.5
@@ -169,8 +169,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       react-glide:
-        specifier: file:../../next.112.tgz
-        version: file:next.112.tgz(react@18.3.1)
+        specifier: workspace:5.0.0-next.9
+        version: link:../..
       vinxi:
         specifier: ^0.5.6
         version: 0.5.6(@types/node@22.15.3)
@@ -11313,26 +11313,4 @@ packages:
 
   /zod@3.24.3:
     resolution: {integrity: sha512-HhY1oqzWCQWuUqvBFnsyrtZRhyPeR7SUGv+C4+MsisMuVfSPx8HpwWqH8tRahSlt6M3PiFAcoeFhZAqIXTxoSg==}
-    dev: false
-
-  file:next.112.tgz(react@18.3.1):
-    resolution: {integrity: sha512-YMzYKiL38D8QOC5PCWLFQmDyy61heS1CggSQ/Mvr8StfGyuGuLUAc5qDIQJQi5Q1LD4BIDskZls0oxNvgCzOcA==, tarball: file:next.112.tgz}
-    id: file:next.112.tgz
-    name: react-glide
-    version: 5.0.0-next.6
-    peerDependencies:
-      react: '>=16.8.x || 17.x.x || 18.x.x || 19.x.x'
-    dependencies:
-      react: 18.3.1
-    dev: false
-
-  file:next.112.tgz(react@19.1.0):
-    resolution: {integrity: sha512-YMzYKiL38D8QOC5PCWLFQmDyy61heS1CggSQ/Mvr8StfGyuGuLUAc5qDIQJQi5Q1LD4BIDskZls0oxNvgCzOcA==, tarball: file:next.112.tgz}
-    id: file:next.112.tgz
-    name: react-glide
-    version: 5.0.0-next.6
-    peerDependencies:
-      react: '>=16.8.x || 17.x.x || 18.x.x || 19.x.x'
-    dependencies:
-      react: 19.1.0
     dev: false
