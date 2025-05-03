@@ -24,6 +24,5 @@
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src"],
-  "exclude": ["ssr-testing"]
+  "include": ["src"]
 }

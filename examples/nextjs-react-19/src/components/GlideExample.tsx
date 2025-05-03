@@ -3,6 +3,10 @@ import { Glide, type GlideProps } from 'react-glide';
 import 'react-glide/lib/reactGlide.css';
 
 const props: GlideProps = {
+  containerStyles: {
+    height: 600,
+    width: 600,
+  },
   autoPlay: true,
   autoPlaySpeed: 5000,
   onSlideChange: () => console.log('slide changed'),
@@ -28,7 +32,7 @@ export function GlideExample() {
         />
       </div>
 
-      <div>
+      <div className="svg-slide">
         <svg
           width="200"
           height="250"

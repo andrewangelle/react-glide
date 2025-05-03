@@ -1,7 +1,6 @@
 import { Glide, type GlideProps } from 'react-glide';
 
 const props: GlideProps = {
-  swipeable: true,
   autoPlay: false,
   autoPlaySpeed: 5000,
   onSlideChange: () => console.log('slide changed'),

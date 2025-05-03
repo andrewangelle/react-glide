@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "react-glide/lib/reactGlide.css";
 
 :root {
   --background: #ffffff;
@@ -28,4 +29,14 @@ body {
 .glide--container {
   height: 600px;
   width: 600px;
+
+  iframe {
+    border: none;
+    padding: 3rem;
+  }
+}
+
+.svg-slide {
+  height: 100%;
+  width: 100%;
 }

@@ -5,6 +5,7 @@
     "react-glide": "4.1.0"
   },
   "changesets": [
+    "afraid-dragons-rush",
     "clear-islands-kick",
     "fruity-kids-yawn",
     "green-lemons-try",
@@ -13,6 +14,8 @@
     "open-paws-draw",
     "plenty-walls-shake",
     "upset-days-smoke",
-    "wide-goats-shave"
+    "wide-goats-shave",
+    "ten-dragons-wish",
+    "upset-days-smoke"
   ]
 }

@@ -29,16 +29,19 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
+      - uses: pnpm/action-setup@v4
+          with:
+            version: 10
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Create Release Pull Request or Publish to NPM
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: npm run ci:publish
-          version: npm run ci:version
+          publish: pnpm ci:publish
+          version: pnpm ci:version
           commit: "release: changesets versioning & publication"
           title: "Changesets: Versioning & Publication"
           createGithubReleases: true

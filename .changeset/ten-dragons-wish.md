@@ -1,0 +1,5 @@
+---
+"react-glide": patch
+---
+
+swipeable

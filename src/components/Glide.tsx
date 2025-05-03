@@ -14,7 +14,7 @@ export function Glide({
   dots = true,
   className = '',
   containerStyles = {},
-  loading = true,
+  loading = false,
   animate = false,
   scrollBehavior = 'smooth',
   ref: usersRef,
@@ -34,8 +34,9 @@ export function Glide({
     innerRef,
   );
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [shouldSkipSmoothScroll, setShouldSkipSmoothScroll] = useState(false);
   const { reset: resetTimer } = useCountdownTimer({
-    skip: !autoPlay || isLoading,
+    skip: !autoPlay || loading || isPreloading,
     interval: autoPlaySpeed,
     onExpire() {
       const lastSlide = children.length - 1;
@@ -52,6 +53,10 @@ export function Glide({
     const lastSlide = children.length - 1;
     const nextIndex = currentIndex === lastSlide ? 0 : currentIndex + 1;
 
+    if (nextIndex === 0 && currentIndex === lastSlide) {
+      setShouldSkipSmoothScroll(true);
+    }
+
     setCurrentIndex((_prevState) => nextIndex);
     resetTimer();
   }
@@ -59,6 +64,11 @@ export function Glide({
   function goToPrevSlide(): void {
     const lastSlide = children.length - 1;
     const nextIndex = currentIndex === 0 ? lastSlide : currentIndex - 1;
+
+    if (nextIndex === lastSlide && currentIndex === 0) {
+      setShouldSkipSmoothScroll(true);
+    }
+
     setCurrentIndex((_prevState) => nextIndex);
     resetTimer();
   }
@@ -72,7 +82,15 @@ export function Glide({
     if (currentIndex) {
       onSlideChange();
     }
-  }, [currentIndex, onSlideChange]);
+
+    const shouldResetSmoothScrollSkip =
+      shouldSkipSmoothScroll &&
+      (currentIndex === 0 || currentIndex === children.length - 1);
+
+    if (shouldResetSmoothScrollSkip) {
+      setShouldSkipSmoothScroll(false);
+    }
+  }, [currentIndex, onSlideChange, shouldSkipSmoothScroll, children.length]);
 
   return (
     <div
@@ -85,11 +103,11 @@ export function Glide({
       )}
       style={containerStyles}
     >
-      {(isLoading || !done) && (
+      {(isPreloading || !done || loading) && (
         <div className="glide--loading" data-testid="loader" />
       )}
 
-      {!isLoading && done && (
+      {!loading && !isPreloading && done && (
         <ul>
           {children.map((child, index) => {
             const key = `glideItem-${index}`;
@@ -99,7 +117,9 @@ export function Glide({
                 loading={isLoading || !done}
                 containerRef={containerRef}
                 count={children.length}
-                scrollBehavior={scrollBehavior}
+                scrollBehavior={
+                  shouldSkipSmoothScroll ? 'instant' : scrollBehavior
+                }
                 animate={animate}
                 isActive={currentIndex === index}
                 goToSelectedDot={() => goToSelectedDot(index)}
