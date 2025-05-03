@@ -12,6 +12,8 @@ const props: GlideProps = {
   onSlideChange: vi.fn(),
 };
 
+HTMLElement.prototype.scrollIntoView = vi.fn();
+
 describe('Glide', () => {
   beforeEach(() => {
     vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] });

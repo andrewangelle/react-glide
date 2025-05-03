@@ -7,6 +7,9 @@ import { useComposedRefs } from '~/utils/useComposedRefs';
 import { useCountdownTimer } from '~/utils/useCountdownTimer';
 import { usePreloadImages } from '~/utils/usePreload';
 
+const isTest =
+  typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
+
 export function Glide({
   autoPlay = false,
   autoPlaySpeed = 5000,
@@ -25,7 +28,7 @@ export function Glide({
     ? props.children.filter(isReactChild)
     : [];
 
-  const { isPreloading, done } = usePreloadImages(props.children);
+  const { isPreloading, done } = usePreloadImages(props.children, isTest);
   const isLoading = isPreloading || loading;
 
   const innerRef = useRef<HTMLDivElement>(null);
