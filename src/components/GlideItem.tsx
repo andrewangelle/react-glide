@@ -1,5 +1,4 @@
 import { Children, useEffect, useRef } from 'react';
-import type { Ref, RefObject } from 'react';
 import type { GlideProps } from '~/types';
 import { classnames } from '~/utils/classnames';
 import { isReactChild } from '~/utils/isReactChild';
@@ -11,23 +10,20 @@ type GlideItemProps = Pick<
 > & {
   isActive: boolean;
   count: number;
-  containerRef: Ref<HTMLDivElement | null>;
   goToSelectedDot: () => void;
 };
 
 export function GlideItem({
   isActive,
-  loading,
+  loading = true,
   animate = false,
   scrollBehavior,
-  containerRef,
   children,
   goToSelectedDot,
 }: GlideItemProps) {
-  const root = (containerRef as RefObject<HTMLLIElement | null>).current;
   const { isIntersecting, ref } = useIntersectionObserver({
-    root,
-    threshold: 0.2,
+    root: null,
+    threshold: 0.3,
     onChange(isIntersecting) {
       if (isIntersecting && !animate && !loading) {
         goToSelectedDot();

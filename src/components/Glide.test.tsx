@@ -17,6 +17,7 @@ HTMLElement.prototype.scrollIntoView = vi.fn();
 describe('Glide', () => {
   beforeEach(() => {
     vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] });
+    vi.resetAllMocks();
   });
 
   it('renders without crashing', () => {
@@ -107,7 +108,7 @@ describe('Glide', () => {
     const elementFinal = await screen.findByTestId('glideCurrentItem');
     await within(elementFinal).findByText(/Slide One/);
 
-    expect(props.onSlideChange).toHaveBeenCalledTimes(3);
+    expect(props.onSlideChange).toHaveBeenCalledTimes(4);
   });
 
   it('changes to previous slide when prev button is clicked', async () => {
@@ -116,6 +117,7 @@ describe('Glide', () => {
         <h1>Slide One</h1>
         <h1>Slide Two</h1>
         <h1>Slide Three</h1>
+        <img data-testid="image" alt="" />
       </Glide>,
     );
     const element1 = await screen.findByTestId('glideCurrentItem');
@@ -124,12 +126,17 @@ describe('Glide', () => {
     await user.click(screen.getByTestId('goToPrevSlide'));
 
     const element2 = await screen.findByTestId('glideCurrentItem');
-    await within(element2).findByText(/Slide Three/);
+    await within(element2).findByTestId('image');
 
     await user.click(screen.getByTestId('goToPrevSlide'));
 
     const element3 = await screen.findByTestId('glideCurrentItem');
-    await within(element3).findByText(/Slide Two/);
+    await within(element3).findByText(/Slide Three/);
+
+    await user.click(screen.getByTestId('goToPrevSlide'));
+
+    const element4 = await screen.findByTestId('glideCurrentItem');
+    await within(element4).findByText(/Slide Two/);
   });
 
   it('changes slides when autoPlay is on', async () => {

@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { useCountdownTimer } from '~/utils/useCountdownTimer';
+
+type ReactChildren<Props> = ReactElement<{
+  src: string;
+  children: ReactChildren<Props>;
+}>;
+type ElementTree = ReactChildren<{ src: string; children: ReactNode }>;
 
 export function usePreloadImages(
   // biome-ignore lint/suspicious/noExplicitAny: reacts typings for children suck
@@ -18,7 +24,7 @@ export function usePreloadImages(
 
   useCountdownTimer({
     skip: baseTimerDone,
-    interval: 1,
+    interval: 0.01,
     resetOnExpire: false,
     onExpire() {
       setBaseTimerDone(true);
@@ -46,10 +52,7 @@ export function usePreloadImages(
     let urlResults: string[] = [];
 
     for (const childElement of children) {
-      const child = childElement as ReactElement<{
-        src: string;
-        children: unknown;
-      }>;
+      const child = childElement;
       const res = traverseElementTree(child);
       urlResults = [...urlResults, ...res];
     }
@@ -58,10 +61,7 @@ export function usePreloadImages(
     return urlResults;
   }
 
-  function traverseElementTree(
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    element: ReactElement<{ src: string; children: any }>,
-  ): string[] {
+  function traverseElementTree(element: ElementTree): string[] {
     const results: string[] = [];
     if (element.type === 'img') {
       results.push(element.props.src);
@@ -78,8 +78,6 @@ export function usePreloadImages(
 
   useEffect(() => {
     if (skip) {
-      setLoading(false);
-      setDone(true);
       setBaseTimerDone(true);
     } else {
       preloadImages();
@@ -90,6 +88,7 @@ export function usePreloadImages(
     if (loadCount === urls.length) {
       setDone(true);
       setLoading(false);
+      setBaseTimerDone(true);
     }
   }, [urls, loadCount]);
 

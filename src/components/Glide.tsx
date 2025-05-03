@@ -7,9 +7,6 @@ import { useComposedRefs } from '~/utils/useComposedRefs';
 import { useCountdownTimer } from '~/utils/useCountdownTimer';
 import { usePreloadImages } from '~/utils/usePreload';
 
-const isTest =
-  typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
-
 export function Glide({
   autoPlay = false,
   autoPlaySpeed = 5000,
@@ -28,18 +25,20 @@ export function Glide({
     ? props.children.filter(isReactChild)
     : [];
 
-  const { isPreloading, done } = usePreloadImages(props.children, isTest);
-  const isLoading = isPreloading || loading;
+  const { isPreloading, done } = usePreloadImages(props.children);
 
   const innerRef = useRef<HTMLDivElement>(null);
   const containerRef = useComposedRefs<HTMLDivElement | null>(
     usersRef,
     innerRef,
   );
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(-1);
   const [shouldSkipSmoothScroll, setShouldSkipSmoothScroll] = useState(false);
+
+  const isLoading = isPreloading || !done || loading;
+  const showSlides = !loading && !isPreloading && done;
   const { reset: resetTimer } = useCountdownTimer({
-    skip: !autoPlay || loading || isPreloading,
+    skip: !autoPlay || !showSlides,
     interval: autoPlaySpeed,
     onExpire() {
       const lastSlide = children.length - 1;
@@ -93,7 +92,17 @@ export function Glide({
     if (shouldResetSmoothScrollSkip) {
       setShouldSkipSmoothScroll(false);
     }
-  }, [currentIndex, onSlideChange, shouldSkipSmoothScroll, children.length]);
+
+    if (showSlides && currentIndex === -1) {
+      setCurrentIndex(0);
+    }
+  }, [
+    showSlides,
+    currentIndex,
+    onSlideChange,
+    shouldSkipSmoothScroll,
+    children.length,
+  ]);
 
   return (
     <div
@@ -106,19 +115,16 @@ export function Glide({
       )}
       style={containerStyles}
     >
-      {(isPreloading || !done || loading) && (
-        <div className="glide--loading" data-testid="loader" />
-      )}
+      {isLoading && <div className="glide--loading" data-testid="loader" />}
 
-      {!loading && !isPreloading && done && (
+      {showSlides && (
         <ul>
           {children.map((child, index) => {
             const key = `glideItem-${index}`;
             return (
               <GlideItem
                 key={key}
-                loading={isLoading || !done}
-                containerRef={containerRef}
+                loading={loading}
                 count={children.length}
                 scrollBehavior={
                   shouldSkipSmoothScroll ? 'instant' : scrollBehavior

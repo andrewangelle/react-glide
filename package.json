@@ -24,6 +24,7 @@
     "build:types": "pnpm tsup src/index.tsx --dts-only --out-dir lib --format esm",
     "build:storybook": "storybook build",
     "start": "storybook dev -p 6006",
+    "dev": "storybook dev -p 6006",
     "test": "vitest watch",
     "test:once": "vitest run --coverage",
     "lint:fix": "pnpm biome check . --write",
