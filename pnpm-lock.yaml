@@ -132,7 +132,7 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       react-glide:
-        specifier: workspace:5.0.0-next.9
+        specifier: workspace:*
         version: link:../..
     devDependencies:
       '@tailwindcss/postcss':
@@ -169,7 +169,7 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
       react-glide:
-        specifier: workspace:5.0.0-next.9
+        specifier: workspace:*
         version: link:../..
       vinxi:
         specifier: ^0.5.6
@@ -10777,7 +10777,7 @@ packages:
       debug: 4.4.0
       globrex: 0.1.2
       tsconfck: 3.1.5(typescript@5.8.3)
-      vite: 6.3.4(@types/node@22.15.3)
+      vite: 6.3.4(@types/node@11.15.54)
     transitivePeerDependencies:
       - supports-color
       - typescript
