@@ -54,18 +54,6 @@ type GlideProps = {
 };
 ```
 
-<!-- ### Props Description
-| option      | type      | description                           | default | required  |
-|------------ |-----------|---------------------------------------|---------|-----------|
-|`width`      |integer    | the width of the carousel container. |  none  |   Yes  |
-|`height`      |integer    | the height of the carousel container. |  none  |   No  |
-|`autoPlay`   |bool       | enables or disables autoPlay feature.| false    | No    |
-|`autoPlaySpeed` |integer    | the rate of change between slides, defined in ms.|  2000  | No    |
-|`infinite` |bool    | carousel will loop infinitely  |  true  | No    |
-|`dots` |bool    | dot navigation & pagination   | true   |  No   |
-|`onSlideChange` |func    | a function that will fire when the slide changes  | none   |  No   | -->
-
-
 ## Styles
 
 ### Default Styles
@@ -89,76 +77,37 @@ In order to fit the design of your project you can customize styles.
 Below are the supported css variables along with their defaults.
 ```css
 :root {
-  --react-glide-button-background: hsl(190, 10%, 10%);
-  --react-glide-button-color: hsl(190, 95%, 80%);
-  --react-glide-dot-color: black;
-  --react-glide-dot-selected-color: hsl(190, 95%, 80%);
-  --react-glide-dot-container-bottom-margin: 10px;
-  --react-glide-dot-gap: 8px;
   --react-glide-spinner-border: 2px solid #ccc;
   --react-glide-spinner-color: #333;
-  --react-glide-animate-in: fade 1s ease-in;
+  --react-glide-button-background: hsl(190, 10%, 10%);
+  --react-glide-button-color: hsl(190, 95%, 80%);
+  --react-glide-dots-container-margin: 10px;
+  --react-glide-dot-color: black;
+  --react-glide-dot-selected-color: hsl(190, 95%, 80%);
+  --react-glide-dot-gap: 8px;
+  --react-glide-animation: fade 1s ease-in;
 }
 ```
 
 You can also using the class names below in your projects own stylesheet:
 
-| element     | class name |
-|------------ |-----------|
-|  containers  | `.glide--container` |
-|           |   `.glide--item`|
-|           | `.glide--item.current` |
-|  buttons  | `.glide--next-btn` |
-|           |  `.glide--prev-btn`|
-|  dots     |  `.glide--dots`  |
-|     |  `.glide--dots-active`  |
-|     |  `.glide--dots-inactive`  |
+```css
+.glide--container {}
+.glide--container.swipeable {}
 
+.glide--item {}
+.glide--item.swipeable {}
+.glide--item.animated {}
+.glide--item.animated.current {}
 
-## Development
+.glide--button {}
+.glide--button.next {}
+.glide--button.previous {}
 
-Install dependencies:
+.glide--dots {}
+.glide--dot {}
+.glide--dot.active {}
 
-```sh
-$ npm install
+.glide--loading {}
 ```
 
-Run storybook at http://localhost:6006:
-
-```sh
-$ npm start
-```
-
-Run ssr test app at http://localhost:3000:
-
-```sh
-$ cd ./ssr-testing && npm i && npm start
-```
-
-Run tests in watch mode:
-
-```sh
-$ npm run test
-```
-
-Execute a single run of tests:
-
-```sh
-$ npm run test:once
-```
-
-Run linter check:
-
-```sh
-$ npm run lint:check
-```
-
-Run linter auto fix:
-
-```sh
-npm run lint:fix
-```
-
-
-## License
-MIT

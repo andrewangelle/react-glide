@@ -1,5 +1,17 @@
 @import "react-glide/lib/reactGlide.css";
 
+:root {
+  --react-glide-spinner-border: 5px solid #ccc;
+  --react-glide-spinner-color: red;
+  --react-glide-button-background: blue;
+  --react-glide-button-color: red;
+  --react-glide-dots-container-margin: 20px;
+  --react-glide-dot-color: green;
+  --react-glide-dot-selected-color: red;
+  --react-glide-dot-gap: 12px;
+  --react-glide-animation: fade 1.5s ease-in;
+}
+
 .glide--container {
   height: 600px;
   width: 600px;
