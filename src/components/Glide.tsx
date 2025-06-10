@@ -5,7 +5,7 @@ import { classnames } from '~/utils/classnames';
 import { isReactChild } from '~/utils/isReactChild';
 import { useComposedRefs } from '~/utils/useComposedRefs';
 import { useCountdownTimer } from '~/utils/useCountdownTimer';
-import { usePreloadImages } from '~/utils/usePreload';
+import { usePrevious } from '~/utils/usePrevious';
 
 export function Glide({
   autoPlay = false,
@@ -25,20 +25,25 @@ export function Glide({
     ? props.children.filter(isReactChild)
     : [];
 
-  const { isPreloading, done } = usePreloadImages(props.children);
-
   const innerRef = useRef<HTMLDivElement>(null);
   const containerRef = useComposedRefs<HTMLDivElement | null>(
     usersRef,
     innerRef,
   );
-  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const previousIndex = usePrevious(currentIndex);
   const [shouldSkipSmoothScroll, setShouldSkipSmoothScroll] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
-  const isLoading = isPreloading || !done || loading;
-  const showSlides = !loading && !isPreloading && done;
+  useCountdownTimer({
+    interval: 250,
+    onExpire() {
+      setIsFirstLoad(false);
+    },
+  });
+
   const { reset: resetTimer } = useCountdownTimer({
-    skip: !autoPlay || !showSlides,
+    skip: !autoPlay || isFirstLoad,
     interval: autoPlaySpeed,
     onExpire() {
       const lastSlide = children.length - 1;
@@ -81,7 +86,7 @@ export function Glide({
   }
 
   useEffect(() => {
-    if (currentIndex) {
+    if (previousIndex !== currentIndex) {
       onSlideChange();
     }
 
@@ -92,14 +97,10 @@ export function Glide({
     if (shouldResetSmoothScrollSkip) {
       setShouldSkipSmoothScroll(false);
     }
-
-    if (showSlides && currentIndex === -1) {
-      setCurrentIndex(0);
-    }
   }, [
-    showSlides,
-    currentIndex,
+    previousIndex,
     onSlideChange,
+    currentIndex,
     shouldSkipSmoothScroll,
     children.length,
   ]);
@@ -115,10 +116,12 @@ export function Glide({
       )}
       style={containerStyles}
     >
-      {isLoading && <div className="glide--loading" data-testid="loader" />}
+      {(loading || isFirstLoad) && (
+        <div className="glide--loading" data-testid="loader" />
+      )}
 
-      {showSlides && (
-        <ul>
+      {!loading && (
+        <ul style={{ display: !isFirstLoad ? undefined : 'none' }}>
           {children.map((child, index) => {
             const key = `glideItem-${index}`;
             return (

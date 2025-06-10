@@ -45,16 +45,17 @@ export function useIntersectionObserver({
   const callbackRef =
     useRef<UseIntersectionObserverOptions['onChange']>(undefined);
 
-  callbackRef.current = onChange;
+  useEffect(() => {
+    callbackRef.current = onChange;
+  });
 
-  const frozen = state.entry?.isIntersecting && freezeOnceVisible;
+  const isFrozen = state.entry?.isIntersecting && freezeOnceVisible;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies:
   useEffect(() => {
     // Ensure we have a ref to observe
     // Ensure the browser supports the Intersection Observer API
     // Skip if frozen
-    const shouldSkip = !ref || !('IntersectionObserver' in window) || frozen;
+    const shouldSkip = !ref || !('IntersectionObserver' in window) || isFrozen;
 
     if (shouldSkip) {
       return;
@@ -95,14 +96,7 @@ export function useIntersectionObserver({
     return () => {
       observer.disconnect();
     };
-  }, [
-    ref,
-    JSON.stringify(threshold),
-    root,
-    rootMargin,
-    frozen,
-    freezeOnceVisible,
-  ]);
+  }, [ref, root, rootMargin, isFrozen, freezeOnceVisible, threshold]);
 
   // ensures that if the observed element changes, the intersection observer is reinitialized
   const prevRef = useRef<Element | null>(null);
@@ -112,13 +106,13 @@ export function useIntersectionObserver({
       !ref &&
       state.entry?.target &&
       !freezeOnceVisible &&
-      !frozen &&
+      !isFrozen &&
       prevRef.current !== state.entry.target
     ) {
       prevRef.current = state.entry.target;
       setState({ isIntersecting: initialIsIntersecting, entry: undefined });
     }
-  }, [ref, state.entry, freezeOnceVisible, frozen, initialIsIntersecting]);
+  }, [ref, state.entry, freezeOnceVisible, isFrozen, initialIsIntersecting]);
 
   const result = [
     setRef,

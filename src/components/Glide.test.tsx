@@ -148,6 +148,10 @@ describe('Glide', () => {
       </Glide>,
     );
 
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+
     const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
@@ -167,6 +171,10 @@ describe('Glide', () => {
         <h1>Slide Three</h1>
       </Glide>,
     );
+
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
 
     // first item
     const element1 = await screen.findByTestId('glideCurrentItem');
@@ -240,6 +248,10 @@ describe('Glide', () => {
         <h1>Slide Three</h1>
       </Glide>,
     );
+
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
 
     const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
