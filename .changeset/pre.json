@@ -2,11 +2,14 @@
   "mode": "pre",
   "tag": "next",
   "initialVersions": {
-    "react-glide": "4.1.0"
+    "react-glide": "4.1.0",
+    "ssr-testing-react-19": "0.1.0",
+    "ssr-testing-react-18": "1.0.0"
   },
   "changesets": [
     "afraid-dragons-rush",
     "clear-islands-kick",
+    "cold-walls-pick",
     "few-berries-smash",
     "fruity-kids-yawn",
     "green-lemons-try",

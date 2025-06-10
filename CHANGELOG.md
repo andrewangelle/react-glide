@@ -1,5 +1,11 @@
 # react-glide
 
+## 5.0.0-next.10
+
+### Patch Changes
+
+- 2839f1a: ensure first slide is set after load
+
 ## 5.0.0-next.9
 
 ### Patch Changes
