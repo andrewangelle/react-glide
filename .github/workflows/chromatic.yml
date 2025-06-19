@@ -1,6 +1,9 @@
 name: "Publish to chromatic"
 
 on: 
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
@@ -19,7 +22,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 9.15.5
 
       - name: Install dependencies
         run: pnpm install
