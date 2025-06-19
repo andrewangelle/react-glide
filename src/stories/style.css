@@ -1,9 +1,17 @@
+@import "../reactGlide.css";
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
 }
 
-.glide--item > iframe {
-  padding: 3rem;
+.glide-storybook {
+  height: 600px;
+  width: 600px;
+
+  iframe {
+    border: none;
+    padding: 3rem;
+  }
 }
