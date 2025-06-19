@@ -1,0 +1,37 @@
+{
+  "name": "ssr-testing-react-18",
+  "version": "1.0.1",
+  "private": true,
+  "description": "",
+  "keywords": [],
+  "author": "andrewangelle@gmail.com",
+  "license": "MIT",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "start": "node .output/server/index.mjs"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "@tanstack/react-router": "^1.121.21",
+    "@tanstack/react-start": "^1.121.23",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-glide": "workspace:*"
+  },
+  "devDependencies": {
+    "@tanstack/react-router-devtools": "^1.121.21",
+    "@types/node": "^22.15.3",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.7",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

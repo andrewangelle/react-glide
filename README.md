@@ -1,14 +1,14 @@
 # react-glide
 
-A lightweight, multi-purpose carousel component for React.
+A lightweight, zero-dependency, multi-purpose carousel component for React.
 
 [![npm version](https://badge.fury.io/js/react-glide.svg)](https://badge.fury.io/js/react-glide)
 [![CircleCI](https://circleci.com/gh/andrewangelle/react-paypal-button.svg?style=svg)](https://circleci.com/gh/andrewangelle/react-glide)
 
 ## Try it out
 
-[Storybook Playground](https://master--676ed9a7f91611407c7878ce.chromatic.com/?path=/story/glide--basic)
-[Codesandbox Demo](https://codesandbox.io/s/r7166733lm)
+[Demo](https://master--676ed9a7f91611407c7878ce.chromatic.com/?path=/story/glide--basic)
+<!-- [Codesandbox Demo](https://codesandbox.io/s/r7166733lm) -->
 
 <img src="glide.png" width="400px" />
 
@@ -20,120 +20,102 @@ $ npm install react-glide
 
 ## Usage
 
-Import the module at the top of your component page:
-
-```javascript
-import { Glide } from 'react-glide';
-import 'react-glide/lib/reactGlide.css'
-```
-
 Glide functions as a wrapper and can be passed any type of element. See [example folder](https://github.com/andrewangelle/react-glide/tree/master/ssr-testing/components/GlideExample.tsx):
 
 ```javascript
-<Glide height={500} width={500}>
-  <img src='http:/path/to/image/url' />
-  <img src='http:/path/to/image/url2' />
-  <img src='http:/path/to/image1/url3' />
-</Glide>
+import { Glide } from 'react-glide';
+
+function Example() {
+  return (
+    <Glide {...props}>
+      <img src='http:/path/to/image/url' />
+      <img src='http:/path/to/image/url2' />
+      <img src='http:/path/to/image1/url3' />
+    </Glide>
+  )
+}
 ```
+
+#### Note*
+You will need to set dimensions on the container. You can do this in one of several ways...
+- Via your own stylesheet on the parent element to the `<Glide />` component.
+- Via your own stylesheet by passing a custom classname to `<Glide />`
+- Via inline styles passed to the `containerStyles` prop on `<Glide />`  
+
 
 ## Options
 
 ### Types
 ```typescript
-interface GlideProps {
+type GlideProps = {
   autoPlay?: boolean;
   autoPlaySpeed?: number;
   dots?: boolean;
-  height?: number;
   infinite?: boolean;
-  width: number;
+  className?: string;
+  children?: string | JSX.Element | JSX.Element[];
+  containerStyles?: CSSProperties;
+  loading?: boolean;
+  swipeable?: boolean;
   onSlideChange?: () => void;
-}
+};
 ```
 
-### Props Description
-| option      | type      | description                           | default | required  |
-|------------ |-----------|---------------------------------------|---------|-----------|
-|`width`      |integer    | the width of the carousel container. |  none  |   Yes  |
-|`height`      |integer    | the height of the carousel container. |  none  |   No  |
-|`autoPlay`   |bool       | enables or disables autoPlay feature.| false    | No    |
-|`autoPlaySpeed` |integer    | the rate of change between slides, defined in ms.|  2000  | No    |
-|`infinite` |bool    | carousel will loop infinitely  |  true  | No    |
-|`dots` |bool    | dot navigation & pagination   | true   |  No   |
-|`onSlideChange` |func    | a function that will fire when the slide changes  | none   |  No   |
+## Styling
 
+### Default Stylesheet
 
-## Styles
+Import the default stylesheet from `react-glide`.
 
-### Default Styles
+in your css file
+```css
+@import 'react-glide/lib/reactGlide.css';
+/* or */
+@import '~react-glide/lib/reactGlide.css';
+```
 
-To use the default styles, import the CSS from react-glide at the top of your file:
-
+or in your module
 ```javascript
 import 'react-glide/lib/reactGlide.css';
 ```
 
-### Overriding Default Styles
+#### CSS Variables
 
-in order to fit the design of your project, you can override the default styles by using the class names below in your projects own stylesheet:
-
-| element     | class name |
-|------------ |-----------|
-|  containers  | `.glide--container` |
-|           |   `.glide--item`|
-|           | `.glide--item.current` |
-|  buttons  | `.glide--next-btn` |
-|           |  `.glide--prev-btn`|
-|  dots     |  `.glide--dots`  |
-|     |  `.glide--dots-active`  |
-|     |  `.glide--dots-inactive`  |
-
-
-## Development
-
-Install dependencies:
-
-```sh
-$ npm install
+The values listed below are the defaults assigned when importing the library's stylesheet.
+```css
+:root {
+  --react-glide-spinner-border: 2px solid #ccc;
+  --react-glide-spinner-color: #333;
+  --react-glide-button-background: hsl(190, 10%, 10%);
+  --react-glide-button-color: hsl(190, 95%, 80%);
+  --react-glide-dots-container-margin: 10px;
+  --react-glide-dot-color: black;
+  --react-glide-dot-selected-color: hsl(190, 95%, 80%);
+  --react-glide-dot-gap: 8px;
+  --react-glide-animation: fade 1s ease-in;
+}
 ```
 
-Run storybook at http://localhost:6006:
+#### Element class names
 
-```sh
-$ npm start
+```css
+.glide--container {}
+.glide--container.swipeable {}
+
+.glide--item {}
+.glide--item.animated {}
+.glide--item.animated.current {}
+.glide--item.swipeable {}
+.glide--item.swipeable.current {}
+
+.glide--button {}
+.glide--button.next {}
+.glide--button.previous {}
+
+.glide--dots {}
+.glide--dot {}
+.glide--dot.active {}
+
+.glide--loading {}
 ```
 
-Run ssr test app at http://localhost:3000:
-
-```sh
-$ cd ./ssr-testing && npm i && npm start
-```
-
-Run tests in watch mode:
-
-```sh
-$ npm run test
-```
-
-Execute a single run of tests:
-
-```sh
-$ npm run test:once
-```
-
-Run linter check:
-
-```sh
-$ npm run lint:check
-```
-
-Run linter auto fix:
-
-```sh
-npm run lint:fix
-```
-
-
-## License
-MIT

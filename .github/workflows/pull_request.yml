@@ -10,16 +10,20 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
-
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10
+        
     - name: Install deps
-      run: npm install
+      run: pnpm install
 
     - name: Run unit tests
-      run: npm run test:once
+      run: pnpm test:once
 
     - name: Run lint checks
-      run: npm run lint:check
+      run: pnpm lint:check
 
     - name: Run production build
-      run: npm run build
+      run: pnpm build
  

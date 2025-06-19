@@ -6,3 +6,5 @@ coverage
 .next
 ./ssr-testing/package-lock.json
 build-storybook.log
+.DS_Store
+app.config.timestamp*

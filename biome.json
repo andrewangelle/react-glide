@@ -7,7 +7,14 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["ssr-testing/.next", "lib", "ssr-testing/node_modules"]
+    "ignore": [
+      ".next",
+      "lib",
+      "coverage",
+      "node_modules",
+      "routeTree.gen.ts",
+      "app.config.timestamp*"
+    ]
   },
   "formatter": {
     "enabled": true,
