@@ -1,26 +1,26 @@
-import tsConfigPaths from 'vite-tsconfig-paths';
-import { coverageConfigDefaults, defineConfig } from 'vitest/config';
-import type { Plugin } from 'vitest/config';
+import tsConfigPaths from "vite-tsconfig-paths";
+import type { Plugin } from "vitest/config";
+import { coverageConfigDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
   plugins: [
     tsConfigPaths({
-      projects: ['./tsconfig.json'],
+      projects: ["./tsconfig.json"],
     }) as Plugin,
   ],
   test: {
     globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.ts",
     coverage: {
       exclude: [
         ...coverageConfigDefaults.exclude,
-        '**/*.stories.tsx',
-        '**/index.tsx',
-        '**/types.ts',
-        '**/utils.ts',
+        "**/*.stories.tsx",
+        "**/index.tsx",
+        "**/types.ts",
+        "**/utils.ts",
       ],
-      include: ['src/**/*.{ts,tsx}'],
+      include: ["src/**/*.{ts,tsx}"],
     },
   },
 });

@@ -1,22 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
-import { GlideItem } from '~/components/GlideItem';
-import type { GlideProps } from '~/types';
-import { classnames } from '~/utils/classnames';
-import { isReactChild } from '~/utils/isReactChild';
-import { useComposedRefs } from '~/utils/useComposedRefs';
-import { useCountdownTimer } from '~/utils/useCountdownTimer';
-import { usePrevious } from '~/utils/usePrevious';
+import { useEffect, useRef, useState } from "react";
+import { GlideItem } from "~/components/GlideItem";
+import type { GlideProps } from "~/types";
+import { classnames } from "~/utils/classnames";
+import { isReactChild } from "~/utils/isReactChild";
+import { useComposedRefs } from "~/utils/useComposedRefs";
+import { useCountdownTimer } from "~/utils/useCountdownTimer";
+import { usePrevious } from "~/utils/usePrevious";
 
 export function Glide({
   autoPlay = false,
   autoPlaySpeed = 5000,
   infinite = false,
   dots = true,
-  className = '',
+  className = "",
   containerStyles = {},
   loading = false,
   swipeable = false,
-  scrollBehavior = 'smooth',
+  scrollBehavior = "smooth",
   ref: usersRef,
   onSlideChange = () => null,
   ...props
@@ -117,8 +117,8 @@ export function Glide({
       ref={containerRef}
       className={classnames(
         className,
-        'glide--container',
-        swipeable && 'swipeable',
+        "glide--container",
+        swipeable && "swipeable",
       )}
       style={containerStyles}
     >
@@ -127,7 +127,7 @@ export function Glide({
       )}
 
       {!loading && (
-        <ul style={{ display: !isFirstLoad && !loading ? undefined : 'none' }}>
+        <ul style={{ display: !isFirstLoad && !loading ? undefined : "none" }}>
           {children.map((child, index) => {
             const key = `glideItem-${index}`;
             return (
@@ -136,7 +136,7 @@ export function Glide({
                 loading={loading}
                 count={children.length}
                 scrollBehavior={
-                  shouldSkipSmoothScroll ? 'instant' : scrollBehavior
+                  shouldSkipSmoothScroll ? "instant" : scrollBehavior
                 }
                 swipeable={swipeable}
                 isActive={currentIndex === index}
@@ -176,7 +176,7 @@ export function Glide({
       {dots && (
         <section className="glide--dots">
           {children.map((_child, index) => {
-            const className = currentIndex === index ? 'active' : '';
+            const className = currentIndex === index ? "active" : "";
             const key = `${className}--${index}`;
             return (
               <button

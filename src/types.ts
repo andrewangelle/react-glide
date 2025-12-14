@@ -1,4 +1,4 @@
-import type { CSSProperties, JSX, Ref } from 'react';
+import type { CSSProperties, JSX, Ref } from "react";
 export type PreloaderProps = {
   currentIndex: number;
   width: number;

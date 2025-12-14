@@ -1,34 +1,34 @@
 import {
+  createRootRoute,
   HeadContent,
   Outlet,
   Scripts,
-  createRootRoute,
-} from '@tanstack/react-router';
-import type { ReactNode } from 'react';
-import { DevTools } from 'src/components/DevTools';
-import appStyles from '~/styles.css?url';
+} from "@tanstack/react-router";
+import type { ReactNode } from "react";
+import { DevTools } from "src/components/DevTools";
+import appStyles from "~/styles.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       {
-        charSet: 'utf-8',
+        charSet: "utf-8",
       },
       {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
       },
       {
-        title: 'React Glide Example',
+        title: "React Glide Example",
       },
       {
-        rel: 'icon',
-        link: '/favicon.ico',
+        rel: "icon",
+        link: "/favicon.ico",
       },
     ],
     links: [
       {
-        rel: 'stylesheet',
+        rel: "stylesheet",
         href: appStyles,
       },
     ],

@@ -6,7 +6,10 @@
   "packageManager": "pnpm@9.15.5",
   "repository": "http://github.com/andrewangelle/react-glide.git",
   "license": "MIT",
-  "files": ["lib", "package.json"],
+  "files": [
+    "lib",
+    "package.json"
+  ],
   "type": "module",
   "module": "./lib/index.mjs",
   "types": "./lib/index.d.ts",
@@ -49,14 +52,20 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,json}": ["pnpm lint:fix", "pnpm format"]
+    "*.{ts,tsx,js,jsx,json}": [
+      "pnpm lint:fix",
+      "pnpm format"
+    ]
   },
-  "keywords": ["react", "component"],
+  "keywords": [
+    "react",
+    "component"
+  ],
   "peerDependencies": {
     "react": ">=16.8.x || 17.x.x || 18.x.x || 19.x.x"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "^2.3.8",
     "@changesets/cli": "^2.29.2",
     "@chromatic-com/storybook": "^3.2.6",
     "@commitlint/cli": "^8.3.6",
@@ -89,7 +98,7 @@
     "source-map-loader": "^0.2.4",
     "storybook": "^8.6.12",
     "tsup": "^8.4.0",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.3",
     "vite": "^6.3.4",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.1.2"
