@@ -1,12 +1,12 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense } from 'react';
 
 function createDevTools() {
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === 'production') {
     return () => null;
   }
 
   return lazy(() =>
-    import("@tanstack/react-router-devtools").then((res) => ({
+    import('@tanstack/react-router-devtools').then((res) => ({
       default: res.TanStackRouterDevtools,
     })),
   );

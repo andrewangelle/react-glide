@@ -1,147 +1,147 @@
 :root {
-  --react-glide-spinner-border: 2px solid #ccc;
-  --react-glide-spinner-color: #333;
-  --react-glide-button-background: hsl(190, 10%, 10%);
-  --react-glide-button-color: hsl(190, 95%, 80%);
-  --react-glide-dots-container-margin: 10px;
-  --react-glide-dot-color: black;
-  --react-glide-dot-selected-color: hsl(190, 95%, 80%);
-  --react-glide-dot-gap: 8px;
-  --react-glide-animation: fade 1s ease-in;
+	--react-glide-spinner-border: 2px solid #ccc;
+	--react-glide-spinner-color: #333;
+	--react-glide-button-background: hsl(190, 10%, 10%);
+	--react-glide-button-color: hsl(190, 95%, 80%);
+	--react-glide-dots-container-margin: 10px;
+	--react-glide-dot-color: black;
+	--react-glide-dot-selected-color: hsl(190, 95%, 80%);
+	--react-glide-dot-gap: 8px;
+	--react-glide-animation: fade 1s ease-in;
 }
 
 .glide--container {
-  position: relative;
-  height: inherit;
-  width: inherit;
+	position: relative;
+	height: inherit;
+	width: inherit;
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
+	ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
 
-  &.swipeable > ul {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    overflow-x: scroll;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
-    list-style-type: none;
-  }
+	&.swipeable > ul {
+		display: flex;
+		flex-direction: row;
+		list-style: none;
+		overflow-x: scroll;
+		scrollbar-width: none;
+		scroll-snap-type: x mandatory;
+		list-style-type: none;
+	}
 }
 
 .glide--item {
-  position: absolute;
-  height: 100%;
-  width: 100%;
+	position: absolute;
+	height: 100%;
+	width: 100%;
 
-  &.swipeable {
-    display: list-item;
-    position: relative;
-    scroll-snap-align: start;
-    list-style-type: none;
-  }
+	&.swipeable {
+		display: list-item;
+		position: relative;
+		scroll-snap-align: start;
+		list-style-type: none;
+	}
 
-  &.animated {
-    visibility: hidden;
+	&.animated {
+		visibility: hidden;
 
-    &.current {
-      visibility: visible;
-      animation: var(--react-glide-animation);
-    }
-  }
+		&.current {
+			visibility: visible;
+			animation: var(--react-glide-animation);
+		}
+	}
 }
 
 .glide--button {
-  position: absolute;
-  z-index: 10;
-  color: var(--react-glide-button-color);
-  background-color: var(--react-glide-button-background);
-  height: 60px;
-  width: 35px;
-  border: none;
-  font-size: 25px;
-  cursor: pointer;
-  top: 45%;
-  outline-offset: 4px;
+	position: absolute;
+	z-index: 10;
+	color: var(--react-glide-button-color);
+	background-color: var(--react-glide-button-background);
+	height: 60px;
+	width: 35px;
+	border: none;
+	font-size: 25px;
+	cursor: pointer;
+	top: 45%;
+	outline-offset: 4px;
 
-  &.next {
-    right: 0;
-  }
+	&.next {
+		right: 0;
+	}
 
-  &.previous {
-    left: 0;
-  }
+	&.previous {
+		left: 0;
+	}
 }
 
 .glide--dots {
-  position: absolute;
-  left: 40%;
-  right: 40%;
-  bottom: 0;
-  display: inline-flex;
-  justify-content: center;
-  margin: var(--react-glide-dots-container-margin);
-  gap: var(--react-glide-dot-gap);
-  font-size: 64px;
-  margin-top: 100%;
-  z-index: 100;
+	position: absolute;
+	left: 40%;
+	right: 40%;
+	bottom: 0;
+	display: inline-flex;
+	justify-content: center;
+	margin: var(--react-glide-dots-container-margin);
+	gap: var(--react-glide-dot-gap);
+	font-size: 64px;
+	margin-top: 100%;
+	z-index: 100;
 }
 
 .glide--dot {
-  border-radius: 50%;
-  height: 10px;
-  width: 10px;
-  border: none;
-  background: var(--react-glide-dot-color);
-  cursor: pointer;
-  outline-offset: 4px;
+	border-radius: 50%;
+	height: 10px;
+	width: 10px;
+	border: none;
+	background: var(--react-glide-dot-color);
+	cursor: pointer;
+	outline-offset: 4px;
 
-  &.active {
-    background: var(--react-glide-dot-selected-color);
-  }
+	&.active {
+		background: var(--react-glide-dot-selected-color);
+	}
 }
 
 .glide--loading {
-  content: "";
-  box-sizing: border-box;
-  position: absolute;
-  top: 44%;
-  left: 45%;
-  width: 5rem;
-  height: 5rem;
-  margin-top: -10px;
-  margin-left: -10px;
-  border-radius: 50%;
-  border: var(--react-glide-spinner-border);
-  border-top-color: var(--react-glide-spinner-color);
-  animation: load8 0.6s linear infinite;
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	top: 44%;
+	left: 45%;
+	width: 5rem;
+	height: 5rem;
+	margin-top: -10px;
+	margin-left: -10px;
+	border-radius: 50%;
+	border: var(--react-glide-spinner-border);
+	border-top-color: var(--react-glide-spinner-color);
+	animation: load8 0.6s linear infinite;
 
-  &:before {
-    border-radius: 50%;
-    width: 10rem;
-    height: 10rem;
-  }
+	&:before {
+		border-radius: 50%;
+		width: 10rem;
+		height: 10rem;
+	}
 }
 
 @keyframes load8 {
-  0% {
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
 }
 
 @keyframes fade {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

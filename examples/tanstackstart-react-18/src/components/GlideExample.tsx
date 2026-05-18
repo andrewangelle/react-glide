@@ -1,9 +1,9 @@
-import { Glide, type GlideProps } from "react-glide";
+import { Glide, type GlideProps } from 'react-glide';
 
 const props: GlideProps = {
   autoPlay: false,
   autoPlaySpeed: 5000,
-  onSlideChange: () => console.log("slide changed"),
+  onSlideChange: () => console.log('slide changed'),
   infinite: true,
   dots: true,
   swipeable: true,

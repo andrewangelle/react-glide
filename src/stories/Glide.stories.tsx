@@ -1,11 +1,11 @@
-import type { Meta } from "@storybook/react-vite";
+import type { Meta } from '@storybook/react-vite';
 
-import "~/stories/style.css";
-import { Glide } from "~/components/Glide";
-import type { GlideProps } from "~/types";
+import '~/stories/style.css';
+import { Glide } from '~/components/Glide';
+import type { GlideProps } from '~/types';
 
 const GlideMeta: Meta<GlideProps> = {
-  title: "Glide",
+  title: 'Glide',
   render(args) {
     return (
       <Glide {...args}>
@@ -22,7 +22,7 @@ const GlideMeta: Meta<GlideProps> = {
           />
         </div>
 
-        <div style={{ width: "100%", height: "100%" }}>
+        <div style={{ width: '100%', height: '100%' }}>
           <svg
             width="600px"
             height="600px"
@@ -45,22 +45,22 @@ const GlideMeta: Meta<GlideProps> = {
     );
   },
   args: {
-    className: "glide-storybook",
+    className: 'glide-storybook',
     autoPlay: false,
     autoPlaySpeed: 5000,
     infinite: false,
     dots: true,
     loading: false,
     swipeable: true,
-    scrollBehavior: "smooth",
+    scrollBehavior: 'smooth',
   },
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
   argTypes: {
     scrollBehavior: {
-      control: "select",
-      options: ["auto", "instant", "smooth"],
+      control: 'select',
+      options: ['auto', 'instant', 'smooth'],
     },
   },
 };

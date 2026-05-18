@@ -1,10 +1,10 @@
-import type { Ref } from "react";
-import { useCallback } from "react";
+import type { Ref } from 'react';
+import { useCallback } from 'react';
 
 export type PossibleRef<T> = Ref<T> | undefined;
 
 function setRef<T>(ref: PossibleRef<T>, value: T): void {
-  if (typeof ref === "function") {
+  if (typeof ref === 'function') {
     ref(value);
   } else if (ref !== null && ref !== undefined) {
     ref.current = value;

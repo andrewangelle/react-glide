@@ -1,27 +1,27 @@
-import { act, render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { Glide } from "~/components/Glide";
-import type { GlideProps } from "~/types";
+import { act, render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Glide } from '~/components/Glide';
+import type { GlideProps } from '~/types';
 
 const user = userEvent.setup();
 
 HTMLElement.prototype.scrollIntoView = vi.fn();
 
-describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
+describe.each(['animated', 'swipeable'])('Glide %s', (variant) => {
   const props: GlideProps = {
     autoPlay: false,
     infinite: true,
     dots: true,
-    swipeable: variant === "swipeable",
+    swipeable: variant === 'swipeable',
     onSlideChange: vi.fn(),
   };
 
   beforeEach(() => {
-    vi.useFakeTimers({ toFake: ["setInterval", "clearInterval"] });
+    vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] });
     vi.resetAllMocks();
   });
 
-  it("renders without crashing", () => {
+  it('renders without crashing', () => {
     const baseProps = {
       width: 500 as number,
       autoPlay: false,
@@ -35,10 +35,10 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
       </Glide>,
     );
 
-    screen.getByTestId("glideContainer");
+    screen.getByTestId('glideContainer');
   });
 
-  it("has children elements", () => {
+  it('has children elements', () => {
     render(
       <Glide {...props}>
         <h1>Slide One</h1>
@@ -51,7 +51,7 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
     screen.getByText(/Slide Three/);
   });
 
-  it("renders first child element as first slide displayed", async () => {
+  it('renders first child element as first slide displayed', async () => {
     render(
       <Glide {...props}>
         <h1>Slide One</h1>
@@ -59,12 +59,12 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
         <h1>Slide Three</h1>
       </Glide>,
     );
-    const element = await screen.findByTestId("glideCurrentItem");
+    const element = await screen.findByTestId('glideCurrentItem');
 
     await within(element).findByText(/Slide One/);
   });
 
-  it("changes to next slide when next button is clicked", async () => {
+  it('changes to next slide when next button is clicked', async () => {
     render(
       <Glide {...props}>
         <h1>Slide One</h1>
@@ -73,16 +73,16 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
       </Glide>,
     );
 
-    const element1 = await screen.findByTestId("glideCurrentItem");
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
-    await user.click(screen.getByTestId("goToNextSlide"));
+    await user.click(screen.getByTestId('goToNextSlide'));
 
-    const element2 = await screen.findByTestId("glideCurrentItem");
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
   });
 
-  it("loops when next button is clicked", async () => {
+  it('loops when next button is clicked', async () => {
     render(
       <Glide {...props}>
         <h1>Slide One</h1>
@@ -91,28 +91,28 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
       </Glide>,
     );
 
-    const element1 = await screen.findByTestId("glideCurrentItem");
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
-    await user.click(screen.getByTestId("goToNextSlide"));
+    await user.click(screen.getByTestId('goToNextSlide'));
 
-    const element2 = await screen.findByTestId("glideCurrentItem");
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
 
-    await user.click(screen.getByTestId("goToNextSlide"));
+    await user.click(screen.getByTestId('goToNextSlide'));
 
-    const element3 = await screen.findByTestId("glideCurrentItem");
+    const element3 = await screen.findByTestId('glideCurrentItem');
     await within(element3).findByText(/Slide Three/);
 
-    await user.click(screen.getByTestId("goToNextSlide"));
+    await user.click(screen.getByTestId('goToNextSlide'));
 
-    const elementFinal = await screen.findByTestId("glideCurrentItem");
+    const elementFinal = await screen.findByTestId('glideCurrentItem');
     await within(elementFinal).findByText(/Slide One/);
 
     expect(props.onSlideChange).toHaveBeenCalledTimes(4);
   });
 
-  it("changes to previous slide when prev button is clicked", async () => {
+  it('changes to previous slide when prev button is clicked', async () => {
     render(
       <Glide {...props}>
         <h1>Slide One</h1>
@@ -121,26 +121,26 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
         <img data-testid="image" alt="" />
       </Glide>,
     );
-    const element1 = await screen.findByTestId("glideCurrentItem");
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
-    await user.click(screen.getByTestId("goToPrevSlide"));
+    await user.click(screen.getByTestId('goToPrevSlide'));
 
-    const element2 = await screen.findByTestId("glideCurrentItem");
-    await within(element2).findByTestId("image");
+    const element2 = await screen.findByTestId('glideCurrentItem');
+    await within(element2).findByTestId('image');
 
-    await user.click(screen.getByTestId("goToPrevSlide"));
+    await user.click(screen.getByTestId('goToPrevSlide'));
 
-    const element3 = await screen.findByTestId("glideCurrentItem");
+    const element3 = await screen.findByTestId('glideCurrentItem');
     await within(element3).findByText(/Slide Three/);
 
-    await user.click(screen.getByTestId("goToPrevSlide"));
+    await user.click(screen.getByTestId('goToPrevSlide'));
 
-    const element4 = await screen.findByTestId("glideCurrentItem");
+    const element4 = await screen.findByTestId('glideCurrentItem');
     await within(element4).findByText(/Slide Two/);
   });
 
-  it("changes slides when autoPlay is on", async () => {
+  it('changes slides when autoPlay is on', async () => {
     render(
       <Glide {...props} autoPlay={true} autoPlaySpeed={2000}>
         <h1>Slide One</h1>
@@ -149,24 +149,24 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
       </Glide>,
     );
 
-    if (variant === "swipeable") {
+    if (variant === 'swipeable') {
       act(() => {
         vi.advanceTimersByTime(2000);
       });
     }
 
-    const element1 = await screen.findByTestId("glideCurrentItem");
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
     act(() => {
       vi.advanceTimersByTime(3000);
     });
 
-    const element2 = await screen.findByTestId("glideCurrentItem");
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
   });
 
-  it("does not loop when autoplay is on and infinite is off", async () => {
+  it('does not loop when autoplay is on and infinite is off', async () => {
     render(
       <Glide {...props} autoPlay={true} autoPlaySpeed={2000} infinite={false}>
         <h1>Slide One</h1>
@@ -175,39 +175,39 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
       </Glide>,
     );
 
-    if (variant === "swipeable") {
+    if (variant === 'swipeable') {
       act(() => {
         vi.advanceTimersByTime(2000);
       });
     }
 
     // first item
-    const element1 = await screen.findByTestId("glideCurrentItem");
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
     // advance timer and expect next item to be visible
     act(() => {
       vi.advanceTimersByTime(3000);
     });
-    const element2 = await screen.findByTestId("glideCurrentItem");
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
 
     // advance timer and expect last item to be visible
     act(() => {
       vi.advanceTimersByTime(3000);
     });
-    const element3 = await screen.findByTestId("glideCurrentItem");
+    const element3 = await screen.findByTestId('glideCurrentItem');
     await within(element3).findByText(/Slide Three/);
 
     // advance timer and expect last item to still be visible
     act(() => {
       vi.advanceTimersByTime(3000);
     });
-    const element3Again = await screen.findByTestId("glideCurrentItem");
+    const element3Again = await screen.findByTestId('glideCurrentItem');
     await within(element3Again).findByText(/Slide Three/);
   });
 
-  it("cancels timer after button click", async () => {
+  it('cancels timer after button click', async () => {
     render(
       <Glide {...props} autoPlay={true}>
         <h1>Slide One</h1>
@@ -216,18 +216,18 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
       </Glide>,
     );
 
-    const element1 = await screen.findByTestId("glideCurrentItem");
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
-    if (variant === "swipeable") {
+    if (variant === 'swipeable') {
       act(() => {
         vi.advanceTimersByTime(2000);
       });
     }
 
-    await user.click(screen.getByTestId("goToNextSlide"));
+    await user.click(screen.getByTestId('goToNextSlide'));
 
-    const elementAfterClick = await screen.findByTestId("glideCurrentItem");
+    const elementAfterClick = await screen.findByTestId('glideCurrentItem');
     await within(elementAfterClick).findByText(/Slide Two/);
 
     act(() => {
@@ -235,7 +235,7 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
     });
 
     const elementHalfwayThroughTimer =
-      await screen.findByTestId("glideCurrentItem");
+      await screen.findByTestId('glideCurrentItem');
     await within(elementHalfwayThroughTimer).findByText(/Slide Two/);
 
     act(() => {
@@ -243,11 +243,11 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
     });
 
     const elementAfterRestOfTimer =
-      await screen.findByTestId("glideCurrentItem");
+      await screen.findByTestId('glideCurrentItem');
     await within(elementAfterRestOfTimer).findByText(/Slide Three/);
   });
 
-  it("sets default autoPlay speed", async () => {
+  it('sets default autoPlay speed', async () => {
     render(
       <Glide {...props} autoPlay={true}>
         <h1>Slide One</h1>
@@ -260,18 +260,18 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
       vi.advanceTimersByTime(2000);
     });
 
-    const element1 = await screen.findByTestId("glideCurrentItem");
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
     act(() => {
       vi.advanceTimersByTime(6000);
     });
 
-    const element2 = await screen.findByTestId("glideCurrentItem");
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Two/);
   });
 
-  it("changes slide when pagination is clicked", async () => {
+  it('changes slide when pagination is clicked', async () => {
     render(
       <Glide {...props}>
         <h1>Slide One</h1>
@@ -279,24 +279,24 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
         <h1>Slide Three</h1>
       </Glide>,
     );
-    const element1 = await screen.findByTestId("glideCurrentItem");
+    const element1 = await screen.findByTestId('glideCurrentItem');
     await within(element1).findByText(/Slide One/);
 
-    await user.click(screen.getByTestId("glideDot-2"));
+    await user.click(screen.getByTestId('glideDot-2'));
 
-    const element2 = await screen.findByTestId("glideCurrentItem");
+    const element2 = await screen.findByTestId('glideCurrentItem');
     await within(element2).findByText(/Slide Three/);
   });
 
-  it("elgantly handles unexpected children", async () => {
+  it('elgantly handles unexpected children', async () => {
     render(<Glide {...props}>{undefined}</Glide>);
 
-    screen.getByTestId("glideContainer");
-    screen.getByTestId("goToPrevSlide");
-    screen.getByTestId("goToNextSlide");
+    screen.getByTestId('glideContainer');
+    screen.getByTestId('goToPrevSlide');
+    screen.getByTestId('goToNextSlide');
   });
 
-  it("works with keyboard interaction", async () => {
+  it('works with keyboard interaction', async () => {
     render(
       <Glide {...props} infinite={false} autoPlay={false}>
         <h1>Slide One</h1>
@@ -311,7 +311,7 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
     }
 
     async function getActiveItem() {
-      const result = await screen.findByTestId("glideCurrentItem");
+      const result = await screen.findByTestId('glideCurrentItem');
       return result;
     }
 
@@ -340,10 +340,10 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
 
     if (focusedEl) {
       // expect the focused el to be the dot
-      expect(focusedEl).toHaveAttribute("data-testid", "glideDot-1");
+      expect(focusedEl).toHaveAttribute('data-testid', 'glideDot-1');
 
       // type enter
-      await user.keyboard("{Enter}");
+      await user.keyboard('{Enter}');
 
       // expect the second slide to be active
       await within(await getActiveItem()).findByText(/Slide Two/);
@@ -354,7 +354,7 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
     const focusedEl2 = getFocusedElement();
     if (focusedEl2) {
       // expect the focused el to be the dot
-      expect(focusedEl2).toHaveAttribute("data-testid", "glideDot-2");
+      expect(focusedEl2).toHaveAttribute('data-testid', 'glideDot-2');
 
       // type space
       await user.keyboard("' '");
@@ -369,10 +369,10 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
 
     if (focusedEl3) {
       // expect the focused el to be the prevButton
-      expect(focusedEl3).toHaveAttribute("data-testid", "goToPrevSlide");
+      expect(focusedEl3).toHaveAttribute('data-testid', 'goToPrevSlide');
 
       // type enter
-      await user.keyboard("{Enter}");
+      await user.keyboard('{Enter}');
 
       // expect the second slide to be active
       await within(await getActiveItem()).findByText(/Slide Two/);
@@ -384,17 +384,17 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
 
     if (focusedEl4) {
       // expect the focused el to be the prevButton
-      expect(focusedEl4).toHaveAttribute("data-testid", "goToNextSlide");
+      expect(focusedEl4).toHaveAttribute('data-testid', 'goToNextSlide');
 
       // type space
-      await user.keyboard(" ");
+      await user.keyboard(' ');
 
       // expect the second slide to be active
       await within(await getActiveItem()).findByText(/Slide Three/);
     }
   });
 
-  it("renders loading spinner", async () => {
+  it('renders loading spinner', async () => {
     render(
       <Glide {...props} loading={true}>
         <h1>Slide One</h1>
@@ -403,6 +403,6 @@ describe.each(["animated", "swipeable"])("Glide %s", (variant) => {
       </Glide>,
     );
 
-    screen.getByTestId("loader");
+    screen.getByTestId('loader');
   });
 });

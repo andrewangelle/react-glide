@@ -1,5 +1,5 @@
-"use client";
-import { Glide, type GlideProps } from "react-glide";
+'use client';
+import { Glide, type GlideProps } from 'react-glide';
 
 const props: GlideProps = {
   containerStyles: {
@@ -8,7 +8,7 @@ const props: GlideProps = {
   },
   autoPlay: true,
   autoPlaySpeed: 5000,
-  onSlideChange: () => console.log("slide changed"),
+  onSlideChange: () => console.log('slide changed'),
   infinite: true,
   dots: true,
   swipeable: false,

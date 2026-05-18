@@ -1,21 +1,21 @@
 {
-  "name": "ssr-testing-react-19",
-  "version": "0.1.1",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "16.1.5",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-glide": "workspace:*"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.1.5",
-    "tailwindcss": "^4.1.5"
-  }
+	"name": "ssr-testing-react-19",
+	"version": "0.1.1",
+	"private": true,
+	"scripts": {
+		"dev": "next dev --turbopack",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"next": "16.1.5",
+		"react": "^19.1.0",
+		"react-dom": "^19.1.0",
+		"react-glide": "workspace:*"
+	},
+	"devDependencies": {
+		"@tailwindcss/postcss": "^4.1.5",
+		"tailwindcss": "^4.1.5"
+	}
 }

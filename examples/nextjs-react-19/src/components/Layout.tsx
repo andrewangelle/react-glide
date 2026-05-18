@@ -1,5 +1,5 @@
-import Head from "next/head";
-import type { PropsWithChildren } from "react";
+import Head from 'next/head';
+import type { PropsWithChildren } from 'react';
 
 type LayoutProps = {
   title?: string;
@@ -7,7 +7,7 @@ type LayoutProps = {
 const layoutStyle = {
   margin: 20,
   padding: 20,
-  border: "1px solid #DDD",
+  border: '1px solid #DDD',
 };
 
 export function Layout({ children, title }: PropsWithChildren<LayoutProps>) {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 export type IntersectionState = {
   isIntersecting: boolean;
@@ -30,7 +30,7 @@ export type IntersectionReturn = [
 export function useIntersectionObserver({
   threshold = 0,
   root = null,
-  rootMargin = "0%",
+  rootMargin = '0%',
   freezeOnceVisible = false,
   initialIsIntersecting = false,
   onChange,
@@ -43,7 +43,7 @@ export function useIntersectionObserver({
   }));
 
   const callbackRef =
-    useRef<UseIntersectionObserverOptions["onChange"]>(undefined);
+    useRef<UseIntersectionObserverOptions['onChange']>(undefined);
 
   useEffect(() => {
     callbackRef.current = onChange;
@@ -55,7 +55,7 @@ export function useIntersectionObserver({
     // Ensure we have a ref to observe
     // Ensure the browser supports the Intersection Observer API
     // Skip if frozen
-    const shouldSkip = !ref || !("IntersectionObserver" in window) || isFrozen;
+    const shouldSkip = !ref || !('IntersectionObserver' in window) || isFrozen;
 
     if (shouldSkip) {
       return;

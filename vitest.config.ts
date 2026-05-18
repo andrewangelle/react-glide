@@ -1,4 +1,4 @@
-import { coverageConfigDefaults, defineConfig } from "vitest/config";
+import { coverageConfigDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
   resolve: {
@@ -6,18 +6,18 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    include: ["src/**/*.test.{js,ts,tsx,jsx}"],
-    setupFiles: "./src/setupTests.ts",
-    environment: "happy-dom",
+    include: ['src/**/*.test.{js,ts,tsx,jsx}'],
+    setupFiles: './src/setupTests.ts',
+    environment: 'happy-dom',
     coverage: {
       exclude: [
         ...coverageConfigDefaults.exclude,
-        "**/*.stories.tsx",
-        "**/index.tsx",
-        "**/types.ts",
-        "**/utils.ts",
+        '**/*.stories.tsx',
+        '**/index.tsx',
+        '**/types.ts',
+        '**/utils.ts',
       ],
-      include: ["src/**/*.{ts,tsx}"],
+      include: ['src/**/*.{ts,tsx}'],
     },
   },
 });

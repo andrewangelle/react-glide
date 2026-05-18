@@ -1,18 +1,18 @@
 {
-  "compilerOptions": {
-    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
-    "noEmit": true,
-    "outDir": "lib",
-    "module": "ESNext",
-    "target": "ESNext",
-    "sourceMap": false,
-    "allowJs": false,
-    "jsx": "react-jsx",
-    "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "paths": {
-      "~/*": ["./src/*"]
-    }
-  },
-  "include": ["./src"]
+	"compilerOptions": {
+		"types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
+		"noEmit": true,
+		"outDir": "lib",
+		"module": "ESNext",
+		"target": "ESNext",
+		"sourceMap": false,
+		"allowJs": false,
+		"jsx": "react-jsx",
+		"moduleResolution": "bundler",
+		"skipLibCheck": true,
+		"paths": {
+			"~/*": ["./src/*"]
+		}
+	},
+	"include": ["./src"]
 }
