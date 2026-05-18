@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
     "noEmit": true,
     "outDir": "lib",
     "module": "ESNext",
@@ -9,10 +10,9 @@
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
     "skipLibCheck": true,
-    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
     "paths": {
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["./src"]
 }
