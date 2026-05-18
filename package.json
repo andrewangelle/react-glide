@@ -16,9 +16,11 @@
   "exports": {
     ".": {
       "import": "./lib/index.mjs",
-      "types": "./lib/index.d.ts"
+      "types": "./lib/index.d.ts",
+      "style": "./lib/reactGlide.css"
     },
     "./lib/reactGlide.css": {
+      "style": "./lib/reactGlide.css",
       "import": "./lib/reactGlide.css",
       "require": "./lib/reactGlide.css"
     }
