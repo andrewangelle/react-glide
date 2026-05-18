@@ -1,25 +1,15 @@
 {
   "compilerOptions": {
     "noEmit": true,
-    "rootDir": ".",
     "outDir": "lib",
     "module": "ESNext",
     "target": "ESNext",
-    "lib": ["ESNext", "dom", "esnext.asynciterable"],
     "sourceMap": false,
     "allowJs": false,
     "jsx": "react-jsx",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": false,
-    "strictNullChecks": true,
-    "noUnusedLocals": true,
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
-    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
     }

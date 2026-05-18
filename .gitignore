@@ -8,3 +8,5 @@ coverage
 build-storybook.log
 .DS_Store
 app.config.timestamp*
+*.log
+.pnpm-store
