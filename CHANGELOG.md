@@ -1,5 +1,11 @@
 # react-glide
 
+## 5.1.0
+
+### Minor Changes
+
+- ed4c0bf: refactor: Update biome. Update vitest to 4. Update typscript. Migrate to tsdown
+
 ## 5.0.0
 
 ### Major Changes
@@ -19,7 +25,6 @@
 - f4e749f: Update peer dependency range for react, update styling docs example
 - 51b8140: Revert the docs update for styles file, and fix the name mismatch in build step
 - 6dca60b: Fix types export
-
 
 ## 5.0.0-next.10
 

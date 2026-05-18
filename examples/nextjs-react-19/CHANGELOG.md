@@ -1,5 +1,12 @@
 # ssr-testing-react-19
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [ed4c0bf]
+  - react-glide@5.1.0
+
 ## 0.1.1
 
 ### Patch Changes
