@@ -14,7 +14,8 @@
       "!coverage",
       "!**/node_modules",
       "!**/routeTree.gen.ts",
-      "!**/app.config.timestamp*"
+      "!**/app.config.timestamp*",
+      "!**/dist"
     ]
   },
   "formatter": {
