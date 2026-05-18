@@ -6,8 +6,9 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    include: ["src/**/*.test.{js,ts}"],
+    include: ["src/**/*.test.{js,ts,tsx,jsx}"],
     setupFiles: "./src/setupTests.ts",
+    environment: "happy-dom",
     coverage: {
       exclude: [
         ...coverageConfigDefaults.exclude,
