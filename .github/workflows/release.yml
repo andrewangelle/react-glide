@@ -22,17 +22,17 @@ jobs:
       published: ${{ steps.output_published.outputs.PUBLISHED }}
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
-          
+          node-version: lts/*
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false 
+
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.15.5
+        uses: pnpm/action-setup@v5
 
       - name: Install dependencies
         run: pnpm install
@@ -48,7 +48,6 @@ jobs:
           createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Output Published Var
         id: output_published

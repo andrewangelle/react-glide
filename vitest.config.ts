@@ -1,17 +1,14 @@
-import tsConfigPaths from 'vite-tsconfig-paths';
 import { coverageConfigDefaults, defineConfig } from 'vitest/config';
-import type { Plugin } from 'vitest/config';
 
 export default defineConfig({
-  plugins: [
-    tsConfigPaths({
-      projects: ['./tsconfig.json'],
-    }) as Plugin,
-  ],
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     globals: true,
-    environment: 'jsdom',
+    include: ['src/**/*.test.{js,ts,tsx,jsx}'],
     setupFiles: './src/setupTests.ts',
+    environment: 'happy-dom',
     coverage: {
       exclude: [
         ...coverageConfigDefaults.exclude,

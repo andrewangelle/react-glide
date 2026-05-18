@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
 import type { Ref } from 'react';
+import { useCallback } from 'react';
 
 export type PossibleRef<T> = Ref<T> | undefined;
 
@@ -22,5 +22,6 @@ export function composeRefs<T>(
 }
 
 export function useComposedRefs<T>(...refs: Array<PossibleRef<T>>): Ref<T> {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <>
   return useCallback(composeRefs(...refs), refs);
 }

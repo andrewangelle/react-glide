@@ -8,14 +8,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v4
+    - name: Checkout Repo
+      uses: actions/checkout@v6
+
+    - name: Setup Node
+      uses: actions/setup-node@v6
       with:
-        version: 9.15.5
-        
-    - name: Install deps
+        node-version: lts/*
+        registry-url: 'https://registry.npmjs.org'
+        package-manager-cache: false 
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v5
+
+    - name: Install dependencies
       run: pnpm install
 
     - name: Run unit tests

@@ -1,6 +1,5 @@
 'use client';
 import { Glide, type GlideProps } from 'react-glide';
-import 'react-glide/lib/reactGlide.css';
 
 const props: GlideProps = {
   containerStyles: {

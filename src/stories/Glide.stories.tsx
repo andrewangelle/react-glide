@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/react';
+import type { Meta } from '@storybook/react-vite';
 
 import '~/stories/style.css';
 import { Glide } from '~/components/Glide';

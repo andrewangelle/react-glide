@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { lazy, Suspense } from 'react';
 
 function createDevTools() {
   if (process.env.NODE_ENV === 'production') {
